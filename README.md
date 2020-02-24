@@ -11,13 +11,15 @@ Actual completion time for each member (hours : int)
 | Name | EID | GitHub
 -----|-----|--------
 Matt Gallant | mdg3344 | mattgallant
-Dylan Wolford | - | - 
-Zander Tedjo | - | - 
-Will Worthington | - | -
-Michael Hilborn | - | - 
-Guy Farmer | - | -
+Dylan Wolford | ddw2379 | dylanwolford
+Zander Tedjo | zbt86 | zandertedjo
+Will Worthington | wjw692 | willworthington
+Michael Hilborn | mth2433| michaelhilborn
+Guy Farmer | gcf375 | farmerguycf
 
 **Estimated Completion Time**
-
-
+| Name | Estimated Time
+------| ------|
 **Actual Completion Time**
+| Name | Actual Time
+------| ------|
