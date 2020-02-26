@@ -1,0 +1,30 @@
+body {
+	font-family: Verdana, Helvetica, sans-serif;
+    color: #05386b;
+
+    background: linear-gradient(to bottom, #000000 80%, #454545 100%);
+    background-attachment: fixed;
+}
+
+.navbar {
+    background-color: orange;
+    border-radius: 0px;
+}
+
+.navbar-brand:hover {
+    background-color: white;
+    color: orange;
+    cursor: pointer;
+}
+
+.carousel-inner {
+    width: 75%;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+.carousel-inner img {
+    margin-left: auto;
+    margin-right: auto;
+}
