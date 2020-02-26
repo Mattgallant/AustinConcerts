@@ -17,7 +17,7 @@ Guy Farmer | gcf375 | farmerguycf
 Matt Gallant | 10
 Dylan Wolford | -
 Zander Tedjo | -
-Will Worthington | -
+Will Worthington | 7
 Michael Hilborn | -
 Guy Farmer | -
 
@@ -27,6 +27,6 @@ Guy Farmer | -
 Matt Gallant | -
 Dylan Wolford | -
 Zander Tedjo | -
-Will Worthington | 7
+Will Worthington | -
 Michael Hilborn | -
 Guy Farmer | -
