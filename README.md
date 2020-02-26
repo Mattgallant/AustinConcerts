@@ -1,10 +1,4 @@
-README
-For every team member: name, EID, Github ID
-Link to website
-Estimated completion time for each member (hours : int)
-Actual completion time for each member (hours : int)
-
-**Website Link**: 
+**Website Link**: N/A For Phase I 
 
 **Team Members**
 
@@ -18,8 +12,21 @@ Michael Hilborn | mth2433| michaelhilborn
 Guy Farmer | gcf375 | farmerguycf
 
 **Estimated Completion Time**
-| Name | Estimated Time
+| Name | Estimated Time (Hours)
 ------| ------|
+Matt Gallant | 10
+Dylan Wolford | -
+Zander Tedjo | -
+Will Worthington | -
+Michael Hilborn | -
+Guy Farmer | -
+
 **Actual Completion Time**
-| Name | Actual Time
+| Name | Actual Time (Hours)
 ------| ------|
+Matt Gallant | -
+Dylan Wolford | -
+Zander Tedjo | -
+Will Worthington | -
+Michael Hilborn | -
+Guy Farmer | -
