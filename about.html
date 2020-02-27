@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+
+
+<script>
+function requestRepoStats(){
+   //Create an XMLHttpRequest object
+    const xhr = new XMLHttpRequest(); 
+
+   //GitHub endpoint
+    const url = `https://api.github.com/repos/mattgallant/AustinConcerts/stats/contributors`;
+
+    xhr.open('GET', url, true);
+
+    xhr.onload = function(){
+        //Parse API Data into JSON
+        const data = JSON.parse(this.response);
+
+        // Log the response
+        console.log(data);
+
+        // Create variable that will create li's to be added to ul
+        let li = document.createElement('li');
+        
+        // Add Bootstrap list item class to each li
+        li.classList.add('list-group-item')
+
+
+        // // Get the ul with id of of userRepos
+        // let ul = document.getElementById('mattStats');
+        // // Create the html markup for each li
+        // li.innerHTML = (`
+        //     <p style="color: black"><strong>Username</strong> ${data[1].author.login}</p>
+        //     <p style="color: black"><strong>Number of Commits:</strong> ${data[1].total}</p>
+        // `);
+        // // Append each li to the ul
+        // ul.appendChild(li);
+
+        let ulWill = document.getElementById('willStats');
+        // Create the html markup for each li
+        li.innerHTML = (`
+            <p style="color: black"><strong>Username</strong> ${data[0].author.login}</p>
+            <p style="color: black"><strong>Number of Commits:</strong> ${data[0].total}</p>
+            <p style="color: black"><strong>Number of Additions:</strong> ${data[0].weeks.a}</p>
+        `);
+        // Append each li to the ul
+        ulWill.appendChild(li);
+    }
+
+    xhr.send();
+}
+
+requestRepoStats();
+</script>
+
+<html>
+    <head>
+        <title>About</title>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="styles/main.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="artists/index.html">Artists</a>
+            <a class="navbar-brand" href="concerts/index.html">Concerts</a>
+            <a class="navbar-brand" href="venues/index.html">Venues</a>
+            <a class="navbar-brand" href="about.html">About</a>
+        </nav>
+
+        <h1 style="text-align: center">About Us</h1>
+
+        <table style="margin-left: auto; margin-right:auto; display: block">
+            <tr>
+                <td>
+                    <h3> Guy Farmer </h3>
+                </td>
+                <td> 
+                    <p> STATS </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3> Matt Gallant </h3>
+                </td>
+                <td> 
+                    <ul id="mattStats" class="list-group mx-auto mb-5" style="width: 500px">
+
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3> Michael Hilborn </h3>
+                </td>
+                <td> 
+                    <p> STATS </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3> Zander Tedjo </h3>
+                </td>
+                <td> 
+                    <p> STATS </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3> Dylan Wolford </h3>
+                </td>
+                <td> 
+                    <p> STATS </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3> Will Worthington </h3>
+                </td>
+                <td> 
+                    <ul id="willStats" class="list-group mx-auto mb-5" style="width: 500px">
+
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
