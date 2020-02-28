@@ -1,28 +1,41 @@
 <!DOCTYPE HTML>
-
+<script type="module">
+    import {
+        createBasicAuth,
+        createAppAuth,
+        createOAuthAppAuth,
+        createTokenAuth
+    } from "https://cdn.pika.dev/@octokit/auth";
+</script>
 
 <script>
+
 function requestRepoStats(){
    //Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest(); 
 
    //GitHub endpoint
     const url = `https://api.github.com/repos/mattgallant/AustinConcerts/stats/contributors`;
-
     xhr.open('GET', url, true);
-
     xhr.onload = function(){
         //Parse API Data into JSON
         const data = JSON.parse(this.response);
-
         // Log the response
         console.log(data);
 
-        // Create variable that will create li's to be added to ul
-        let li = document.createElement('li');
-        
-        // Add Bootstrap list item class to each li
-        li.classList.add('list-group-item')
+        let span = document.getElementById("statCommits");
+        let commits;
+        commits = 0;
+        for(let i of data){
+            commits += i.total;
+        }
+        span.innerHTML = commits.toString();
+        //span.innerHTML = commits.toString();
+        // // Create variable that will create li's to be added to ul
+        // let li = document.createElement('li');
+        //
+        // // Add Bootstrap list item class to each li
+        // li.classList.add('list-group-item')
 
 
         // // Get the ul with id of of userRepos
@@ -35,21 +48,18 @@ function requestRepoStats(){
         // // Append each li to the ul
         // ul.appendChild(li);
 
-        let ulWill = document.getElementById('willStats');
-        // Create the html markup for each li
-        li.innerHTML = (`
-            <p style="color: black"><strong>Username</strong> ${data[0].author.login}</p>
-            <p style="color: black"><strong>Number of Commits:</strong> ${data[0].total}</p>
-            <p style="color: black"><strong>Number of Additions:</strong> ${data[0].weeks.a}</p>
-        `);
-        // Append each li to the ul
-        ulWill.appendChild(li);
+        // let ulWill = document.getElementById('willStats');
+        // // Create the html markup for each li
+        // li.innerHTML = (`
+        //     <p style="color: black"><strong>Username</strong> ${data[0].author.login}</p>
+        //     <p style="color: black"><strong>Number of Commits:</strong> ${data[0].total}</p>
+        //     <p style="color: black"><strong>Number of Additions:</strong> ${data[0].weeks.a}</p>
+        // `);
+        // // Append each li to the ul
+        // ulWill.appendChild(li);
     }
-
     xhr.send();
 }
-
-requestRepoStats();
 </script>
 
 <html>
@@ -64,8 +74,9 @@ requestRepoStats();
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
-<body>
+<body onload="requestRepoStats()">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="index.html">Home</a>
@@ -77,7 +88,81 @@ requestRepoStats();
 
     <div class="container-fluid">
         <h1 class="pt-5 pb-5 text-center font-weight-bold">About Us</h1>
+        <div class="mb-5 text-body text-center ml-lg-5 mr-lg-5">
+            <div class="card border-warning border-size-5">
+                <div class="card-body">
+                    <h3 class="card-title font-weight-bold">Austin Data Bass Team</h3>
+                    <br><br>
+                    <h4 class="card-subtitle text-left pl-2 mb-2 text-muted">Site Description</h4>
+                    <p class="card-text text-left pl-2 pr-2">
+                        Our site serves as a database for all of Austin's upcoming concerts. We aim to make finding upcoming concerts a seamless experience by providing all of the venue, artist and
+                        event details in one easy to use website. We know how hard it can be to find all the information about one concert in one place. Whether you're an avid concert goer, an artist
+                        looking to find a venue or taking your first steps into the world of live music, we have the information you need!
+                    </p>
+                    <hr>
+                    <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Data & Tools</h4>
+                    <div class ="row text-center">
+                        <div class="col-xs-6 col-sm-4 col-md-4">
+                            <i style="color: #e54d26" class="fas fa-code"></i>
+                            <h5> HTML </h5>
+                            <p> Used to create the structure of our webpages. </p>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            <i style="color: #563d7c" class="fas fa-bold"></i>
+                            <h5> Bootstrap</h5>
+                            <p> Used as a CSS framework to speed up styling. </p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-4">
+                            <i style="color: #2163af" class="fab fa-css3"></i>
+                            <h5> CSS</h5>
+                            <p>Used to style our webpages. </p>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 pt-sm-3 pt-md-3">
+                            <i style="color: #FFCA28" class="fab fa-js"></i>
+                            <h5> JavaScript</h5>
+                            <p> Used to import API data and display it.</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 pt-sm-3 pt-md-3">
+                            <i style="color: black" class="fab fa-python"></i>
+                            <h5> Python</h5>
+                            <p> Used as our backend language that handles the database.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <p class="card-text text-left pl-2 pr-2">
+                        Still need links to data we scraped here and how we used to data. Also need to
+                        explain the interesting result produced by intergrating the data sources<br>
+                    </p>
+                    <hr>
+                    <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Stats & GitHub</h4>
+                    <div class ="row text-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <ul class="list group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Commits
+                                    <span id="statCommits" class="badge badge-warning badge-pill">14</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Issues
+                                    <span id="statIssues" class="badge badge-warning badge-pill">14</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Unit Tests
+                                    <span id="statTests" class="badge badge-warning badge-pill">14</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <a style="font-size: 4.5em; color: black" href="https://www.github.com/mattgallant/AustinConcerts" target="_blank"><i class="fab fa-github"></i></a>
+                            <h6> GitHub Repo</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!--  for each member: name, photo, bio, major/track, primary responsibilities, number of commits, number of issues, number of unit tests
+                        team stats: total number of commits, total number of issues, total number of unit tests -->
         <!-- Start of member cards-->
         <div class="container text-body">
             <div class="row">
@@ -92,13 +177,29 @@ requestRepoStats();
                 </div>
                 <div class="col-12 col-md-4 mb-4 mb-md-0">
                     <div class="card">
-                        <div class="card">
-                            <img class="card-img-top" src="" alt="Card image">
-                            <div class="card-body">
-                                <h5 class="card-title">Matt Gallant</h5>
-                                <p class="card-text">Stats</p>
+                            <div class="row">
+                            <div class="col-6">
+                                <img class="card-img" src="./imgs/matt.jpg" alt="Card image">
                             </div>
-                        </div>
+                            <div class="col-5">
+                                <h3 class="card-title text-center font-weight-bold">Matt Gallant</h3>
+                                <h5 class="text-center font-weight-light">Software Track</h5><br>
+                                <span style="font-size: 15px" id="statMattCommits" class="badge badge-warning badge-pill ml-5">14</span>
+                                <p class="text-center"> Commits</p>
+                                <br>
+                                <span style="font-size: 20px" id="statMattCommits" class="badge badge-warning badge-pill ml-5">14</span>
+                                <p class="text-center"> Issues</p>
+                                <br>
+                                <span style="font-size: 20px" id="statMattCommits" class="badge badge-warning badge-pill ml-5">14</span>
+                                <p class="text-center"> Unit Tests</p>
+                                <br>
+                            </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+
+                                <p class="card-text">name, photo, bio, major/track, primary responsibilities, number of commits, number of issues, number of unit tests</p>
+                            </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
