@@ -66,6 +66,7 @@ requestRepoStats();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="index.html">Home</a>
         <a class="navbar-brand" href="artists/index.html">Artists</a>
@@ -73,62 +74,81 @@ requestRepoStats();
         <a class="navbar-brand" href="venues/index.html">Venues</a>
         <a class="navbar-brand" href="about.html">About</a>
     </nav>
-    <div class="container">
-        <h1>About Us</h1>
-    <table>
-        <tr>
-            <td>
-                <h3> Guy Farmer </h3>
-            </td>
-            <td>
-                <p> STATS </p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3> Matt Gallant </h3>
-            </td>
-            <td>
-                <ul id="mattStats" class="list-group mx-auto mb-5" style="width: 500px">
 
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3> Michael Hilborn </h3>
-            </td>
-            <td>
-                <p> STATS </p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3> Zander Tedjo </h3>
-            </td>
-            <td>
-                <p> STATS </p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3> Dylan Wolford </h3>
-            </td>
-            <td>
-                <p> STATS </p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3> Will Worthington </h3>
-            </td>
-            <td>
-                <ul id="willStats" class="list-group mx-auto mb-5" style="width: 500px">
+    <div class="container-fluid">
+        <h1 class="pt-5 pb-5 text-center font-weight-bold">About Us</h1>
 
-                </ul>
-            </td>
-        </tr>
-    </table>
+        <!-- Start of member cards-->
+        <div class="container text-body">
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4 mb-md-0">
+                    <div class="card">
+                        <img class="card-img-top" src="" alt="Card image">
+                        <div class="card-body">
+                            <h5 class="card-title">Guy Farmer</h5>
+                            <p class="card-text">Stats</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 mb-4 mb-md-0">
+                    <div class="card">
+                        <div class="card">
+                            <img class="card-img-top" src="" alt="Card image">
+                            <div class="card-body">
+                                <h5 class="card-title">Matt Gallant</h5>
+                                <p class="card-text">Stats</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="" alt="Card image">
+                        <div class="card-body">
+                            <h5 class="card-title">Michael Hilborn</h5>
+                            <p class="card-text">Stats</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-md-4 mb-4 mb-md-0">
+                        <div class="card">
+                            <img class="card-img-top" src="" alt="Card image">
+                            <div class="card-body">
+                                <h5 class="card-title">Zander Tedjo</h5>
+                                <p class="card-text">Stats</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 mb-4 mb-md-0">
+                        <div class="card">
+                            <div class="card">
+                                <img class="card-img-top" src="" alt="Card image">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dylan Wolford</h5>
+                                    <p class="card-text">Stats</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card">
+                            <img class="card-img-top" src="" alt="Card image">
+                            <div class="card-body">
+                                <h5 class="card-title">Will Worthington</h5>
+                                <p class="card-text">Stats</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul id="mattStats" class="list-group mx-auto mb-5" style="width: 500px">
+            </ul>
+            <ul id="willStats" class="list-group mx-auto mb-5" style="width: 500px">
+            </ul>
+        </div>
     </div>
 </body>
 </html>
