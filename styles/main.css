@@ -4,17 +4,22 @@ body {
     color: white;
 
     background: linear-gradient(to bottom, #000000 80%, #454545 100%);
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
     background-attachment: fixed;
 }
 
 .navbar {
-    background-color: orange;
+    background-color: white;
+    opacity: 50%;
     border-radius: 0px;
 }
 
 .navbar-brand:hover {
     background-color: white;
-    color: orange;
+    text-shadow: 0px 5px 20px black, 0px -5px 20px pink,
+        5px 0px 20px black, -5px 0px 20px pink;
+    color: black;
     cursor: pointer;
 }
 
@@ -29,6 +34,20 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+/* For the artist pages */
+.artist-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/*
+.artist-image img {
+    width: auto;
+    height: auto;
+}*/
 
 
 /* For about page */
