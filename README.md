@@ -15,8 +15,8 @@ Guy Farmer | gcf375 | farmerguycf
 | Name | Estimated Time (Hours)
 ------| ------|
 Matt Gallant | 10
-Dylan Wolford | -
-Zander Tedjo | -
+Dylan Wolford | 10
+Zander Tedjo | 10
 Will Worthington | 7
 Michael Hilborn | -
 Guy Farmer | -
