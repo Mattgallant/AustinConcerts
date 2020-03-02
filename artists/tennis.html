@@ -1,23 +1,15 @@
 <!DOCTYPE HTML>
-<script type="module">
-    import {
-        createBasicAuth,
-        createAppAuth,
-        createOAuthAppAuth,
-        createTokenAuth
-    } from "https://cdn.pika.dev/@octokit/auth";
-</script>
 
 <script>
 
 function requestArtistInfo(){
    //Create an XMLHttpRequest object
-    const xhr = new XMLHttpRequest(); 
+    const xhrArtist = new XMLHttpRequest(); 
 
-   //GitHub endpoint
-    const url = `https://api.spotify.com/v1/artists/3oDbviiivRWhXwIE8hxkVV`;
-    xhr.open('GET', url, true);
-    xhr.onload = function(){
+   //Spotify Artist info request
+    const urlArtist = `https://api.spotify.com/v1/artists/246dkjvS1zLTtiykXe5h60`;
+    xhrArtist.open('GET', urlArtist, true);
+    xhrArtist.onload = function(){
         //Parse API Data into JSON
         const data = JSON.parse(this.response);
         // Log the response
@@ -56,13 +48,31 @@ function requestArtistInfo(){
         artistFollowers.innerHTML = followers.toLocaleString();
         
     }
-    xhr.send();
+    
+    //Spotify artist top tracks request
+    const xhrTracks = new XMLHttpRequest(); 
+
+    //Spotify Artist info request
+    const urlTracks = `https://api.spotify.com/v1/artists/246dkjvS1zLTtiykXe5h60/top-tracks`;
+    xhrTracks.open('GET', urlTracks, true);
+    xhrTracks.onload = function(){
+    	//Parse API Data into JSON
+        const data = JSON.parse(this.response);
+        // Log the response
+        console.log(data);   
+        
+    }
+    
+    
+    //send all the requests
+    xhrArtist.send();
+    xhrTracks.send();
 }
 </script>
 
 <html>
 <head>
-    <title>The Beach Boys</title>
+    <title>Tennis</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -74,7 +84,7 @@ function requestArtistInfo(){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
-<body onload="requestArtistInfo()">
+<body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="../index.html">Austin Data Bass</a>
@@ -93,13 +103,13 @@ function requestArtistInfo(){
                 <div class="card-body">
                     <div class="row">
                        <div class="pt-4 col-sm-3">
-                           <img class="artist-image" id="artistImage" src="#">
+                           <img class="artist-image" id="artistImage" src="tennis.jpeg">
                        </div>
                        <div class="col-lg-8">
-                          <h1 class="text-left pt-2 pb-2 font-weight-bold" id="artistName"></h1>
+                          <h1 class="text-left pt-2 pb-2 font-weight-bold" id="artistName">Tennis</h1>
                           <h4 class="card-subtitle text-left mb-2 text-muted">Artist Bio</h4>
                             <p class="card-text text-left pr-2" id="artistInfo">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                                Tennis is an American indie pop band from Denver, Colorado, United States, made up of husband-and-wife duo Alaina Moore and Patrick Riley. The duo formed in 2010, and released their debut album, Cape Dory, in 2011. Their second album, Young & Old, was released the following year. Their third release, Ritual in Repeat (2014), was released on Communion records. The band's fourth album, Yours Conditionally, was released in 2017, followed by Swimmer in 2020.
                             </p> 
                        </div>
                        
@@ -108,25 +118,49 @@ function requestArtistInfo(){
                     
 
                     <hr>
-                    <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Spotify Stats <i style="color: black" class="fab fa-spotify"></i></h4>
+                    <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Artist On Spotify <i style="color: grey" class="fab fa-spotify"></i></h4>
                     <div class ="row text-center">
                         <div class="col-xs-6 col-sm-6 col-md-6 ">
                             <ul class="list group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Genres
-                                    <span id="artistGenres"></span>
+                                    <span class="text-muted" id="artistGenres">Indie Pop</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Popularity
-                                    <span id="artistPopularity"></span>
+                                    <span class="text-muted" id="artistPopularity">72%</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Followers
-                                    <span id="artistFollowers"></span>
+                                    <span class="text-muted" id="artistFollowers">867,235</span>
                                 </li>
                             </ul>
                         </div>
-
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <ul type="1" class="list group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>In The Morning I'll Be Better</span>
+                                    <span class="text-muted">11,867,514</span></li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Need Your Love</span>
+                                    <span class="text-muted">1,385,690</span></li></li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Matrimony II</span>
+                                    <span class="text-muted">393,875</span></li></li>
+                            </ul>
+                        </div>
+                </div>
+                <hr>
+                <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Upcoming Concerts in Austin</h4>
+                <div class ="row text-center">
+                    <div class="col-xs-8 col-sm-8 col-md-8 ">
+                        <ul class="list group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="../concerts/index.html">Concert</a>
+                                <span class="text-muted" id="concertDate">March 2, 2020</span>
+                                <a href="../venues/index.html">Venue</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
