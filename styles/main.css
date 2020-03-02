@@ -60,3 +60,8 @@ font-size:3em;
 .fa-github:hover{
     color: #d5d5d5;
 }/* End about page */
+
+/*For venue instances*/
+.fa-yelp:hover{
+    color: white;
+}
