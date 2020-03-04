@@ -1,23 +1,15 @@
 <!DOCTYPE HTML>
-<script type="module">
-    import {
-        createBasicAuth,
-        createAppAuth,
-        createOAuthAppAuth,
-        createTokenAuth
-    } from "https://cdn.pika.dev/@octokit/auth";
-</script>
 
 <script>
 
 function requestArtistInfo(){
    //Create an XMLHttpRequest object
-    const xhr = new XMLHttpRequest(); 
+    const xhrArtist = new XMLHttpRequest(); 
 
-   //GitHub endpoint
-    const url = `https://api.spotify.com/v1/artists/246dkjvS1zLTtiykXe5h60`;
-    xhr.open('GET', url, true);
-    xhr.onload = function(){
+   //Spotify Artist info request
+    const urlArtist = `https://api.spotify.com/v1/artists/246dkjvS1zLTtiykXe5h60`;
+    xhrArtist.open('GET', urlArtist, true);
+    xhrArtist.onload = function(){
         //Parse API Data into JSON
         const data = JSON.parse(this.response);
         // Log the response
@@ -56,7 +48,25 @@ function requestArtistInfo(){
         artistFollowers.innerHTML = followers.toLocaleString();
         
     }
-    xhr.send();
+    
+    //Spotify artist top tracks request
+    const xhrTracks = new XMLHttpRequest(); 
+
+    //Spotify Artist info request
+    const urlTracks = `https://api.spotify.com/v1/artists/246dkjvS1zLTtiykXe5h60/top-tracks`;
+    xhrTracks.open('GET', urlTracks, true);
+    xhrTracks.onload = function(){
+    	//Parse API Data into JSON
+        const data = JSON.parse(this.response);
+        // Log the response
+        console.log(data);   
+        
+    }
+    
+    
+    //send all the requests
+    xhrArtist.send();
+    xhrTracks.send();
 }
 </script>
 
@@ -74,9 +84,9 @@ function requestArtistInfo(){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
-<body onload="requestArtistInfo()">
+<body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <a class="navbar-brand" href="../index.html">Austin Data Bass</a>
         <div class="ml-auto">
             <a class="navbar-brand" href="../artists/index.html">Artists</a>
@@ -93,13 +103,13 @@ function requestArtistInfo(){
                 <div class="card-body">
                     <div class="row">
                        <div class="pt-4 col-sm-3">
-                           <img class="artist-image" id="artistImage" src="#">
+                           <img class="artist-image" id="artistImage" src="imgs/post-malone.jpeg">
                        </div>
                        <div class="col-lg-8">
-                          <h1 class="text-left pt-2 pb-2 font-weight-bold" id="artistName"></h1>
+                          <h1 class="text-left pt-2 pb-2 font-weight-bold" id="artistName">Post Malone</h1>
                           <h4 class="card-subtitle text-left mb-2 text-muted">Artist Bio</h4>
                             <p class="card-text text-left pr-2" id="artistInfo">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                                Austin Richard Post (born July 4, 1995), known professionally as Post Malone, is an American rapper, singer, songwriter, and record producer. He is known for his introspective songwriting and laconic vocal style, Post has gained acclaim for bending a range of genres including hip hop, pop, country, and rock. He first attained recognition in 2015 following the release of his debut single "White Iverson". He subsequently signed a recording contract with Republic Records.                            
                             </p> 
                        </div>
                        
@@ -108,30 +118,65 @@ function requestArtistInfo(){
                     
 
                     <hr>
-                    <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Spotify Stats <i style="color: black" class="fab fa-spotify"></i></h4>
+                    <h4 class="card-subtitle text-left pl-2 mb-3">
+                    <a href="https://open.spotify.com/artist/246dkjvS1zLTtiykXe5h60" class="text-muted">
+                    Artist On Spotify <i style="color: grey" class="fab fa-spotify"></i>
+                    </a></h4>
                     <div class ="row text-center">
                         <div class="col-xs-6 col-sm-6 col-md-6 ">
                             <ul class="list group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Genres
-                                    <span id="artistGenres"></span>
+                                    <span class="text-muted" id="artistGenres">Rap</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Popularity
-                                    <span id="artistPopularity"></span>
+                                    <span class="text-muted" id="artistPopularity">98%</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Followers
-                                    <span id="artistFollowers"></span>
+                                    <span class="text-muted" id="artistFollowers">75,394,473</span>
                                 </li>
                             </ul>
                         </div>
-
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <ul type="1" class="list group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Circles</span>
+                                    <span class="text-muted">733,270,065</span></li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Goodbyes (feat. Young Thug)</span>
+                                    <span class="text-muted">588,008,852</span></li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Rockstar (feat. 21 Savage)</span>
+                                    <span class="text-muted">1,835,682,429</span></li>
+                            </ul>
+                        </div>
+                </div>
+                <hr>
+                <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Upcoming Concerts in Austin</h4>
+                <div class ="row text-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                        <ul class="list group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="../concerts/index.html" id="concertDate">March 2, 2020</a>
+                                <a href="../venues/index.html">Venue</a>
+                            </li>
+                            <br>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+</div>
+
 </body>
+       <!--
+        <footer class="footer">
+            <div class="footer-text text-center ">
+                <a>AustinDataBass.appspot.com</a>
+            </div>
+        </footer>
+        -->
 </html>
