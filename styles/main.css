@@ -103,6 +103,22 @@ This will center both the text and the image inside the container */
     height: 200px;
     width: 250px;
 }
+.kesha_concert_div{
+    background-color: #fff;
+    color: #000;
+    border-radius: 25px;
+    border: 2px solid #ccc;
+    padding: 50px;
+    margin-left: 20%;
+    margin-right:20%;
+}
+.kesha_concert_div img{
+    /*position: relative;*/
+    /*right: 50px;
+    top: 20px;*/
+    height: 300px;
+    width: 225px;
+}
 .artist_name{
     /*position: relative;*/
     /*left: 350px;
