@@ -92,25 +92,24 @@ function requestIssueStats(){
             if(i.user.login == "willworthington") {
                 willIssues++;
             }
-            issues ++;
         }
 
-        //Set total commits
+        //Set total issues
         let span = document.getElementById("statIssues");
-        span.innerHTML = issues.toString();
+        span.innerHTML = data[0].number;
 
-        //Set member commits
-        span = document.getElementById("statGuyCommits");
+        //Set member issues TODO: This number is not actually accurate. Doesn't account for closed issues!
+        span = document.getElementById("statGuyIssues");
         span.innerHTML = guyIssues.toString();
-        span = document.getElementById("statMattCommits");
+        span = document.getElementById("statMattIssues");
         span.innerHTML = mattIssues.toString();
-        span = document.getElementById("statMichaelCommits");
+        span = document.getElementById("statMichaelIssues");
         span.innerHTML = michaelIssues.toString();
-        span = document.getElementById("statDylanCommits");
+        span = document.getElementById("statDylanIssues");
         span.innerHTML = dylanIssues.toString();
-        span = document.getElementById("statZanderCommits");
+        span = document.getElementById("statZanderIssues");
         span.innerHTML = zanderIssues.toString();
-        span = document.getElementById("statWillCommits");
+        span = document.getElementById("statWillIssues");
         span.innerHTML = willIssues.toString();
     }
     xhr.send();
@@ -143,7 +142,7 @@ function populatePage(){
         <div class="ml-auto">
             <a class="navbar-brand" href="artists/index.html">Artists</a>
             <a class="navbar-brand" href="concerts/index.html">Concerts</a>
-            <a class="navbar-brand" href="index.html">Venues</a>
+            <a class="navbar-brand" href="venues/index.html">Venues</a>
             <a class="navbar-brand" href="about.html">About</a>
         </div>
     </nav>
@@ -245,8 +244,8 @@ function populatePage(){
         <!--  for each member: name, photo, bio, major/track, primary responsibilities, number of commits, number of issues, number of unit tests
                         team stats: total number of commits, total number of issues, total number of unit tests -->
         <!-- Start of member cards-->
-        <div class="container text-body">
-            <div class="row">
+        <div class="container-fluid text-body">
+            <div class="row mr-5 ml-5">
                 <div class="col-12 col-md-6 mb-6 mb-md-0 mb-3">
                     <div class="card">
                         <div class="card-header font-weight-bold display text-center">
@@ -323,7 +322,7 @@ function populatePage(){
                     </div> <!-- End of member card -->
                     </div> <!-- End of column spacing -->
                 </div> <!-- End of ROW -->
-            <div class="row mt-3">
+            <div class="row mt-3 mr-5 ml-5"">
                 <div class="col-12 col-md-6 mb-6 mb-md-0">
                     <div class="card">
                         <div class="card-header font-weight-bold display text-center">
@@ -400,7 +399,7 @@ function populatePage(){
                     </div> <!-- End of member card -->
                 </div> <!-- End of column spacing -->
             </div> <!-- End of ROW -->
-        <div class="row mt-3">
+        <div class="row mt-3 mr-5 ml-5"">
             <div class="col-12 col-md-6 mb-6 mb-md-0 mt-3">
                 <div class="card">
                     <div class="card-header font-weight-bold display text-center">
