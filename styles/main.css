@@ -87,7 +87,7 @@ This will center both the text and the image inside the container */
   }
 }
 
-.post_malone_concert_div{
+.concert_div{
     background-color: #fff;
     color: #000;
     border-radius: 25px;
@@ -96,7 +96,7 @@ This will center both the text and the image inside the container */
     margin-left: 20%;
     margin-right:20%;
 }
-.post_malone_concert_div img{
+.concert_div img{
     /*position: relative;*/
     /*right: 50px;
     top: 20px;*/
