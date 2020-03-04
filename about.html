@@ -131,10 +131,27 @@ function requestRepoStats(){
                         </div>
                     </div>
                     <br>
-                    <p class="card-text text-left pl-2 pr-2">
-                        Still need links to data we scraped here and how we used to data. Also need to
-                        explain the interesting result produced by intergrating the data sources<br>
-                    </p>
+                    <div class ="row text-center">
+                        <div class="col-sm-6 col-md-6">
+                            <p>We used several different RESTful APIs that provided data for our venues, concerts and artist models.
+                                Using these disparate data sources allowed us to centralize all the information a concert goer needs
+                                to chose the right show for them!
+                            </p>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <ul class="list group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-center align-items-center">
+                                    <a href="https://www.yelp.com/fusion">Yelp API</a>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-center align-items-center">
+                                    <a href="https://developer.spotify.com/documentation/web-api/"> Spotify API </a>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-center align-items-center">
+                                    <a href="https://www.songkick.com/developer"> Songkick API </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <hr>
                     <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Stats & GitHub</h4>
                     <div class ="row text-center">
@@ -142,15 +159,15 @@ function requestRepoStats(){
                             <ul class="list group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Commits
-                                    <span id="statCommits" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statCommits" class="badge badge-warning badge-pill"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Issues
-                                    <span id="statIssues" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statIssues" class="badge badge-warning badge-pill">0</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Unit Tests
-                                    <span id="statTests" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statTests" class="badge badge-warning badge-pill">0</span>
                                 </li>
                             </ul>
                         </div>
@@ -188,7 +205,7 @@ function requestRepoStats(){
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Unit Tests
-                                        <span id="statGuyTests" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statGuyTests" class="badge badge-warning badge-pill">0</span>
                                     </li>
                                 </ul>
                             </div>
@@ -225,7 +242,7 @@ function requestRepoStats(){
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Unit Tests
-                                        <span id="statTests" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statTests" class="badge badge-warning badge-pill">0</span>
                                     </li>
                                 </ul>
                             </div>
@@ -233,7 +250,7 @@ function requestRepoStats(){
                                 <p class="card-title">ECE Major</p>
                                 <p class="card-subtitle text-muted" >Software Engineering / AE Track</p>
                                 <hr>
-                                <p> Responsible for About Page, Venues Index and Venues Instances </p>
+                                <p> Responsible for About Page and Venue Model </p>
                             </div>
                         </div>
                         <hr>
@@ -265,7 +282,7 @@ function requestRepoStats(){
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Unit Tests
-                                        <span id="statTests" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statTests" class="badge badge-warning badge-pill">0</span>
                                     </li>
                                 </ul>
                             </div>
@@ -278,7 +295,8 @@ function requestRepoStats(){
                         </div>
                         <hr>
                         <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
-                        <p class="card-text"> West Philadelphia born and raised. On a playground is where I spent most of my days, chilling out maxing, relaxing, and cool. I was shooting some b-ball outside the school when a couple of guys, who were up to no good, started making trouble in my neighborhood. I got in one little fight and my mom got scared she said, "You're moving with your Auntie and Uncle in Belair". I whistled for the cab and when it came near the license plate said "fresh" and it had dice in the mirror. If anything I could say that this cab was rare but I thought, "man forget it" - "Yo homes to Belair".  </p>
+                        <p class="card-text"> Junior in Software Engineering and Design from Houston Texas. I enjoy exercising, Pina Coladas, and getting caught in the rain.
+  </p>
                         <br>
                     </div> <!-- End of member card -->
                 </div> <!-- End of column spacing -->
@@ -302,7 +320,7 @@ function requestRepoStats(){
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Unit Tests
-                                        <span id="statTests" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statTests" class="badge badge-warning badge-pill">0</span>
                                     </li>
                                 </ul>
                             </div>
@@ -341,7 +359,7 @@ function requestRepoStats(){
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Unit Tests
-                                    <span id="statTests" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statTests" class="badge badge-warning badge-pill">0</span>
                                 </li>
                             </ul>
                         </div>
@@ -378,7 +396,7 @@ function requestRepoStats(){
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Unit Tests
-                                    <span id="statTests" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statTests" class="badge badge-warning badge-pill">0</span>
                                 </li>
                             </ul>
                         </div>
@@ -391,7 +409,8 @@ function requestRepoStats(){
                     </div>
                     <hr>
                     <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
-                    <p class="card-text"> Extreme Programmer
+                    <p class="card-text">  I'm a Junior from Houston, Texas.  I love running and lifting, but nothing compares to my love for pair programming.
+
                     </p>
                     <br>
                 </div> <!-- End of member card -->
