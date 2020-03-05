@@ -24,7 +24,7 @@ Guy Farmer | -
 **Actual Completion Time**
 | Name | Actual Time (Hours)
 ------| ------|
-Matt Gallant | -
+Matt Gallant | 16
 Dylan Wolford | 6
 Zander Tedjo | -
 Will Worthington | -
