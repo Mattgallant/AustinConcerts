@@ -6,16 +6,28 @@ body {
     background: linear-gradient(to bottom, #000000 80%, #454545 100%);
     background-attachment: fixed;
 }
-
-.navbar {
+.navbar-custom {
     background-color: orange;
-    border-radius: 0px;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: black;
 }
 
-.navbar-brand:hover {
-    background-color: white;
-    color: black;
-    cursor: pointer;
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-text:hover {
+    color: white;
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
 }
 
 .carousel-inner {
