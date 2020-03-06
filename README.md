@@ -25,8 +25,8 @@ Guy Farmer | -
 | Name | Actual Time (Hours)
 ------| ------|
 Matt Gallant | 16
-Dylan Wolford | 6
-Zander Tedjo | - 12
+Dylan Wolford | 11
+Zander Tedjo | 12
 Will Worthington | 11
 Michael Hilborn | -
 Guy Farmer | -
