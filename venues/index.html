@@ -1,14 +1,24 @@
 <!DOCTYPE HTML>
 
 <script>
-    $(document).ready(function(){
-        $("#venueSearch").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#venueList li").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
+    function search() {
+        // Declare variables
+        var input, filter, div, element, a, i, txtValue;
+        input = document.getElementById('searchBar');
+        filter = input.value.toUpperCase();
+        div = document.getElementById("list-tab");
+        element = div.getElementsByTagName('a');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < element.length; i++) {
+            txtValue = element[i].innerHTML; //Get text of the element
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                element[i].style.display = ""; //Show
+            } else {
+                element[i].style.display = "none"; //Hide
+            }
+        }
+    }
 </script>
 
 <html>
@@ -26,21 +36,20 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="../index.html">Austin Data Bass</a>
-    <div class="ml-auto">
-        <a class="navbar-brand" href="../artists/index.html">Artists</a>
-        <a class="navbar-brand" href="../concerts/index.html">Concerts</a>
-        <a class="navbar-brand" href="index.html">Venues</a>
-        <a class="navbar-brand" href="../about.html">About</a>
-    </div>
-</nav>
-
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="../index.html">Austin Data Bass</a>
+        <div class="ml-auto">
+            <a class="navbar-brand" href="../artists/index.html">Artists</a>
+            <a class="navbar-brand" href="../concerts/index.html">Concerts</a>
+            <a class="navbar-brand" href="index.html">Venues</a>
+            <a class="navbar-brand" href="../about.html">About</a>
+        </div>
+    </nav>
     <div class="container-fluid">
         <h1 class="pt-5 pb-5 text-center font-weight-bold">Venues</h1>
         <!-- List of Venues left Card -->
         <div class="row text-center" style="color:black">
-            <div class="col-xs-7 col-sm-7 col-md-7 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 mb-3">
                 <div class="card">
                     <div class="card-header font-weight-bold display">
                         List of Venues
@@ -54,13 +63,12 @@
                         </div>
                     </div>
                     <div class="card-footer text-muted">
-                        <input class="form-control"  id="venueSearch" type="text" placeholder="Search" aria-label="Search">
-                        Filter & Sort features, etc..
+                        <input class="form-control"  type="text" id="searchBar" onkeyup="search()" placeholder="Search for venue">
                     </div>
                 </div>
             </div>
             <!-- Preview, Right card -->
-            <div class="col-xs-5 col-sm-5 col-md-5">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
                 <div class="card">
                     <div class="card-header font-weight-bold display">
                         Preview

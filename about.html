@@ -1,16 +1,6 @@
 <!DOCTYPE HTML>
-<script type="module">
-    import {
-        createBasicAuth,
-        createAppAuth,
-        createOAuthAppAuth,
-        createTokenAuth
-    } from "https://cdn.pika.dev/@octokit/auth";
-</script>
-
 <script>
-
-function requestRepoStats(){
+function requestCommitStats(){
    //Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest(); 
 
@@ -23,42 +13,111 @@ function requestRepoStats(){
         // Log the response
         console.log(data);
 
-        let span = document.getElementById("statCommits");
-        let commits;
-        commits = 0;
+        let commits, zanderCommits, guyCommits, mattCommits, dylanCommits, willCommits, michaelCommits;
+        commits = zanderCommits = guyCommits = mattCommits = dylanCommits = willCommits = michaelCommits = 0;
         for(let i of data){
+            if(i.author.login == "zandertedjo") {
+                zanderCommits = i.total;
+            }
+            if(i.author.login == "farmerguycf") {
+                guyCommits = i.total;
+            }
+            if(i.author.login == "Mattgallant") {
+                mattCommits = i.total;
+            }
+            if(i.author.login == "dylanwolford") {
+                dylanCommits = i.total;
+            }
+            if(i.author.login == "michaelhilborn") {
+                michaelCommits = i.total;
+            }
+            if(i.author.login == "willworthington") {
+                willCommits = i.total;
+            }
             commits += i.total;
         }
+
+        //Set total commits
+        let span = document.getElementById("statCommits");
         span.innerHTML = commits.toString();
-        //span.innerHTML = commits.toString();
-        // // Create variable that will create li's to be added to ul
-        // let li = document.createElement('li');
-        //
-        // // Add Bootstrap list item class to each li
-        // li.classList.add('list-group-item')
 
-
-        // // Get the ul with id of of userRepos
-        // let ul = document.getElementById('mattStats');
-        // // Create the html markup for each li
-        // li.innerHTML = (`
-        //     <p style="color: black"><strong>Username</strong> ${data[1].author.login}</p>
-        //     <p style="color: black"><strong>Number of Commits:</strong> ${data[1].total}</p>
-        // `);
-        // // Append each li to the ul
-        // ul.appendChild(li);
-
-        // let ulWill = document.getElementById('willStats');
-        // // Create the html markup for each li
-        // li.innerHTML = (`
-        //     <p style="color: black"><strong>Username</strong> ${data[0].author.login}</p>
-        //     <p style="color: black"><strong>Number of Commits:</strong> ${data[0].total}</p>
-        //     <p style="color: black"><strong>Number of Additions:</strong> ${data[0].weeks.a}</p>
-        // `);
-        // // Append each li to the ul
-        // ulWill.appendChild(li);
+        //Set member commits
+        span = document.getElementById("statGuyCommits");
+        span.innerHTML = guyCommits.toString();
+        span = document.getElementById("statMattCommits");
+        span.innerHTML = mattCommits.toString();
+        span = document.getElementById("statMichaelCommits");
+        span.innerHTML = michaelCommits.toString();
+        span = document.getElementById("statDylanCommits");
+        span.innerHTML = dylanCommits.toString();
+        span = document.getElementById("statZanderCommits");
+        span.innerHTML = zanderCommits.toString();
+        span = document.getElementById("statWillCommits");
+        span.innerHTML = willCommits.toString();
     }
     xhr.send();
+}
+
+function requestIssueStats(){
+    //Create an XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+
+    //GitHub endpoint
+    const url = `https://api.github.com/repos/mattgallant/AustinConcerts/issues`;
+    xhr.open('GET', url, true);
+    xhr.onload = function(){
+        //Parse API Data into JSON
+        const data = JSON.parse(this.response);
+        // Log the response
+        console.log(data);
+
+        let issues, zanderIssues, guyIssues, mattIssues, dylanIssues, willIssues, michaelIssues;
+        issues = zanderIssues = guyIssues = mattIssues = dylanIssues = willIssues = michaelIssues = 0;
+        for(let i of data){
+            if(i.user.login == "zandertedjo") {
+                zanderIssues++;
+            }
+            if(i.user.login == "farmerguycf") {
+                guyIssues++;
+            }
+            if(i.user.login == "Mattgallant") {
+                mattIssues++;
+            }
+            if(i.user.login == "dylanwolford") {
+                dylanIssues++;
+            }
+            if(i.user.login == "michaelhilborn") {
+                michaelIssues++;
+            }
+            if(i.user.login == "willworthington") {
+                willIssues++;
+            }
+        }
+
+        //Set total issues
+        let span = document.getElementById("statIssues");
+        span.innerHTML = data[0].number;
+
+        //Set member issues TODO: This number is not actually accurate. Doesn't account for closed issues!
+        span = document.getElementById("statGuyIssues");
+        span.innerHTML = guyIssues.toString();
+        span = document.getElementById("statMattIssues");
+        span.innerHTML = mattIssues.toString();
+        span = document.getElementById("statMichaelIssues");
+        span.innerHTML = michaelIssues.toString();
+        span = document.getElementById("statDylanIssues");
+        span.innerHTML = dylanIssues.toString();
+        span = document.getElementById("statZanderIssues");
+        span.innerHTML = zanderIssues.toString();
+        span = document.getElementById("statWillIssues");
+        span.innerHTML = willIssues.toString();
+    }
+    xhr.send();
+}
+
+function populatePage(){
+    requestCommitStats();
+    requestIssueStats();
 }
 </script>
 
@@ -76,14 +135,14 @@ function requestRepoStats(){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
-<body onload="requestRepoStats()">
+<body onload="populatePage()">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="index.html">Austin Data Bass</a>
         <div class="ml-auto">
             <a class="navbar-brand" href="artists/index.html">Artists</a>
             <a class="navbar-brand" href="concerts/index.html">Concerts</a>
-            <a class="navbar-brand" href="index.html">Venues</a>
+            <a class="navbar-brand" href="venues/index.html">Venues</a>
             <a class="navbar-brand" href="about.html">About</a>
         </div>
     </nav>
@@ -135,7 +194,9 @@ function requestRepoStats(){
                         <div class="col-sm-6 col-md-6">
                             <p>We used several different RESTful APIs that provided data for our venues, concerts and artist models.
                                 Using these disparate data sources allowed us to centralize all the information a concert goer needs
-                                to chose the right show for them!
+                                to chose the right show! Whether you need Spotify stats on an artist, details about the size and location of
+                                a venue or all the details you need to worry about for the show, Austin Data Bass displays it in an
+                                easy to read format.
                             </p>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 ">
@@ -163,7 +224,7 @@ function requestRepoStats(){
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Issues
-                                    <span id="statIssues" class="badge badge-warning badge-pill">0</span>
+                                    <span id="statIssues" class="badge badge-warning badge-pill"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Unit Tests
@@ -183,8 +244,8 @@ function requestRepoStats(){
         <!--  for each member: name, photo, bio, major/track, primary responsibilities, number of commits, number of issues, number of unit tests
                         team stats: total number of commits, total number of issues, total number of unit tests -->
         <!-- Start of member cards-->
-        <div class="container text-body">
-            <div class="row">
+        <div class="container-fluid text-body">
+            <div class="row mr-5 ml-5">
                 <div class="col-12 col-md-6 mb-6 mb-md-0 mb-3">
                     <div class="card">
                         <div class="card-header font-weight-bold display text-center">
@@ -197,11 +258,11 @@ function requestRepoStats(){
                                 <ul class="list group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Commits
-                                        <span id="statGuyCommits" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statGuyCommits" class="badge badge-warning badge-pill"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Issues
-                                        <span id="statGuyIssues" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statGuyIssues" class="badge badge-warning badge-pill"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Unit Tests
@@ -234,15 +295,15 @@ function requestRepoStats(){
                                 <ul class="list group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Commits
-                                        <span id="statCommits" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statMattCommits" class="badge badge-warning badge-pill"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Issues
-                                        <span id="statIssues" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statMattIssues" class="badge badge-warning badge-pill"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Unit Tests
-                                        <span id="statTests" class="badge badge-warning badge-pill">0</span>
+                                        <span id="statMattTests" class="badge badge-warning badge-pill">0</span>
                                     </li>
                                 </ul>
                             </div>
@@ -261,7 +322,7 @@ function requestRepoStats(){
                     </div> <!-- End of member card -->
                     </div> <!-- End of column spacing -->
                 </div> <!-- End of ROW -->
-            <div class="row mt-3">
+            <div class="row mt-3 mr-5 ml-5"">
                 <div class="col-12 col-md-6 mb-6 mb-md-0">
                     <div class="card">
                         <div class="card-header font-weight-bold display text-center">
@@ -274,15 +335,15 @@ function requestRepoStats(){
                                 <ul class="list group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Commits
-                                        <span id="statCommits" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statMichaelCommits" class="badge badge-warning badge-pill"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Issues
-                                        <span id="statIssues" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statMichaelIssues" class="badge badge-warning badge-pill"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Unit Tests
-                                        <span id="statTests" class="badge badge-warning badge-pill">0</span>
+                                        <span id="statMichaelTests" class="badge badge-warning badge-pill">0</span>
                                     </li>
                                 </ul>
                             </div>
@@ -312,15 +373,15 @@ function requestRepoStats(){
                                 <ul class="list group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Commits
-                                        <span id="statCommits" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statZanderCommits" class="badge badge-warning badge-pill"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Issues
-                                        <span id="statIssues" class="badge badge-warning badge-pill">14</span>
+                                        <span id="statZanderIssues" class="badge badge-warning badge-pill"></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Unit Tests
-                                        <span id="statTests" class="badge badge-warning badge-pill">0</span>
+                                        <span id="statZanderTests" class="badge badge-warning badge-pill">0</span>
                                     </li>
                                 </ul>
                             </div>
@@ -338,7 +399,7 @@ function requestRepoStats(){
                     </div> <!-- End of member card -->
                 </div> <!-- End of column spacing -->
             </div> <!-- End of ROW -->
-        <div class="row mt-3">
+        <div class="row mt-3 mr-5 ml-5"">
             <div class="col-12 col-md-6 mb-6 mb-md-0 mt-3">
                 <div class="card">
                     <div class="card-header font-weight-bold display text-center">
@@ -351,15 +412,15 @@ function requestRepoStats(){
                             <ul class="list group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Commits
-                                    <span id="statCommits" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statDylanCommits" class="badge badge-warning badge-pill"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Issues
-                                    <span id="statIssues" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statDylanIssues" class="badge badge-warning badge-pill"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Unit Tests
-                                    <span id="statTests" class="badge badge-warning badge-pill">0</span>
+                                    <span id="statDylanTests" class="badge badge-warning badge-pill">0</span>
                                 </li>
                             </ul>
                         </div>
@@ -376,7 +437,7 @@ function requestRepoStats(){
                     <br>
                 </div> <!-- End of member card -->
             </div> <!-- End of column spacing -->
-            <div class="col-12 col-md-6 mb-6 mb-md-0 mt-3">
+            <div class="col-12 col-md-6 mb-6 mb-3 mt-3">
                 <div class="card">
                     <div class="card-header font-weight-bold display text-center">
                         Will Worthington
@@ -388,15 +449,15 @@ function requestRepoStats(){
                             <ul class="list group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Commits
-                                    <span id="statCommits" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statWillCommits" class="badge badge-warning badge-pill"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Issues
-                                    <span id="statIssues" class="badge badge-warning badge-pill">14</span>
+                                    <span id="statWillIssues" class="badge badge-warning badge-pill"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Unit Tests
-                                    <span id="statTests" class="badge badge-warning badge-pill">0</span>
+                                    <span id="statWillTests" class="badge badge-warning badge-pill">0</span>
                                 </li>
                             </ul>
                         </div>
@@ -410,7 +471,6 @@ function requestRepoStats(){
                     <hr>
                     <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
                     <p class="card-text">  I'm a Junior from Houston, Texas.  I love running and lifting, but nothing compares to my love for pair programming.
-
                     </p>
                     <br>
                 </div> <!-- End of member card -->
