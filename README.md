@@ -11,7 +11,7 @@ Will Worthington | wjw692 | willworthington
 Michael Hilborn | mth2433| michaelhilborn
 Guy Farmer | gcf375 | farmerguycf
 
-**Estimated Completion Time**
+**Phase I: Estimated Completion Time**
 | Name | Estimated Time (Hours)
 ------| ------|
 Matt Gallant | 10
@@ -21,12 +21,34 @@ Will Worthington | 7
 Michael Hilborn | -
 Guy Farmer | -
 
-**Actual Completion Time**
+**Phase I: Actual Completion Time**
 | Name | Actual Time (Hours)
 ------| ------|
 Matt Gallant | 18
 Dylan Wolford | 11
 Zander Tedjo | 12
 Will Worthington | 11
+Michael Hilborn | -
+Guy Farmer | -
+
+***
+
+**Phase II: Estimated Completion Time**
+| Name | Estimated Time (Hours)
+------| ------|
+Matt Gallant | 10
+Dylan Wolford | -
+Zander Tedjo | -
+Will Worthington | -
+Michael Hilborn | -
+Guy Farmer | -
+
+**Phase II: Actual Completion Time**
+| Name | Actual Time (Hours)
+------| ------|
+Matt Gallant | -
+Dylan Wolford | -
+Zander Tedjo | -
+Will Worthington | 
 Michael Hilborn | -
 Guy Farmer | -
