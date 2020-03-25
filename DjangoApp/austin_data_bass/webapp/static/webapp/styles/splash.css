@@ -1,0 +1,63 @@
+body {
+	font-family: Verdana, Helvetica, sans-serif;
+    /*color: #05386b; */
+    color: white;
+
+    background: rgb(244,132,81);
+    background: linear-gradient(39deg, rgba(244,132,81,1) 0%, rgba(241,209,91,1) 100%);
+    background-attachment: fixed;
+    
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+}
+
+.navbar-custom {
+    background-color: rgba(0,0,0,.75);
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: orange;
+}
+
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-text:hover {
+    color: white;
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+.carousel-inner {
+    width: 75%;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+.carousel-inner img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgba(0, 0, 0, .75);
+    color: orange;
+}
+
+.footer-text {
+    font-size: 12px;
+}

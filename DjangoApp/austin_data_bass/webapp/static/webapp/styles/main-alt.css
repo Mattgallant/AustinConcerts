@@ -1,0 +1,94 @@
+body {
+	font-family: Verdana, Helvetica, sans-serif;
+    /*color: #05386b; */
+    color: white;
+
+    background: rgb(244,132,81);
+    background: linear-gradient(39deg, rgba(244,132,81,1) 0%, rgba(241,209,91,1) 100%);
+    background: linear-gradient(to bottom, #000000 80%, #454545 100%);
+    background-attachment: fixed;
+    
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+}
+
+.navbar-custom {
+    background-color: orange;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: black;
+}
+
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-text:hover {
+    color: white;
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+.carousel-inner {
+    width: 75%;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+.carousel-inner img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* For the artist pages */
+.artist-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+/* For about page */
+.fa-github:hover{
+    color: #d5d5d5;
+}
+.fa-python,
+.fa-js,
+.fa-code,
+.fa-css3,
+.fa-bold{
+font-size:3em;
+}
+
+.fa-github:hover{
+    color: #d5d5d5;
+}/* End about page */
+
+/*For venue instances*/
+.fa-yelp:hover{
+    color: white;
+}
+
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgba(0, 0, 0, .5);
+    color: orange;
+}
+
+.footer-text {
+    font-size: 12px;
+}
