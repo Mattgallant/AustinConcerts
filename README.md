@@ -39,7 +39,7 @@ Guy Farmer | -
 Matt Gallant | 10
 Dylan Wolford | -
 Zander Tedjo | -
-Will Worthington | -
+Will Worthington | 12
 Michael Hilborn | -
 Guy Farmer | -
 
