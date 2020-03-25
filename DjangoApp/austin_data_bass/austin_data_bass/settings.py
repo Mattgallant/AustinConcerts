@@ -74,14 +74,21 @@ WSGI_APPLICATION = 'austin_data_bass.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'djongo',
+#        'NAME': 'austindatabass-test',
+#        'HOST': 'mongodb+srv://adb-developer:kZcM77b62tF8iI3I@austindatabass-test-c2w7y.gcp.mongodb.net/test?retryWrites=true&w=majority',
+#        'USER': 'adb-developer',
+#        'PASSWORD': 'kZcM77b62tF8iI3I',
+        
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'austindatabass-test',
-        'HOST': 'mongodb+srv://adb-developer:kZcM77b62tF8iI3I@austindatabass-test-c2w7y.gcp.mongodb.net/test?retryWrites=true&w=majority',
-        'USER': 'adb-developer',
-        'PASSWORD': 'kZcM77b62tF8iI3I',
-        
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
