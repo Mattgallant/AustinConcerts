@@ -7,4 +7,5 @@ urlpatterns = [
     path('concerts/', views.concerts, name='webapp-concerts'),
     path('venues/', views.venues, name='webapp-venues'),
     path('artists/', views.artists, name='webapp-artists'),
+    path('dev/', views.dev, name='webapp-dev'),
 ]
