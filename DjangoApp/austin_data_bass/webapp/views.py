@@ -66,16 +66,16 @@ def home(request):
     return render(request, 'webapp/index.html')
 
 def about(request):
-    return render(request, 'webapp/about.html')
+    return render(request, 'webapp/about.html', {'title': 'About'})
 
 def concerts(request):
-    return render(request, 'webapp/concerts/index.html')
+    return render(request, 'webapp/concerts/index.html', {'title': 'Concerts'})
 
 def artists(request):
-    return render(request, 'webapp/artists/index.html')
+    return render(request, 'webapp/artists/index.html', {'title': 'Artists'})
 
 def venues(request):
-    return render(request, 'webapp/venues/index.html')  
+    return render(request, 'webapp/venues/index.html', {'title': 'Venues'})  
 
 def dev(request):
     context = {
