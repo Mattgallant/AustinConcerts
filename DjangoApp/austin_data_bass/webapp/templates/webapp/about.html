@@ -1,152 +1,133 @@
-<!DOCTYPE HTML>
+{% extends "webapp/navbar.html" %}
+{% load static %}
+<!-- This page now imports the navbar from the template... -->
+{% block head %}
+{% endblock head %}
+
 <script>
-function requestCommitStats(){
-   //Create an XMLHttpRequest object
-    const xhr = new XMLHttpRequest(); 
+    function requestCommitStats(){
+       //Create an XMLHttpRequest object
+        const xhr = new XMLHttpRequest(); 
 
-   //GitHub endpoint
-    const url = `https://api.github.com/repos/mattgallant/AustinConcerts/stats/contributors`;
-    xhr.open('GET', url, true);
-    xhr.onload = function(){
-        //Parse API Data into JSON
-        const data = JSON.parse(this.response);
-        // Log the response
-        console.log(data);
+       //GitHub endpoint
+        const url = `https://api.github.com/repos/mattgallant/AustinConcerts/stats/contributors`;
+        xhr.open('GET', url, true);
+        xhr.onload = function(){
+            //Parse API Data into JSON
+            const data = JSON.parse(this.response);
+            // Log the response
+            console.log(data);
 
-        let commits, zanderCommits, guyCommits, mattCommits, dylanCommits, willCommits, michaelCommits;
-        commits = zanderCommits = guyCommits = mattCommits = dylanCommits = willCommits = michaelCommits = 0;
-        for(let i of data){
-            if(i.author.login == "zandertedjo") {
-                zanderCommits = i.total;
+            let commits, zanderCommits, guyCommits, mattCommits, dylanCommits, willCommits, michaelCommits;
+            commits = zanderCommits = guyCommits = mattCommits = dylanCommits = willCommits = michaelCommits = 0;
+            for(let i of data){
+                if(i.author.login == "zandertedjo") {
+                    zanderCommits = i.total;
+                }
+                if(i.author.login == "farmerguycf") {
+                    guyCommits = i.total;
+                }
+                if(i.author.login == "Mattgallant") {
+                    mattCommits = i.total;
+                }
+                if(i.author.login == "dylanwolford") {
+                    dylanCommits = i.total;
+                }
+                if(i.author.login == "michaelhilborn") {
+                    michaelCommits = i.total;
+                }
+                if(i.author.login == "willworthington") {
+                    willCommits = i.total;
+                }
+                commits += i.total;
             }
-            if(i.author.login == "farmerguycf") {
-                guyCommits = i.total;
-            }
-            if(i.author.login == "Mattgallant") {
-                mattCommits = i.total;
-            }
-            if(i.author.login == "dylanwolford") {
-                dylanCommits = i.total;
-            }
-            if(i.author.login == "michaelhilborn") {
-                michaelCommits = i.total;
-            }
-            if(i.author.login == "willworthington") {
-                willCommits = i.total;
-            }
-            commits += i.total;
+
+            //Set total commits
+            let span = document.getElementById("statCommits");
+            span.innerHTML = commits.toString();
+
+            //Set member commits
+            span = document.getElementById("statGuyCommits");
+            span.innerHTML = guyCommits.toString();
+            span = document.getElementById("statMattCommits");
+            span.innerHTML = mattCommits.toString();
+            span = document.getElementById("statMichaelCommits");
+            span.innerHTML = michaelCommits.toString();
+            span = document.getElementById("statDylanCommits");
+            span.innerHTML = dylanCommits.toString();
+            span = document.getElementById("statZanderCommits");
+            span.innerHTML = zanderCommits.toString();
+            span = document.getElementById("statWillCommits");
+            span.innerHTML = willCommits.toString();
         }
-
-        //Set total commits
-        let span = document.getElementById("statCommits");
-        span.innerHTML = commits.toString();
-
-        //Set member commits
-        span = document.getElementById("statGuyCommits");
-        span.innerHTML = guyCommits.toString();
-        span = document.getElementById("statMattCommits");
-        span.innerHTML = mattCommits.toString();
-        span = document.getElementById("statMichaelCommits");
-        span.innerHTML = michaelCommits.toString();
-        span = document.getElementById("statDylanCommits");
-        span.innerHTML = dylanCommits.toString();
-        span = document.getElementById("statZanderCommits");
-        span.innerHTML = zanderCommits.toString();
-        span = document.getElementById("statWillCommits");
-        span.innerHTML = willCommits.toString();
+        xhr.send();
     }
-    xhr.send();
-}
 
-function requestIssueStats(){
-    //Create an XMLHttpRequest object
-    const xhr = new XMLHttpRequest();
+    function requestIssueStats(){
+        //Create an XMLHttpRequest object
+        const xhr = new XMLHttpRequest();
 
-    //GitHub endpoint
-    const url = `https://api.github.com/repos/mattgallant/AustinConcerts/issues`;
-    xhr.open('GET', url, true);
-    xhr.onload = function(){
-        //Parse API Data into JSON
-        const data = JSON.parse(this.response);
-        // Log the response
-        console.log(data);
+        //GitHub endpoint
+        const url = `https://api.github.com/repos/mattgallant/AustinConcerts/issues`;
+        xhr.open('GET', url, true);
+        xhr.onload = function(){
+            //Parse API Data into JSON
+            const data = JSON.parse(this.response);
+            // Log the response
+            console.log(data);
 
-        let issues, zanderIssues, guyIssues, mattIssues, dylanIssues, willIssues, michaelIssues;
-        issues = zanderIssues = guyIssues = mattIssues = dylanIssues = willIssues = michaelIssues = 0;
-        for(let i of data){
-            if(i.user.login == "zandertedjo") {
-                zanderIssues++;
+            let issues, zanderIssues, guyIssues, mattIssues, dylanIssues, willIssues, michaelIssues;
+            issues = zanderIssues = guyIssues = mattIssues = dylanIssues = willIssues = michaelIssues = 0;
+            for(let i of data){
+                if(i.user.login == "zandertedjo") {
+                    zanderIssues++;
+                }
+                if(i.user.login == "farmerguycf") {
+                    guyIssues++;
+                }
+                if(i.user.login == "Mattgallant") {
+                    mattIssues++;
+                }
+                if(i.user.login == "dylanwolford") {
+                    dylanIssues++;
+                }
+                if(i.user.login == "michaelhilborn") {
+                    michaelIssues++;
+                }
+                if(i.user.login == "willworthington") {
+                    willIssues++;
+                }
             }
-            if(i.user.login == "farmerguycf") {
-                guyIssues++;
-            }
-            if(i.user.login == "Mattgallant") {
-                mattIssues++;
-            }
-            if(i.user.login == "dylanwolford") {
-                dylanIssues++;
-            }
-            if(i.user.login == "michaelhilborn") {
-                michaelIssues++;
-            }
-            if(i.user.login == "willworthington") {
-                willIssues++;
-            }
+
+            //Set total issues
+            let span = document.getElementById("statIssues");
+            span.innerHTML = data[0].number;
+
+            //Set member issues TODO: This number is not actually accurate. Doesn't account for closed issues!
+            span = document.getElementById("statGuyIssues");
+            span.innerHTML = guyIssues.toString();
+            span = document.getElementById("statMattIssues");
+            span.innerHTML = mattIssues.toString();
+            span = document.getElementById("statMichaelIssues");
+            span.innerHTML = michaelIssues.toString();
+            span = document.getElementById("statDylanIssues");
+            span.innerHTML = dylanIssues.toString();
+            span = document.getElementById("statZanderIssues");
+            span.innerHTML = zanderIssues.toString();
+            span = document.getElementById("statWillIssues");
+            span.innerHTML = willIssues.toString();
         }
-
-        //Set total issues
-        let span = document.getElementById("statIssues");
-        span.innerHTML = data[0].number;
-
-        //Set member issues TODO: This number is not actually accurate. Doesn't account for closed issues!
-        span = document.getElementById("statGuyIssues");
-        span.innerHTML = guyIssues.toString();
-        span = document.getElementById("statMattIssues");
-        span.innerHTML = mattIssues.toString();
-        span = document.getElementById("statMichaelIssues");
-        span.innerHTML = michaelIssues.toString();
-        span = document.getElementById("statDylanIssues");
-        span.innerHTML = dylanIssues.toString();
-        span = document.getElementById("statZanderIssues");
-        span.innerHTML = zanderIssues.toString();
-        span = document.getElementById("statWillIssues");
-        span.innerHTML = willIssues.toString();
+        xhr.send();
     }
-    xhr.send();
-}
 
-function populatePage(){
-    requestCommitStats();
-    requestIssueStats();
-}
+    function populatePage(){
+        requestCommitStats();
+        requestIssueStats();
+    }
 </script>
 
-<html>
-<head>
-    <title>About</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- Our stylesheet -->
-    <link rel="stylesheet" href="styles/main.css">
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-</head>
-<body onload="populatePage()">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
-        <a class="navbar-brand" href="index.html">Austin Data Bass</a>
-        <div class="ml-auto">
-            <a class="navbar-brand" href="artists/index.html">Artists</a>
-            <a class="navbar-brand" href="concerts/index.html">Concerts</a>
-            <a class="navbar-brand" href="venues/index.html">Venues</a>
-            <a class="navbar-brand" href="about.html">About</a>
-        </div>
-    </nav>
-
+{% block body %}
+<body onload="populatePage()"> <!-- There is an ISSUE here in that this is onload function is not being called b/c of way template is working.... perhaps a better way to resolve this. -->
     <div class="container-fluid">
         <h1 class="pt-5 pb-5 text-center font-weight-bold">About Us</h1>
         <div class="mb-5 text-body text-center ml-lg-5 mr-lg-5">
@@ -251,7 +232,7 @@ function populatePage(){
                         <div class="card-header font-weight-bold display text-center">
                             Guy Farmer
                         </div>
-                        <img class="card-img" src="./imgs/guy.jpg" alt="Card image">
+                        <img class="card-img" src="{% static 'webapp/imgs/guy.jpg' %}" alt="Card image">
                         <br>
                         <div class ="row text-center">
                             <div class="col-xs-6 col-sm-6 col-md-6 ">
@@ -288,7 +269,7 @@ function populatePage(){
                         <div class="card-header font-weight-bold display text-center">
                             Matt Gallant
                         </div>
-                        <img class="card-img" src="./imgs/matt.jpg" alt="Card image">
+                        <img class="card-img" src="{% static 'webapp/imgs/matt.jpg' %}" alt="Card image">
                         <br>
                         <div class ="row text-center">
                             <div class="col-xs-6 col-sm-6 col-md-6 ">
@@ -328,7 +309,7 @@ function populatePage(){
                         <div class="card-header font-weight-bold display text-center">
                             Michael Hilborn
                         </div>
-                        <img class="card-img" src="./imgs/michael.jpg" alt="Card image">
+                        <img class="card-img" src="{% static 'webapp/imgs/michael.jpg' %}" alt="Card image">
                         <br>
                         <div class ="row text-center">
                             <div class="col-xs-6 col-sm-6 col-md-6 ">
@@ -366,7 +347,7 @@ function populatePage(){
                         <div class="card-header font-weight-bold display text-center">
                             Zander Tedjo
                         </div>
-                        <img class="card-img" src="./imgs/zander.png" alt="Card image">
+                        <img class="card-img" src="{% static 'webapp/imgs/zander.png' %}" alt="Card image">
                         <br>
                         <div class ="row text-center">
                             <div class="col-xs-6 col-sm-6 col-md-6 ">
@@ -405,7 +386,7 @@ function populatePage(){
                     <div class="card-header font-weight-bold display text-center">
                         Dylan Wolford
                     </div>
-                    <img class="card-img" src="./imgs/dylan.jpg" alt="Card image">
+                    <img class="card-img" src="{% static 'webapp/imgs/dylan.jpg' %}" alt="Card image">
                     <br>
                     <div class ="row text-center">
                         <div class="col-xs-6 col-sm-6 col-md-6 ">
@@ -442,7 +423,7 @@ function populatePage(){
                     <div class="card-header font-weight-bold display text-center">
                         Will Worthington
                     </div>
-                    <img class="card-img" src="./imgs/will.jpg" alt="Card image">
+                    <img class="card-img" src="{% static 'webapp/imgs/will.jpg' %}" alt="Card image">
                     <br>
                     <div class ="row text-center">
                         <div class="col-xs-6 col-sm-6 col-md-6 ">
@@ -480,4 +461,4 @@ function populatePage(){
         </div>
     </div>
 </body>
-</html>
+{% endblock body %}

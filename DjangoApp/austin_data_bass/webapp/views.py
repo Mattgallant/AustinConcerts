@@ -11,10 +11,10 @@ def about(request):
     return render(request, 'webapp/about.html')
 
 def concerts(request):
-    return HttpResponse('<h1>About</h1>')
+    return render(request, 'webapp/concerts/index.html')
 
 def artists(request):
-    return HttpResponse('<h1>About</h1>')
+    return render(request, 'webapp/artists/index.html')
 
 def venues(request):
-    return HttpResponse('<h1>About</h1>')    
+    return render(request, 'webapp/venues/index.html')  
