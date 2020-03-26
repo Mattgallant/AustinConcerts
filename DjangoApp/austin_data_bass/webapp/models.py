@@ -1,6 +1,7 @@
 from django.db import models
 import requests
-#from djongo import models
+import base64
+import six
 
 # Create your models here.
 
@@ -16,7 +17,20 @@ class Artist(models.Model):
     topTracks = models.CharField(max_length=50) #will be a json list of tracks with their corresponding popularity
     
     def create(artistName):
-        token = "BQAzTEpizT9X6bhV_VaxbnNmbbucjlArynIHPg1ln72Z_Q5LN-MCu7IgRdMYkffIK0SO2tKDAgcrnvniQSh6-qT6eZ0auaP8QalaytCilM5Z5k8eRM6gXXXzZd3rcfYI0TuCqimDmbE3eSdaYDqUUzc_Mf0dlsE"
+        #get the token to use the spotify API
+        clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
+        secret = '492d077d949c4f21a79eedff5d70852d'
+        auth = base64.b64encode(
+            six.text_type(clientId + ':' + secret).encode("ascii")
+            )
+        payload = {"grant_type": "client_credentials"}
+
+        resp = requests.post("https://accounts.spotify.com/api/token",
+                             data=payload,
+                             headers={'Authorization': "Basic %s" % auth.decode("ascii")},
+                             verify=True)
+
+        token = resp.json()['access_token']
         
         URL1 = "https://api.spotify.com/v1/search?q=" + artistName.lower().replace(" ", "%20") + "&type=artist"
 
@@ -53,3 +67,4 @@ class Artist(models.Model):
                      popularity = artist['popularity'],
                      followers = artist['followers'],
                      topTracks = artist['topTracks'])
+        
