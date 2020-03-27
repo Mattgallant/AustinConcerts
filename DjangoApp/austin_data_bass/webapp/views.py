@@ -136,7 +136,20 @@ def artist_name(request, artist_name):
 	return render(request, 'webapp/artists/artist-template.html', context)
 
 def venues(request):
-    return render(request, 'webapp/venues/grid.html', {'title': 'Venues'})  
+	context ={
+		'venues': Venue.objects.all(),
+		'model_name': 'Venues',
+		'title': 'Venues',
+	}
+	return render(request, 'webapp/venues/grid.html', context)  
+
+#Venue instance template handler
+def venue_name(request, venue_name):
+	context = {
+		'title': venue_name,
+		'venue': Venue.objects.filter(name__iexact = venue_name).first(),
+	}
+	return render(request, 'webapp/venues/instance_template.html', context) 
 
 def dev(request): #Model Grid Page
 	"""    context = {

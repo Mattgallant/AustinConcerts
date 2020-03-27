@@ -1,0 +1,65 @@
+{% extends "webapp/navbar.html" %}
+{% load static %}
+<!-- This page now imports the navbar from the template... -->
+{% block head %}
+{% endblock head %}
+
+<!--name = models.CharField(max_length=200)
+    yelpID =  models.CharField(max_length=25)
+    imageURL = models.CharField(max_length=300)
+    yelpURL = models.CharField(max_length=300)
+    phone = models.CharField(max_length=15) 
+    reviewCount = models.IntegerField()
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    location = models.CharField(max_length=150) 
+    price = models.CharField(max_length=4) -->
+
+{% block body %}
+    <div class="container-fluid text-body">
+        <br><br>
+        <div class="card border-warning border-size-5 text-body text-center ml-lg-5 mr-lg-5 mb-5">
+            <div class="card-body">
+                <h1> {{ venue.name }}</h1>
+                <img class="w-75"src="{{venue.imageURL}}" style="margin-left: auto; margin-right: auto; display: block; height: 500px">
+                <hr>
+                <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Location and Contact</h4>
+                <div class ="row text-center">
+                    <div class="col-xs-4 col-sm-12 col-md-4 ">
+                        <!-- TODO: Update this with a img link variable -->
+                        <img src="../../imgs/location_moody.png" height="250px" width="250px">
+                    </div>
+                    <div class="col-xs-8 col-sm-12 col-md-8 ">
+                        <ul type="1" class="list group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span> {{ venue.location}} </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span> Price {{venue.price}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span> {{venue.phone}}</span>
+                            </li>
+                        </ul>
+                        <br>
+                        <p>{{venue.rating}}/5.0 Stars with {{venue.reviewCount}} Reviews </p>
+                        <!-- TODO: Insert a link to the yelp page here -->
+                        <a style="font-size: 1.8em; color: red" href="{{venue.yelpURL}}" target="_blank"><i class="fab fa-yelp"></i></a>
+                    </div>
+                </div> <!-- End of Row -->
+                <hr>
+                <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Upcoming Concerts</h4>
+                <div class="w-m-75 w-l-50 w-xs-75">
+                    <ul type="1" class="list group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span> <a href="../../concerts/index.html"> POPULATE FROM CONCERT MODEL DATA </a> </span>
+                            <span><a href="../../artists/index.html">PLACEHOLDER</a></span>
+                        </li>
+                    </ul>
+                </div> <!-- End Calendar -->
+                <hr>
+                <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Other Information</h4>
+                <p> Absolutely none as of now </p>
+            </div> <!--End of card body-->
+        </div> <!--End of card-->
+    </div> <!-- End of fluid container -->
+{% endblock body %}

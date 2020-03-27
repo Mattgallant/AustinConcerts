@@ -26,36 +26,48 @@
     }
 </script>
 
+<!--    name = models.CharField(max_length=200)
+    yelpID =  models.CharField(max_length=25)
+    imageURL = models.CharField(max_length=300)
+    yelpURL = models.CharField(max_length=300)
+    phone = models.CharField(max_length=15) 
+    reviewCount = models.IntegerField()
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    location = models.CharField(max_length=150) 
+    price = models.CharField(max_length=4) -->
+
 {% block body %}
     <div class="container-fluid">
         <h1 class="pt-5 pb-5 text-center font-weight-bold">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
 
         <!-- Start of instance cards -->
         <div class="row mr-2 ml-2">
-            {% for instance in artists %}
-                <div class="col-4  mb-4">
+            {% for instance in venues %}
+                <div class="col-sm-12 col-lg-4 col-md-4 col-4  mb-4">
+                    <a href="{{instance.name}}">
                     <div class="card text-body">
                         <div class="card-header font-weight-bold display text-center">
                             <!-- Insert the link to the instance here? -->
                             {{ instance.name }}
                         </div>
                         <!-- Instance Image, still need to figure out how to handle this... -->
-                        <img class="card-img" src="{{ instance.imageLink }}" alt= {{ instance.imageLink }}>
+                        <img class="card-img" src="{{ instance.imageURL }}" style="height: 400px;" alt= {{ instance.imageLink }}>
                         <!-- At least 3 attributes -->
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex align-items-start">
-                                <span><b>Popularity:  </b> {{ instance.popularity }}</span>
+                                <span><b>Rating:  </b> {{ instance.rating }}</span>
                             </li>
                             <li class="list-group-item d-flex align-items-center">
-                                <span><b>Genre:  </b> 
-                                        {{ instance.genres }},
+                                <span><b>Location:  </b> 
+                                        {{ instance.location }},
                                 </span>
                             </li>
                             <li class="list-group-item d-flex align-items-center">
-                                <span><b>Followers:</b> {{ instance.followers }}</span>
+                                <span><b>Phone:</b> {{ instance.phone }}</span>
                             </li>
                         </ul>
                     </div> <!-- End of card -->
+                    </a>
                 </div> <!-- End of Col Div -->
             {% endfor %}
         </div> <!-- End of the row div -->
