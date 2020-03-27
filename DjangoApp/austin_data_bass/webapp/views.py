@@ -110,24 +110,6 @@ def artists(request):
 def artist_name(request, artist_name):
 #Query the database, filter by artist_name
 #Get relevant instance info, pass to template
-	#Handle Track String
-	trackstring = (Artist.objects.filter(name__iexact = artist_name).first()).topTracks
-	trackstring = trackstring.replace("[", "")
-	trackstring = trackstring.replace("]", "")
-	trackstring = trackstring.split('}, ')
-	track_name = []
-	track_pop = []
-	for track in trackstring: #Parse this stuff
-		track = track.replace("{", "")
-		track = track.replace("}", "")
-		name = track[track.find("'")+1:track.find("',")]
-		num = track.replace(name, "")
-		num = num.replace(",", "")
-		num = num.replace(" ", "")
-		num = num.replace("''", "")
-		track_pop.append(num)
-		track_name.append(name)
-
 	#Handle genre string
 	genrestring = (Artist.objects.filter(name__iexact = artist_name).first()).genres
 	genrestring = genrestring.replace("[", "")
@@ -146,8 +128,6 @@ def artist_name(request, artist_name):
 	genre_list = ", ".join(genre_list)
 
 	context = {
-		'track_name': track_name,
-		'track_pop': track_pop,
 		'genre' : genre_list,
 		'title': artist_name, 
 		'artist_name': artist_name,
