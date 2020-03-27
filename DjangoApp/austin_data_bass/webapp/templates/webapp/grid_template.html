@@ -34,7 +34,8 @@
         <div class="row mr-2 ml-2">
             {% for instance in artists %}
                 <div class="col-4  mb-4">
-                    <div class="card text-body">
+                    <a href="#">
+                    <div class="card text-body" href="#">
                         <div class="card-header font-weight-bold display text-center">
                             <!-- Insert the link to the instance here? -->
                             {{ instance.name }}
@@ -56,6 +57,7 @@
                             </li>
                         </ul>
                     </div> <!-- End of card -->
+                    </a>
                 </div> <!-- End of Col Div -->
             {% endfor %}
         </div> <!-- End of the row div -->

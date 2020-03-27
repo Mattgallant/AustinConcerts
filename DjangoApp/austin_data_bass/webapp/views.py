@@ -6,6 +6,8 @@ import json
 import re
 from .models import Venue
 
+>>>>>>> 2b47460203253ad742934b750e9d80faaaee6e6b
+
 
 instance_list = [ #List of dictionaries, this stuff gets passed into the grid_template and inserted into cards
 	{
@@ -79,7 +81,26 @@ def concerts(request):
     return render(request, 'webapp/concerts/grid.html', {'title': 'Concerts'})
 
 #Artist grid page
-def artists(request): 
+"""	artist_list = Artist.objects.all()
+	print(type(list(artist_list)))
+	for artist in artist_list:
+		genrestring = artist['genres']
+		genrestring = genrestring.replace("[", "")
+		genrestring = genrestring.replace("]", "")
+		genrestring = genrestring.split(",")
+		genre_list = []
+		skip = True
+		for genre in genrestring:
+			genre = genre.replace("'", "")
+			genre = genre.title()
+			if skip:
+				skip = False
+				continue
+			genre = genre[1:]
+			genre_list.append(genre)
+		genre_list = ", ".join(genre_list)
+		artist['genres'] = genre_list"""
+def artists(request):
 	context = {
 		'artists': Artist.objects.all(), #Is this a list?????
 		'model_name' : 'Artists',
@@ -115,7 +136,6 @@ def artist_name(request, artist_name):
 	genrestring = genrestring.replace("]", "")
 	genrestring = genrestring.split(",")
 	genre_list = []
-	print(genrestring)
 	skip = True
 	for genre in genrestring:
 		genre = genre.replace("'", "")

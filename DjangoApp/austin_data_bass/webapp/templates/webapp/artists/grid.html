@@ -34,13 +34,14 @@
         <div class="row mr-2 ml-2">
             {% for instance in artists %}
                 <div class="col-4  mb-4">
-                    <div class="card text-body">
+                    <a href="{{instance.name}}">
+                    <div class="card text-body" href="#">
                         <div class="card-header font-weight-bold display text-center">
                             <!-- Insert the link to the instance here? -->
                             {{ instance.name }}
                         </div>
                         <!-- Instance Image, still need to figure out how to handle this... -->
-                        <img class="card-img" src="{{ instance.imageLink }}" alt= {{ instance.imageLink }}>
+                        <img class="card-img" style="height: 400px;" src="{{ instance.imageLink }}" alt= {{ instance.imageLink }}>
                         <!-- At least 3 attributes -->
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex align-items-start">
@@ -56,6 +57,7 @@
                             </li>
                         </ul>
                     </div> <!-- End of card -->
+                </a>
                 </div> <!-- End of Col Div -->
             {% endfor %}
         </div> <!-- End of the row div -->
