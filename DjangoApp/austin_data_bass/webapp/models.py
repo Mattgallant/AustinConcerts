@@ -2,6 +2,7 @@ from django.db import models
 import requests
 import base64
 import six
+import json
 
 # Create your models here.
 
@@ -67,4 +68,64 @@ class Artist(models.Model):
                      popularity = artist['popularity'],
                      followers = artist['followers'],
                      topTracks = artist['topTracks'])
+
+
+
+class Venue(models.Model):
+    name = models.CharField(max_length=100)
+    yelpID =  models.CharField(max_length=25)
+    imageURL = models.CharField(max_length=100)
+    yelpURL = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15) 
+    reviewCount = models.IntegerField()
+    rating = models.DecimalField()
+    location = models.CharField(max_length=150) 
+    price = models.CharField(max_length=4)
+
+    def create(venueID):
+
+        api_key='a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
+        headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
+        payload = {}
+        #url = "https://api.yelp.com/v3/businesses/search?location=austin&term=concert venues&limit=50"
+        #response = requests.request("GET", url, headers=headers, data = payload)
+
+        #parsed = json.loads(response.text)
+        #businesses = parsed["businesses"]
+        #id_alias_dict = {}
+        #for business in businesses:
+            #id_alias_dict[business["id"]] = business["name"]
+        
+
+        url = "https://api.yelp.com/v3/businesses/" + venueID
+        r1 = requests.request("GET", url, headers=headers, data = {})
+        data1 = json.loads(r1.text)
+        
+        venue = {
+            "name": data1["name"],
+            "yelpID": data1["id"],
+            "imageURL": data1["image_url"],
+            "yelpURL": data1["url"],
+            "phone": data1["display_phone"],
+            "reviewCount": data1["review_count"],
+            "rating": data1["rating"],
+            "location": " ".join(data1["location"]["display_address"]),
+            if ("price" in data1):
+                "price": data1["price"]
+            else
+                "price": "$$"
+        }
+
+
+        return Venue(name = venue['name'],
+                    yelpID =  venue['yelpID'],
+                    imageURL = venue['imageURL'],
+                    yelpURL = venue['yelpURL'],
+                    phone = venue['phone'],
+                    reviewCount = venue['reviewCount'],
+                    rating = venue['rating'],
+                    location = venue['location'],
+                    price = venue['price'])
+
+    
         
