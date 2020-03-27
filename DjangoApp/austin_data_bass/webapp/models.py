@@ -10,12 +10,15 @@ import json
 class Artist(models.Model):
     name = models.CharField(max_length=25)
     spotifyID = models.CharField(max_length=50)
+    spotifyLink = models.CharField(max_length=200)
     imageLink = models.CharField(max_length=200)
-    bio = models.CharField(max_length=500)
+    bio = models.CharField(max_length=1000)
     genres = models.CharField(max_length=150) #will be a json list of genres
     popularity = models.IntegerField()
     followers = models.IntegerField()
-    topTracks = models.CharField(max_length=150) #will be a json list of tracks with their corresponding popularity
+    track1 = models.CharField(max_length=50) 
+    track2 = models.CharField(max_length=50) 
+    track3 = models.CharField(max_length=50) 
     
     def __str__(self):
         #This function just allows the model to be displayed in a more readable fashion
@@ -47,6 +50,7 @@ class Artist(models.Model):
             'name': data1['name'],
             'spotifyID': data1['uri'][15:],
             'imageLink': data1['images'][0]['url'],
+            'spotifyLink': data1['external_urls']['spotify'],
             'bio': '',
             'genres': data1['genres'],
             'popularity': data1['popularity'],
@@ -68,10 +72,13 @@ class Artist(models.Model):
         return Artist(name = artist['name'],
                      spotifyID = artist['spotifyID'],
                      imageLink = artist['imageLink'],
+                     spotifyLink = artist['spotifyLink'],
                      genres = artist['genres'],
                      popularity = artist['popularity'],
                      followers = artist['followers'],
-                     topTracks = artist['topTracks'])
+                     track1 = artist['topTracks'][0],
+                     track2 = artist['topTracks'][1],
+                     track3 = artist['topTracks'][2],)
 
 
 
