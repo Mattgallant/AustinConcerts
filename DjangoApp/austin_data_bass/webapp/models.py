@@ -9,12 +9,12 @@ import six
 class Artist(models.Model):
     name = models.CharField(max_length=25)
     spotifyID = models.CharField(max_length=30)
-    imageLink = models.CharField(max_length=50)
+    imageLink = models.CharField(max_length=55)
     bio = models.CharField(max_length=500)
-    genres = models.CharField(max_length=50) #will be a json list of genres
+    genres = models.CharField(max_length=150) #will be a json list of genres
     popularity = models.IntegerField()
     followers = models.IntegerField()
-    topTracks = models.CharField(max_length=50) #will be a json list of tracks with their corresponding popularity
+    topTracks = models.CharField(max_length=150) #will be a json list of tracks with their corresponding popularity
     
     def create(artistName):
         #get the token to use the spotify API

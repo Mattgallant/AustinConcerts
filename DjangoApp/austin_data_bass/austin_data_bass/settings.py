@@ -25,7 +25,7 @@ SECRET_KEY = 'v!_^w+2fms1a+qp^&!ood@uxzo%p_d8*tobr&029-^q!v7*qz_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'austindatabass.appspot.com',]
 
 
 # Application definition
@@ -74,23 +74,24 @@ WSGI_APPLICATION = 'austin_data_bass.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'djongo',
-#        'NAME': 'austindatabass-test',
-#        'HOST': 'mongodb+srv://adb-developer:kZcM77b62tF8iI3I@austindatabass-test-c2w7y.gcp.mongodb.net/test?retryWrites=true&w=majority',
-#        'USER': 'adb-developer',
-#        'PASSWORD': 'kZcM77b62tF8iI3I',
-        
-#    }
-#}
-
 DATABASES = {
+    'default': {
+      'ENGINE': 'django.db.backends.postgresql',
+      #'HOST': '/cloudsql/djangopractice-272319:us-central1:djangopractice-dbs',
+      'HOST': '34.68.27.7',
+      'PORT': '5432', # PostgreSQL port
+      'NAME': 'test',
+      'USER': 'dbuser', # either 'postgres' (default) or one you created on the PostgreSQL instance page
+      'PASSWORD': 'password2'
+    }
+}
+
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-}
+}'''
 
 
 # Password validation
