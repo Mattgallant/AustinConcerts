@@ -75,21 +75,26 @@ class Artist(models.Model):
 
 
 
-"""class Venue(models.Model):
-    name = models.CharField(max_length=100)
+class Venue(models.Model):
+    name = models.CharField(max_length=200)
     yelpID =  models.CharField(max_length=25)
-    imageURL = models.CharField(max_length=100)
-    yelpURL = models.CharField(max_length=100)
+    imageURL = models.CharField(max_length=300)
+    yelpURL = models.CharField(max_length=300)
     phone = models.CharField(max_length=15) 
     reviewCount = models.IntegerField()
-    rating = models.DecimalField()
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
     location = models.CharField(max_length=150) 
     price = models.CharField(max_length=4)
 
+    def __str__(self):
+        #This function just allows the model to be displayed in a more readable fashion
+        return(self.name)
+
+
     def create(venueID):
         api_key='a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
-        headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
-        payload = {}
+        headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'}
+        
         #url = "https://api.yelp.com/v3/businesses/search?location=austin&term=concert venues&limit=50"
         #response = requests.request("GET", url, headers=headers, data = payload)
 
@@ -103,7 +108,13 @@ class Artist(models.Model):
         url = "https://api.yelp.com/v3/businesses/" + venueID
         r1 = requests.request("GET", url, headers=headers, data = {})
         data1 = json.loads(r1.text)
-        
+        price = ""
+
+        if ("price" in data1):
+            price: data1["price"]
+        else:
+            price: "$$"
+
         venue = {
             "name": data1["name"],
             "yelpID": data1["id"],
@@ -113,10 +124,8 @@ class Artist(models.Model):
             "reviewCount": data1["review_count"],
             "rating": data1["rating"],
             "location": " ".join(data1["location"]["display_address"]),
-            if ("price" in data1):
-                "price": data1["price"]
-            else
-                "price": "$$"
+            "price": price
+            
         }
 
 
@@ -128,7 +137,7 @@ class Artist(models.Model):
                     reviewCount = venue['reviewCount'],
                     rating = venue['rating'],
                     location = venue['location'],
-                    price = venue['price'])"""
+                    price = venue['price'])
 
     
         
