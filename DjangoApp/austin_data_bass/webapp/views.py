@@ -116,7 +116,7 @@ def getGitStats():
 		'willCommits' : willCommits,
 		'michaelCommits' : michaelCommits,
 		'dylanCommits': dylanCommits,
-		'totalIssues' : data.get("number"),
+		'totalIssues' : data[0].get("number"),
 		'michaelIssues': michaelIssues,
 		'zanderIssues': zanderIssues,
 		'mattIssues': mattIssues,

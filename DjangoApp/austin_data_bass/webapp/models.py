@@ -71,7 +71,7 @@ class Artist(models.Model):
 
 
 
-class Venue(models.Model):
+"""class Venue(models.Model):
     name = models.CharField(max_length=100)
     yelpID =  models.CharField(max_length=25)
     imageURL = models.CharField(max_length=100)
@@ -125,7 +125,7 @@ class Venue(models.Model):
                     reviewCount = venue['reviewCount'],
                     rating = venue['rating'],
                     location = venue['location'],
-                    price = venue['price'])
+                    price = venue['price'])"""
 
     
         
