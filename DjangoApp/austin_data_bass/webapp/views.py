@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .gitstats import getGitStats
 from .models import Artist
+from .models import Venue
 
 
 instance_list = [ #List of dictionaries, this stuff gets passed into the grid_template and inserted into cards
