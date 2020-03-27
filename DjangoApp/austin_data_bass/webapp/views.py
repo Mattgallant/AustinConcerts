@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .gitstats import getGitStats
 from .models import Artist
+import json
+import re
 
 
 instance_list = [ #List of dictionaries, this stuff gets passed into the grid_template and inserted into cards
@@ -73,16 +75,69 @@ def about(request):
 	return render(request, 'webapp/about.html', context)
 
 def concerts(request):
-    return render(request, 'webapp/concerts/index.html', {'title': 'Concerts'})
+    return render(request, 'webapp/concerts/grid.html', {'title': 'Concerts'})
 
-def artists(request):
-  	return render(request, 'webapp/artists/index.html', {'title': 'Artists'})
+#Artist grid page
+def artists(request): 
+	context = {
+		'artists': Artist.objects.all(), #Is this a list?????
+		'model_name' : 'Artists',
+		'title': 'Artists'
+	}
+	return render(request, 'webapp/artists/grid.html', context)
 
+#Artist instance template
 def artist_name(request, artist_name):
-  	return render(request, 'webapp/artists/index.html', {'title': artist_name, 'artist_name': artist_name})
+#Query the database, filter by artist_name
+#Get relevant instance info, pass to template
+	#Handle Track String
+	trackstring = (Artist.objects.filter(name__iexact = artist_name).first()).topTracks
+	trackstring = trackstring.replace("[", "")
+	trackstring = trackstring.replace("]", "")
+	trackstring = trackstring.split('}, ')
+	track_name = []
+	track_pop = []
+	for track in trackstring: #Parse this stuff
+		track = track.replace("{", "")
+		track = track.replace("}", "")
+		name = track[track.find("'")+1:track.find("',")]
+		num = track.replace(name, "")
+		num = num.replace(",", "")
+		num = num.replace(" ", "")
+		num = num.replace("''", "")
+		track_pop.append(num)
+		track_name.append(name)
+
+	#Handle genre string
+	genrestring = (Artist.objects.filter(name__iexact = artist_name).first()).genres
+	genrestring = genrestring.replace("[", "")
+	genrestring = genrestring.replace("]", "")
+	genrestring = genrestring.split(",")
+	genre_list = []
+	print(genrestring)
+	skip = True
+	for genre in genrestring:
+		genre = genre.replace("'", "")
+		genre = genre.title()
+		if skip:
+			skip = False
+			continue
+		genre = genre[1:]
+		genre_list.append(genre)
+	genre_list = ", ".join(genre_list)
+
+	context = {
+		'track_name': track_name,
+		'track_pop': track_pop,
+		'genre' : genre_list,
+		'title': artist_name, 
+		'artist_name': artist_name,
+		'artist': Artist.objects.filter(name__iexact = artist_name).first(), #The __iexact makes querey ignore caps..!
+	}
+	return render(request, 'webapp/artists/artist-template.html', context)
 
 def venues(request):
-    return render(request, 'webapp/venues/index.html', {'title': 'Venues'})  
+    return render(request, 'webapp/venues/grid.html', {'title': 'Venues'})  
 
 def dev(request): #Model Grid Page
 	"""    context = {
@@ -93,7 +148,7 @@ def dev(request): #Model Grid Page
 		'artists': Artist.objects.all(), #Is this a list?????
 		'model_name' : 'Artists'
 	}
-	return render(request, 'webapp/grid_template.html', context)      
+	return render(request, 'webapp/artists/artist-template.html', context)      
 
 def venues_template(request):
     context = { #Below are the areas you can populate by sending in values

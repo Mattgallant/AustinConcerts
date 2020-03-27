@@ -9,8 +9,8 @@ import json
 
 class Artist(models.Model):
     name = models.CharField(max_length=25)
-    spotifyID = models.CharField(max_length=30)
-    imageLink = models.CharField(max_length=55)
+    spotifyID = models.CharField(max_length=50)
+    imageLink = models.CharField(max_length=200)
     bio = models.CharField(max_length=500)
     genres = models.CharField(max_length=150) #will be a json list of genres
     popularity = models.IntegerField()

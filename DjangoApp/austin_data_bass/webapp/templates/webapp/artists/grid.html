@@ -1,0 +1,76 @@
+{% extends "webapp/navbar.html" %}
+{% load static %}
+<!-- This page now imports the navbar from the template... -->
+{% block head %}
+{% endblock head %}
+
+<script> 
+    //THIS SCRIPT CURRENTLY DOES NOTHING!
+    function search() {
+        // var input, filter, div, element, a, i, txtValue;
+        // input = document.getElementById('searchBar');
+        // filter = input.value.toUpperCase();
+        // div = document.getElementById("list-tab");
+        // element = div.getElementsByTagName('a');
+
+        // // Loop through all list items, and hide those who don't match the search query
+        // for (i = 0; i < element.length; i++) {
+        //     txtValue = element[i].innerHTML; //Get text of the element
+        //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        //         element[i].style.display = ""; //Show
+        //     } else {
+        //         element[i].style.display = "none"; //Hide
+        //     }
+        // }
+        
+    }
+</script>
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="pt-5 pb-5 text-center font-weight-bold">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
+
+        <!-- Start of instance cards -->
+        <div class="row mr-2 ml-2">
+            {% for instance in artists %}
+                <div class="col-4  mb-4">
+                    <div class="card text-body">
+                        <div class="card-header font-weight-bold display text-center">
+                            <!-- Insert the link to the instance here? -->
+                            {{ instance.name }}
+                        </div>
+                        <!-- Instance Image, still need to figure out how to handle this... -->
+                        <img class="card-img" src="{{ instance.imageLink }}" alt= {{ instance.imageLink }}>
+                        <!-- At least 3 attributes -->
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-start">
+                                <span><b>Popularity:  </b> {{ instance.popularity }}</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <span><b>Genre:  </b> 
+                                        {{ instance.genres }},
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <span><b>Followers:</b> {{ instance.followers }}</span>
+                            </li>
+                        </ul>
+                    </div> <!-- End of card -->
+                </div> <!-- End of Col Div -->
+            {% endfor %}
+        </div> <!-- End of the row div -->
+        <!-- END OF THE GRID -->
+
+        <!-- Search, filter and pagination features go here -->
+        <div class="card-footer text-muted mx-5">
+            <input class="form-control mb-3"  type="text" id="searchBar" onkeyup="search()" placeholder="Search for Instance">
+            <ul class="pagination justify-content-center>
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </div>
+    </div> <!--End of fluid container -->
+{% endblock body %}
