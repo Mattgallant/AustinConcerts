@@ -16,9 +16,13 @@ class Artist(models.Model):
     genres = models.CharField(max_length=150) #will be a json list of genres
     popularity = models.IntegerField()
     followers = models.IntegerField()
-    track1 = models.CharField(max_length=50) 
+    track1 = models.CharField(max_length=50)
+    track1popularity = models.CharField(max_length=10)
     track2 = models.CharField(max_length=50) 
+    track2popularity = models.CharField(max_length=10)
     track3 = models.CharField(max_length=50) 
+    track3popularity = models.CharField(max_length=10)
+
     
     def __str__(self):
         #This function just allows the model to be displayed in a more readable fashion
@@ -65,7 +69,7 @@ class Artist(models.Model):
         topTracks = []
 
         for track in data2:
-            topTracks.append({track['name'], track['popularity']})
+            topTracks.append({'track':track['name'], 'popularity':track['popularity']})
 
         artist['topTracks'] = topTracks
         
@@ -76,9 +80,13 @@ class Artist(models.Model):
                      genres = artist['genres'],
                      popularity = artist['popularity'],
                      followers = artist['followers'],
-                     track1 = artist['topTracks'][0],
-                     track2 = artist['topTracks'][1],
-                     track3 = artist['topTracks'][2],)
+                     track1 = artist['topTracks'][0]['track'],
+                     track1popularity = artist['topTracks'][0]['popularity'],
+                     track2 = artist['topTracks'][1]['track'],
+                     track2popularity = artist['topTracks'][1]['popularity'],
+                     track3 = artist['topTracks'][2]['track'],
+                     track3popularity = artist['topTracks'][2]['popularity'],)
+
 
 
 

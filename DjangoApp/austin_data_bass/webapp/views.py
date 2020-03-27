@@ -6,8 +6,6 @@ import json
 import re
 from .models import Venue
 
->>>>>>> 2b47460203253ad742934b750e9d80faaaee6e6b
-
 
 instance_list = [ #List of dictionaries, this stuff gets passed into the grid_template and inserted into cards
 	{
