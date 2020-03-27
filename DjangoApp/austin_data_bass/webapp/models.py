@@ -76,15 +76,20 @@ class Artist(models.Model):
 
 
 class Venue(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     yelpID =  models.CharField(max_length=25)
-    imageURL = models.CharField(max_length=100)
-    yelpURL = models.CharField(max_length=100)
+    imageURL = models.CharField(max_length=300)
+    yelpURL = models.CharField(max_length=300)
     phone = models.CharField(max_length=15) 
     reviewCount = models.IntegerField()
     rating = models.DecimalField(max_digits=2, decimal_places=1)
     location = models.CharField(max_length=150) 
     price = models.CharField(max_length=4)
+
+    def __str__(self):
+        #This function just allows the model to be displayed in a more readable fashion
+        return(self.name)
+
 
     def create(venueID):
         api_key='a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
