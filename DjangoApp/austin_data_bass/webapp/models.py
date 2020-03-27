@@ -17,6 +17,10 @@ class Artist(models.Model):
     followers = models.IntegerField()
     topTracks = models.CharField(max_length=150) #will be a json list of tracks with their corresponding popularity
     
+    def __str__(self):
+        #This function just allows the model to be displayed in a more readable fashion
+        return(self.name)
+
     def create(artistName):
         #get the token to use the spotify API
         clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
@@ -63,7 +67,7 @@ class Artist(models.Model):
         
         return Artist(name = artist['name'],
                      spotifyID = artist['spotifyID'],
-                     imageLink = artist['bio'],
+                     imageLink = artist['imageLink'],
                      genres = artist['genres'],
                      popularity = artist['popularity'],
                      followers = artist['followers'],
@@ -83,7 +87,6 @@ class Artist(models.Model):
     price = models.CharField(max_length=4)
 
     def create(venueID):
-
         api_key='a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
         headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
         payload = {}

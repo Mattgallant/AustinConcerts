@@ -32,7 +32,7 @@
 
         <!-- Start of instance cards -->
         <div class="row mr-2 ml-2">
-            {% for instance in instances %}
+            {% for instance in artists %}
                 <div class="col-4  mb-4">
                     <div class="card text-body">
                         <div class="card-header font-weight-bold display text-center">
@@ -40,17 +40,19 @@
                             {{ instance.name }}
                         </div>
                         <!-- Instance Image, still need to figure out how to handle this... -->
-                        <img class="card-img" src="#" alt="Card image">
+                        <img class="card-img" src="{{ instance.imageLink }}" alt= {{ instance.imageLink }}>
                         <!-- At least 3 attributes -->
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex align-items-start">
-                                <span><b>Address:  </b> {{ instance.attri1 }}</span>
+                                <span><b>Popularity:  </b> {{ instance.popularity }}</span>
                             </li>
                             <li class="list-group-item d-flex align-items-center">
-                                <span><b>Size:  </b> {{ instance.attri2 }}</span>
+                                <span><b>Genre:  </b> 
+                                        {{ instance.genres }},
+                                </span>
                             </li>
                             <li class="list-group-item d-flex align-items-center">
-                                <span><b>Yelp Rating:</b> {{ instance.attri3 }}</span>
+                                <span><b>Followers:</b> {{ instance.followers }}</span>
                             </li>
                         </ul>
                     </div> <!-- End of card -->

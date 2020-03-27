@@ -7,6 +7,8 @@ urlpatterns = [
     path('concerts/', views.concerts, name='webapp-concerts'),
     path('venues/', views.venues, name='webapp-venues'),
     path('artists/', views.artists, name='webapp-artists'),
+    path('artists/<str:artist_name>/', views.artist_name, name='webapp-artists-instance'),
+
     path('dev/', views.dev, name='webapp-dev'),
     path('venues/template', views.venues_template, name='webapp-venues_template')
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import requests
-import json
+from .gitstats import getGitStats
+from .models import Artist
 
 
 instance_list = [ #List of dictionaries, this stuff gets passed into the grid_template and inserted into cards
@@ -66,69 +66,9 @@ instance_list = [ #List of dictionaries, this stuff gets passed into the grid_te
 # and display that view here. 
 def home(request):
    	return render(request, 'webapp/index.html')
-
-def getGitStats():
-	#Getting commit stats
-	response = requests.get("https://api.github.com/repos/mattgallant/AustinConcerts/stats/contributors")
-	data = response.json()
-
-	commits = zanderCommits = guyCommits = mattCommits = dylanCommits = willCommits = michaelCommits = 0;
-	for i in data:
-		if(i.get("author").get("login") == "zandertedjo"):
-			zanderCommits = i.get("total")
-		if(i.get("author").get("login") == "farmerguycf"):
-			guyCommits = i.get("total")
-		if(i.get("author").get("login") == "Mattgallant"):
-			mattCommits = i.get("total")
-		if(i.get("author").get("login") == "dylanwolford"):
-			dylanCommits = i.get("total")
-		if(i.get("author").get("login") == "michaelhilborn"):
-			michaelCommits = i.get("total")
-		if(i.get("author").get("login") == "willworthington"):
-			willCommits = i.get("total")
-		commits += i.get("total")
-
-
-	#Getting issues stats
-	response = requests.get("https://api.github.com/repos/mattgallant/AustinConcerts/issues")
-	data = response.json()
-
-	issues = zanderIssues = guyIssues = mattIssues = dylanIssues = willIssues = michaelIssues = 0;
-	for i in data:
-		if(i.get("user").get("login") == "zandertedjo"):
-		    zanderIssues += 1
-		if(i.get("user").get("login") == "farmerguycf"):
-		    guyIssues += 1
-		if(i.get("user").get("login") == "Mattgallant"):
-		    mattIssues += 1
-		if(i.get("user").get("login") == "dylanwolford"):
-		    dylanIssues += 1
-		if(i.get("user").get("login") == "michaelhilborn"):
-		    michaelIssues += 1
-		if(i.get("user").get("login") == "willworthington"):
-		    willIssues+= 1
-
-	ret_dict ={
-		'totalCommits' : commits,
-		'zanderCommits' : zanderCommits,
-		'mattCommits' : mattCommits,
-		'guyCommits' : guyCommits,
-		'willCommits' : willCommits,
-		'michaelCommits' : michaelCommits,
-		'dylanCommits': dylanCommits,
-		'totalIssues' : data[0].get("number"),
-		'michaelIssues': michaelIssues,
-		'zanderIssues': zanderIssues,
-		'mattIssues': mattIssues,
-		'guyIssues': guyIssues,
-		'willIssues': willIssues,
-		'dylanIssues': dylanIssues
-	}
-	#print(ret_dict)
-	return ret_dict
         
 def about(request):
-	context = getGitStats() #Need to pass this in
+	context = getGitStats() #Get git stats from the API
 	context['title'] = "About"
 	return render(request, 'webapp/about.html', context)
 
@@ -138,15 +78,22 @@ def concerts(request):
 def artists(request):
   	return render(request, 'webapp/artists/index.html', {'title': 'Artists'})
 
+def artist_name(request, artist_name):
+  	return render(request, 'webapp/artists/index.html', {'title': artist_name, 'artist_name': artist_name})
+
 def venues(request):
     return render(request, 'webapp/venues/index.html', {'title': 'Venues'})  
 
 def dev(request): #Model Grid Page
-    context = {
+	"""    context = {
 	    'instances' : instance_list,
 	   	'model_name' : 'Venues'
+	}"""
+	context = {
+		'artists': Artist.objects.all(), #Is this a list?????
+		'model_name' : 'Artists'
 	}
-    return render(request, 'webapp/grid_template.html', context)      
+	return render(request, 'webapp/grid_template.html', context)      
 
 def venues_template(request):
     context = { #Below are the areas you can populate by sending in values
