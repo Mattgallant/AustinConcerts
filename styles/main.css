@@ -71,6 +71,10 @@ body {
     clear:both;
     display: table;
 }
+
+.container:hover{
+    cursor: pointer;
+}
 /* Float images inside the container to the left. 
 Add a right margin, and style the image as a circle */
 
@@ -124,8 +128,8 @@ This will center both the text and the image inside the container */
     top:50%;
     float:left;
     border-radius:50%;
-    height: 300px;
-    width: 300px;
+    height: 80%;
+    width: 80%;
     vertical-align:center; 
 }
 .artist_name{
