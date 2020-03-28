@@ -149,6 +149,6 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'austindatabass-bucket') #
 
 STATICFILES_DIRS = [
   # TODO: configure the name and path to your development static directory
-    os.path.join(BASE_DIR, 'static'), # static directory (in the top level directory) for local testing
-    #os.path.join(BASE_DIR, 'webapp/static/'), # from this location
+    #os.path.join(BASE_DIR, 'static'), # static directory (in the top level directory) for local testing
+    os.path.join(BASE_DIR, 'webapp/static/'), # from this location
 ]
