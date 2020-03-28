@@ -131,12 +131,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 # /static/ if DEBUG else Google Cloud bucket url
 
-STATIC_URL = '/static/'
-#STATIC_URL = os.path.join(BASE_DIR, 'webapp/static/')
+STATIC_URL = '/static/' # T and F works locally
+#STATIC_URL = 'webapp/static/' #T no, F yes
+#STATIC_URL = '/webapp/static/' # T and F works locally
+#STATIC_URL = os.path.join(BASE_DIR, 'webapp/static/') #both no
+#STATIC_URL =  os.path.join(os.path.dirname(BASE_DIR), 'austindatabass-bucket/') #both no
 
 # this is the url that you sync static files to
 # server error
-#STATIC_URL: 'https://storage.googleapis.com/austindatabass-bucket/static' 
+#STATIC_URL: 'https://storage.googleapis.com/austindatabass-bucket/static/' #T cmd error, F server error
+#STATIC_URL: 'https://storage.googleapis.com/austindatabass-bucket/' #T cmd error, F server error
 
 
 # collectstatic directory (located OUTSIDE the base directory)
