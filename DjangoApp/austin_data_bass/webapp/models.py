@@ -114,7 +114,9 @@ class Venue(models.Model):
     phone = models.CharField(max_length=15) 
     reviewCount = models.IntegerField()
     rating = models.DecimalField(max_digits=2, decimal_places=1)
-    location = models.CharField(max_length=150) 
+    location = models.CharField(max_length=150)
+    latitude = models.DecimalField(max_digits=15, decimal_places=13) 
+    longitude = models.DecimalField(max_digits=15, decimal_places=13) 
     price = models.CharField(max_length=4)
 
     def __str__(self):
@@ -139,12 +141,11 @@ class Venue(models.Model):
         url = "https://api.yelp.com/v3/businesses/" + venueID
         r1 = requests.request("GET", url, headers=headers, data = {})
         data1 = json.loads(r1.text)
-        price = ""
+        priceholder = "$$"
 
         if ("price" in data1):
-            price: data1["price"]
-        else:
-            price: "$$"
+            priceholder = data1["price"]
+        
 
         venue = {
             "name": data1["name"],
@@ -155,7 +156,9 @@ class Venue(models.Model):
             "reviewCount": data1["review_count"],
             "rating": data1["rating"],
             "location": " ".join(data1["location"]["display_address"]),
-            "price": price
+            "latitude": data1["coordinates"]["latitude"],
+            "longitude": data1["coordinates"]["longitude"],
+            "price": priceholder
             
         }
 
@@ -167,7 +170,9 @@ class Venue(models.Model):
                     phone = venue['phone'],
                     reviewCount = venue['reviewCount'],
                     rating = venue['rating'],
-                    location = venue['location'],
+                    location = venue['location'], 
+                    latitude = venue['latitude'],
+                    longitude = venue['longitude'],
                     price = venue['price'])
 
     
