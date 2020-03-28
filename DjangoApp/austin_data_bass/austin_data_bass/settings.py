@@ -138,6 +138,7 @@ STATIC_URL = '/static/' # T and F works locally
 #STATIC_URL =  os.path.join(os.path.dirname(BASE_DIR), 'austindatabass-bucket/') #both no
 
 # this is the url that you sync static files to
+# link to bucket for static files
 # server error
 #STATIC_URL: 'https://storage.googleapis.com/austindatabass-bucket/static/' #T cmd error, F server error
 #STATIC_URL: 'https://storage.googleapis.com/austindatabass-bucket/' #T cmd error, F server error
@@ -152,3 +153,9 @@ STATICFILES_DIRS = [
     #os.path.join(BASE_DIR, 'static'), # static directory (in the top level directory) for local testing
     os.path.join(BASE_DIR, 'webapp/static/'), # from this location
 ]
+
+# to sync static files to bucket. go to static root level then:
+# gsutil rsync -r austindatabass-bucket gs://austindatabass-bucket/static
+
+# for bucket permission, after every sync
+# gsutil acl -r ch -u AllUsers:R gs://austindatabass-bucket/static
