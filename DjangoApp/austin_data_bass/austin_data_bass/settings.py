@@ -25,7 +25,7 @@ SECRET_KEY = 'v!_^w+2fms1a+qp^&!ood@uxzo%p_d8*tobr&029-^q!v7*qz_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'austindatabass.appspot.com',]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'austindatabass.appspot.com',]
 
 
 # Application definition
@@ -129,5 +129,22 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+# /static/ if DEBUG else Google Cloud bucket url
 
 STATIC_URL = '/static/'
+#STATIC_URL = os.path.join(BASE_DIR, 'webapp/static/')
+
+# this is the url that you sync static files to
+# server error
+#STATIC_URL: 'https://storage.googleapis.com/austindatabass-bucket/static' 
+
+
+# collectstatic directory (located OUTSIDE the base directory)
+# TODO: configure the name and path to your static bucket directory (where collectstatic will copy to)
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'austindatabass-bucket') # destination location
+
+STATICFILES_DIRS = [
+  # TODO: configure the name and path to your development static directory
+    os.path.join(BASE_DIR, 'static'), # static directory (in the top level directory) for local testing
+    #os.path.join(BASE_DIR, 'webapp/static/'), # from this location
+]
