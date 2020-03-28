@@ -1,68 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.core.paginator import Paginator
 from .gitstats import getGitStats
 from .models import Artist
 import json
 import re
 from .models import Venue
-
-
-instance_list = [ #List of dictionaries, this stuff gets passed into the grid_template and inserted into cards
-	{
-		'name': 'The Venue',
-		'attri1': '123 abc Rd.',
-		'attri2': '1000',
-		'attri3': '4.0/5.0'
-	},
-	{
-		'name': 'Mutt',
-		'attri1': 'Blog Post 2',
-		'attri2': 'First post BUT NOT REALLY',
-		'attri3': 'Jan 7th 2020'
-	},
-	{
-		'name': 'The Venue',
-		'attri1': '123 abc Rd.',
-		'attri2': '1000',
-		'attri3': '4.0/5.0'
-	},
-	{
-		'name': 'The Venue',
-		'attri1': '123 abc Rd.',
-		'attri2': '1000',
-		'attri3': '4.0/5.0'
-	},
-	{
-		'name': 'The Venue',
-		'attri1': '123 abc Rd.',
-		'attri2': '1000',
-		'attri3': '4.0/5.0'
-	},
-	{
-		'name': 'The Venue',
-		'attri1': '123 abc Rd.',
-		'attri2': '1000',
-		'attri3': '4.0/5.0'
-	},
-	{
-		'name': 'The Venue',
-		'attri1': '123 abc Rd.',
-		'attri2': '1000',
-		'attri3': '4.0/5.0'
-	},
-	{
-		'name': 'The Venue',
-		'attri1': '123 abc Rd.',
-		'attri2': '1000',
-		'attri3': '4.0/5.0'
-	},
-	{
-		'name': 'The Venue',
-		'attri1': '123 abc Rd.',
-		'attri2': '1000',
-		'attri3': '4.0/5.0'
-	},
-]
 
 # Create your views here. These are called from urls.py.
 # A URL will essentially request a certain "view". Process
@@ -79,30 +21,18 @@ def concerts(request):
     return render(request, 'webapp/concerts/grid.html', {'title': 'Concerts'})
 
 #Artist grid page
-"""	artist_list = Artist.objects.all()
-	print(type(list(artist_list)))
-	for artist in artist_list:
-		genrestring = artist['genres']
-		genrestring = genrestring.replace("[", "")
-		genrestring = genrestring.replace("]", "")
-		genrestring = genrestring.split(",")
-		genre_list = []
-		skip = True
-		for genre in genrestring:
-			genre = genre.replace("'", "")
-			genre = genre.title()
-			if skip:
-				skip = False
-				continue
-			genre = genre[1:]
-			genre_list.append(genre)
-		genre_list = ", ".join(genre_list)
-		artist['genres'] = genre_list"""
 def artists(request):
+	artist_list = Artist.objects.all()
+
+	#Pagination
+	paginator = Paginator(artist_list, 9) #9 Artists per page
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+
 	context = {
-		'artists': Artist.objects.all(), #Is this a list?????
+		'artists': page_obj, #Passing in the artists on seperate pages
 		'model_name' : 'Artists',
-		'title': 'Artists'
+		'title': 'Artists',
 	}
 	return render(request, 'webapp/artists/grid.html', context)
 
@@ -117,6 +47,7 @@ def artist_name(request, artist_name):
 	genrestring = genrestring.split(",")
 	genre_list = []
 	skip = True
+	#Parse the genre list into a more readable format
 	for genre in genrestring:
 		genre = genre.replace("'", "")
 		genre = genre.title()
@@ -135,9 +66,17 @@ def artist_name(request, artist_name):
 	}
 	return render(request, 'webapp/artists/artist-template.html', context)
 
+#Venues grid page
 def venues(request):
+	venue_list = Venue.objects.all()
+
+	#Pagination
+	paginator = Paginator(venue_list, 9) #9 Artists per page
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+
 	context ={
-		'venues': Venue.objects.all(),
+		'venues': page_obj,
 		'model_name': 'Venues',
 		'title': 'Venues',
 	}
@@ -151,24 +90,11 @@ def venue_name(request, venue_name):
 	}
 	return render(request, 'webapp/venues/instance_template.html', context) 
 
+#Development view... just for messing around
 def dev(request): #Model Grid Page
-	"""    context = {
-	    'instances' : instance_list,
-	   	'model_name' : 'Venues'
-	}"""
 	context = {
 		'artists': Artist.objects.all(), #Is this a list?????
 		'model_name' : 'Artists'
 	}
 	return render(request, 'webapp/artists/artist-template.html', context)      
 
-def venues_template(request):
-    context = { #Below are the areas you can populate by sending in values
-        'title' : 'Venue Name',
-        'address' : '123 Big Road',
-        'phone' : '512-999-8888',
-        'website' : 'www.google.com',
-        'review' : '4.0',
-        'review_count' : '50'
-	}
-    return render(request, 'webapp/venues/instances/instance_template.html', context)  

@@ -76,13 +76,28 @@
         <!-- Search, filter and pagination features go here -->
         <div class="card-footer text-muted mx-5">
             <input class="form-control mb-3"  type="text" id="searchBar" onkeyup="search()" placeholder="Search for Instance">
-            <ul class="pagination justify-content-center>
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
+        <!--<ul class="pagination justify-content-center>
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul> -->
+            <div class="pagination justify-content-center">
+                {% if venues.has_previous %}
+                    <a class="page-link" href="?page=1">&laquo; first</a>
+                    <a class="page-link" href="?page={{ venues.previous_page_number }}">previous</a>
+                {% endif %}
+
+                {% if venues.has_next %}
+                    <a class="page-link" href="?page={{ venues.next_page_number }}">next</a>
+                    <a class="page-link" href="?page={{ venues.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+                <br>
+                <p class="current ml-5">
+                       Page {{ venues.number }} of {{ venues.paginator.num_pages }}.
+                </p>
+            </div>
         </div>
     </div> <!--End of fluid container -->
 {% endblock body %}
