@@ -3,6 +3,9 @@ import requests
 import base64
 import six
 import json
+import wikipedia
+
+maxbio_length = 997
 
 # Create your models here.
 
@@ -73,10 +76,23 @@ class Artist(models.Model):
 
         artist['topTracks'] = topTracks
         
+        #now get the artist's wikipedia bio
+        bio = wikipedia.summary(artistName + " musician")
+        bio_array = bio.splitlines()
+        bio_short = bio_array[0][0:maxbio_length] 
+
+        # chop bios that are too long
+        if(len(bio_short) >= maxbio_length):
+            bio_short = bio_short + '...'
+            
+        artist['bio'] = bio_short
+
+        
         return Artist(name = artist['name'],
                      spotifyID = artist['spotifyID'],
                      imageLink = artist['imageLink'],
                      spotifyLink = artist['spotifyLink'],
+                     bio = artist['bio'],
                      genres = artist['genres'],
                      popularity = artist['popularity'],
                      followers = artist['followers'],
