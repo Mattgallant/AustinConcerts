@@ -218,10 +218,11 @@ class Concerts(models.Model):
 
 
         key = 'fYlpdrJQZavt4FGw'
-        locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
+        #locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
 
-        location = locationResponse.json()
-        cityID = str(location['resultsPage']['results']['location'][0]['metroArea']['id'])
+        #locationlist = locationResponse.json()['resultsPage'][]
+        #cityID = str(location['resultsPage']['results']['location'][0]['metroArea']['id'])
+        cityID = "9179"
         PARAMS = {'min_date': '2020-03-28','max_date': '2020-04-03'}
         eventsResponseDate = requests.get('https://api.songkick.com/api/3.0/metro_areas/'+ cityID+'/calendar.json?apikey='+key, PARAMS)
 
@@ -261,7 +262,9 @@ class Concerts(models.Model):
                 VenueWebsite = eachEvent['venue']['uri']
                 if VenueWebsite is None:
                     VenueWebsite = 'N/A'
-                StartingTime = '21:00:00'
+                StartingTime = eachEvent['start']['time']
+                if StartingTime is None:
+                    StartingTime = '21:00:00'
                 Date = eachEvent['start']['date']
                 headLiner = artist[0]
                 if "," in headLiner:
