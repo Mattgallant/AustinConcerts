@@ -31,7 +31,7 @@
           var locate = {lat: {{venue.latitude}}, lng: {{venue.longitude}}};
           // The map, centered at Uluru
           var map = new google.maps.Map(
-              document.getElementById('map'), {zoom: 4, center: locate});
+              document.getElementById('map'), {zoom: 15, center: locate});
           // The marker, positioned at Uluru
           var marker = new google.maps.Marker({position: locate, map: map});
         }
