@@ -1,0 +1,32 @@
+{% extends "webapp/navbar.html" %}
+{% load static %}
+<!-- This page now imports the navbar from the template... -->
+{% block head %}
+{% endblock head %}
+
+<!--    city = models.CharField(max_length = 200)
+    concertName = models.CharField(max_length=200)
+    artists = ArrayField(models.CharField(max_length=200), blank = True,size = 80)
+    venue = models.CharField(max_length = 200)
+    venueWebsite = models.CharField(max_length = 200)
+    startingTime = models.CharField(max_length = 200)
+    date = models.CharField(max_length = 200)
+    headliner = models.CharField(max_length = 200,default = 'N/A') -->
+
+{% block body %}
+    <div class = "concert_div">
+	   <div class = "event_div">
+            <img src ="#" alt="NEED TO ADD IMAGE HERE">
+        </div>
+        <div class = "event_div">
+            <h3 class = "artist_name"> {{concert.concertName}} </h3> 
+            <hr>
+            <p><span><u><b>Event headliner:</u><br>  {{concert.headliner}}</b></p>     
+            <p><span><u><b>Event date:</u><br>  {{concert.date}}</b></p>
+            <p><span><u><b>Event time:</u><br> {{concert.startingTime}}</b></p>  
+	        <p><u><b>Venue:</u><br>  {{concert.venue}} </b></p>
+            <p><span><u><b>Ticket price range:</u><br> Unknown</b></p>
+            <p> <a href= "{{concert.venueWebsite}}"><u><b>Venue Website</b></u></a></p>
+       </div>
+    </div>
+{% endblock body %}
