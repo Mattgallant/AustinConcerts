@@ -5,6 +5,7 @@ from .models import Artist
 import json
 import re
 from .models import Venue
+from .models import Concerts
 
 # Create your views here. These are called from urls.py.
 # A URL will essentially request a certain "view". Process
@@ -18,8 +19,26 @@ def about(request):
 	return render(request, 'webapp/about.html', context)
 
 def concerts(request):
-    return render(request, 'webapp/concerts/grid.html', {'title': 'Concerts'})
+	concert_list = Concerts.objects.all()
+	#Pagination
+	paginator = Paginator(concert_list, 9) #9 Artists per page
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
 
+	context = {
+		'concerts': page_obj, #Passing in the concerts on seperate pages
+		'model_name' : 'Concerts',
+		'title': 'Concerts',
+	}
+	return render(request, 'webapp/concerts/grid.html', context)
+
+#Concert instance template handler
+def concert_name(request, concert_name):
+	context = {
+		'title': concert_name,
+		'venue': Venue.objects.filter(name__iexact = concert_name).first(),
+	}
+	return render(request, 'webapp/concerts/concert_template.html', context) 
 #Artist grid page
 def artists(request):
 	artist_list = Artist.objects.all()
