@@ -10,18 +10,25 @@ from .models import Concerts
 # Create your views here. These are called from urls.py.
 # A URL will essentially request a certain "view". Process
 # and display that view here. 
+
+#Home page
 def home(request):
    	return render(request, 'webapp/index.html')
         
+#About page        
 def about(request):
 	context = getGitStats() #Get git stats from the API
 	context['title'] = "About"
 	return render(request, 'webapp/about.html', context)
 
+
+#MODEL PAGES ------------------------------------------------
+
+#Concert grid page
 def concerts(request):
 	concert_list = Concerts.objects.all()
 	#Pagination
-	paginator = Paginator(concert_list, 9) #9 Artists per page
+	paginator = Paginator(concert_list, 9) #9 Concerts per page
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
 
@@ -32,13 +39,14 @@ def concerts(request):
 	}
 	return render(request, 'webapp/concerts/grid.html', context)
 
-#Concert instance template handler
+#Concert instance pages
 def concert_name(request, concert_name):
 	context = {
 		'title': concert_name,
-		'venue': Venue.objects.filter(name__iexact = concert_name).first(),
+		'concert': Concerts.objects.filter(concertName__iexact = concert_name).first(),
 	}
-	return render(request, 'webapp/concerts/concert_template.html', context) 
+	return render(request, 'webapp/concerts/concert-template.html', context) 
+
 #Artist grid page
 def artists(request):
 	artist_list = Artist.objects.all()
@@ -108,6 +116,8 @@ def venue_name(request, venue_name):
 		'venue': Venue.objects.filter(name__iexact = venue_name).first(),
 	}
 	return render(request, 'webapp/venues/instance_template.html', context) 
+
+
 
 #Development view... just for messing around
 def dev(request): #Model Grid Page

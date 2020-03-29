@@ -26,6 +26,16 @@
     }
 </script>
 
+
+<!--   city = models.CharField(max_length = 200)
+    concertName = models.CharField(max_length=200)
+    artists = ArrayField(models.CharField(max_length=200), blank = True,size = 80)
+    venue = models.CharField(max_length = 200)
+    venueWebsite = models.CharField(max_length = 200)
+    startingTime = models.CharField(max_length = 200)
+    date = models.CharField(max_length = 200)
+    headliner = models.CharField(max_length = 200,default = 'N/A') -->
+
 {% block body %}
     <div class="container-fluid">
         <h1 class="pt-5 pb-5 text-center font-weight-bold">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
@@ -34,6 +44,7 @@
         <div class="row mr-2 ml-2">
             {% for instance in concerts %}
                 <div class="col-4  mb-4">
+                    <a href="{{instance.concertName}}">
                     <div class="card text-body">
                         <div class="card-header font-weight-bold display text-center">
                             <!-- Insert the link to the instance here? -->
@@ -56,6 +67,7 @@
                             </li>
                         </ul>
                     </div> <!-- End of card -->
+                    </a>
                 </div> <!-- End of Col Div -->
             {% endfor %}
         </div> <!-- End of the row div -->

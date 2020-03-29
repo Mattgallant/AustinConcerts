@@ -1,0 +1,45 @@
+{% extends "webapp/navbar.html" %}
+{% load static %}
+<!-- This page now imports the navbar from the template... -->
+{% block head %}
+{% endblock head %}
+
+<!--    city = models.CharField(max_length = 200)
+    concertName = models.CharField(max_length=200)
+    artists = ArrayField(models.CharField(max_length=200), blank = True,size = 80)
+    venue = models.CharField(max_length = 200)
+    venueWebsite = models.CharField(max_length = 200)
+    startingTime = models.CharField(max_length = 200)
+    date = models.CharField(max_length = 200)
+    headliner = models.CharField(max_length = 200,default = 'N/A') -->
+
+{% block body %}
+    <div class = "concert_div">
+	   <div class = "event_div">
+            <img src ="#" alt="NEED TO ADD IMAGE HERE">
+        </div>
+        <div class = "event_div">
+            <h3 class = "artist_name"> {{concert.concertName}} </h3> 
+            <ul type="1" class="list group list-group-flush">
+                <li class="list-group-item d-flex align-items-left">
+                    <p><b>Event headliner:</b><br>  {{concert.headliner}}</p>
+                </li>
+                <li class="list-group-item d-flex align-items-left">
+                    <p><b>Event date:</b><br>  {{concert.date}}</p>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <p><b>Event time:</b><br> {{concert.startingTime}}</p> 
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <p><b>Venue:</b><br>  {{concert.venue}}</p>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <p><b>Ticket price range:</b><br> Unknown</p>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <p> <a href= "{{concert.venueWebsite}}">Venue Website</a></p>
+                </li>
+            </ul>   
+       </div>
+    </div>
+{% endblock body %}
