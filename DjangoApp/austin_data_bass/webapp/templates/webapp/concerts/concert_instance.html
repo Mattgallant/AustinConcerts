@@ -1,0 +1,96 @@
+{% extends "webapp/navbar.html" %}
+{% load static %}
+<!-- This page now imports the navbar from the template... -->
+{% block head %}
+  <head>
+    <style>
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 350px;  /* The height is 400 pixels */
+        width: 350px;  /* The width is the width of the web page */
+       }
+    </style>
+  </head>
+{% endblock head %}
+<!--
+	city = models.CharField(max_length = 200)
+         concertName = models.CharField(max_length=200)
+         artists = ArrayField(models.CharField(max_length=200), blank = True,siz    e = 80)
+         venue = models.CharField(max_length = 200)
+         venueWebsite = models.CharField(max_length = 200)
+         startingTime = models.CharField(max_length = 200)
+         date = models.CharField(max_length = 200)
+         headliner = models.CharField(max_length = 200,default = 'N/A') -->
+
+{% block body %}
+    <script>
+        // Initialize and add the map
+        function initMap() {
+          // The location of Uluru
+          var uluru = {lat: -25.344, lng: 131.036};
+          // The map, centered at Uluru
+          var map = new google.maps.Map(
+              document.getElementById('map'), {zoom: 4, center: uluru});
+          // The marker, positioned at Uluru
+          var marker = new google.maps.Marker({position: uluru, map: map});
+        }
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_t5jZCMhg6bF7PCxZORq4cyJIVPW_-fw&callback=initMap">
+    </script>
+
+
+
+    <div class="container-fluid text-body">
+        <br><br>
+        <div class="card border-warning border-size-5 text-body text-center ml-lg-5 mr-lg-5 mb-5">
+            <div class="card-body">
+                <h1> {{ venue.name }}</h1>
+                <img class="w-75"src="{{venue.imageURL}}" style="margin-left: auto; margin-right: auto; display: block; height: 500px">
+                <hr>
+                <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Location and Contact</h4>
+                <div class ="row text-center">
+                    <div class="col-xs-4 col-sm-12 col-md-4 ">
+                        <!-- TODO: Update this with a img link variable -->
+                        <div id="map"></div>
+                    </div>
+                    <div class="col-xs-8 col-sm-12 col-md-8 ">
+                        <ul type="1" class="list group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span> {{ venue.location}} </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span> Price {{venue.price}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span> {{venue.phone}}</span>
+                            </li>
+                        </ul>
+                        <br>
+                        <p>{{venue.rating}}/5.0 Stars with {{venue.reviewCount}} Reviews </p>
+                        <!-- TODO: Insert a link to the yelp page here -->
+                        <a style="font-size: 1.8em; color: red" href="{{venue.yelpURL}}" target="_blank"><i class="fab fa-yelp"></i></a>
+                    </div>
+                </div> <!-- End of Row -->
+                <hr>
+                <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Upcoming Concerts</h4>
+                <div class="w-m-75 w-l-50 w-xs-75">
+                    <ul type="1" class="list group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span> <a href="../../concerts/index.html"> POPULATE FROM CONCERT MODEL DATA </a> </span>
+                            <span><a href="../../artists/index.html">PLACEHOLDER</a></span>
+                        </li>
+                    </ul>
+                </div> <!-- End Calendar -->
+                <hr>
+                <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Other Information</h4>
+                <p> Absolutely none as of now </p>
+            </div> <!--End of card body-->
+        </div> <!--End of card-->
+    </div> <!-- End of fluid container -->
+{% endblock body %}

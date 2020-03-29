@@ -10,7 +10,7 @@ urlpatterns = [
 
     path('artists/', views.artists, name='webapp-artists'),
     path('artists/<str:artist_name>/', views.artist_name, name='webapp-artists-instance'),
-
+#    path('concerts/<str:concert_name>/', views.concert_name, name='webapp-concerts-instance'),
     #Development url... just for messing around
     path('dev/', views.dev, name='webapp-dev'),
 ]

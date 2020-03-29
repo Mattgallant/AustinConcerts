@@ -195,6 +195,7 @@ class Concerts(models.Model):
 	venueWebsite = models.CharField(max_length = 200)
 	startingTime = models.CharField(max_length = 200)
 	date = models.CharField(max_length = 200)
+	headliner = models.CharField(max_length = 200,default = 'N/A')
 	
 	def __str__(self):
 		return self.concertName
@@ -215,6 +216,9 @@ class Concerts(models.Model):
 		concerts =[]
 		for eachEvent in eventsWeek:
 			concertTitle = eachEvent['displayName']
+			if "(" in concertTitle:
+				index = concertTitle.index('(')
+				concertTitle = concertTitle[:index-1]
 			artist = []
 			performances = eachEvent['performance']
 			for performance in performances:
@@ -226,8 +230,12 @@ class Concerts(models.Model):
 				VenueWebsite = 'N/A'
 			StartingTime = '21:00:00'
 			Date = eachEvent['start']['date']
+			headLiner = artist[0]
+			if "," in headLiner:
+				index = headLiner.index(',')
+				headliner = headliner[:index]
 			
-			specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date)
+			specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner)
 			concerts.append(specificConcert)
 		
 
