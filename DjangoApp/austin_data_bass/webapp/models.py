@@ -143,9 +143,13 @@ class Venue(models.Model):
         r1 = requests.request("GET", url, headers=headers, data = {})
         data1 = json.loads(r1.text)
         priceholder = "$$"
+        phonenumber = "N/A"
 
         if ("price" in data1):
             priceholder = data1["price"]
+
+        if ("display_phone" in data1):
+            phonenumber = data1["display_phone"]
         
 
         venue = {
@@ -153,7 +157,7 @@ class Venue(models.Model):
             "yelpID": data1["id"],
             "imageURL": data1["image_url"],
             "yelpURL": data1["url"],
-            "phone": data1["display_phone"],
+            "phone": phonenumber,
             "reviewCount": data1["review_count"],
             "rating": data1["rating"],
             "location": " ".join(data1["location"]["display_address"]),
