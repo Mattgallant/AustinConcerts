@@ -187,11 +187,18 @@ class Concerts(models.Model):
 	startingTime = models.CharField(max_length = 200)
 	date = models.CharField(max_length = 200)
 	headliner = models.CharField(max_length = 200,default = 'N/A')
-	
+	imageURL = models.CharField(max_length = 200,default = 'N/A')	
+
 	def __str__(self):
 		return self.concertName
 	def create():
-		
+		clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
+		secret = '492d077d949c4f21a79eedff5d70852d'
+		auth = base64.b64encode(six.text_type(clientId + ':' + secret).encode("ascii"))
+		payload = {"grant_type": "client_credentials"}
+		resp = requests.post("https://accounts.spotify.com/api/token",data=payload,headers={'Authorization': "Basic %s" % auth.decode("ascii")},verify=True)
+		token = resp.json()['access_token']		
+
 		key = 'fYlpdrJQZavt4FGw'
 		locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
 
@@ -214,6 +221,11 @@ class Concerts(models.Model):
 			performances = eachEvent['performance']
 			for performance in performances:
 				artist.append(performance['displayName'])
+			artistName = artist[0]
+			URL1 = "https://api.spotify.com/v1/search?q=" + artistName.lower().replace(" ", "%20") + "&type=artist"
+			r1 = requests.get(url = URL1, headers={'Authorization': 'Bearer ' + token})
+			data1 = r1.json()['artists']['items'][0]
+			imageLink= data1['images'][0]['url']
 			City = eachEvent['location']['city']
 			Venue = eachEvent['venue']['displayName']
 			VenueWebsite = eachEvent['venue']['uri']
@@ -226,7 +238,7 @@ class Concerts(models.Model):
 				index = headLiner.index(',')
 				headliner = headliner[:index]
 			
-			specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner)
+			specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner, imageURL = imageLink)
 			concerts.append(specificConcert)
 		
 
