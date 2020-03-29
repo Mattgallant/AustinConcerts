@@ -192,67 +192,79 @@ class Venue(models.Model):
     
         
 class Concerts(models.Model):
-	city = models.CharField(max_length = 200)
-	concertName = models.CharField(max_length=200)
-	artists = ArrayField(models.CharField(max_length=200), blank = True,size = 80)
-	venue = models.CharField(max_length = 200)
-	venueWebsite = models.CharField(max_length = 200)
-	startingTime = models.CharField(max_length = 200)
-	date = models.CharField(max_length = 200)
-	headliner = models.CharField(max_length = 200,default = 'N/A')
-	imageURL = models.CharField(max_length = 200,default = 'N/A')	
+    city = models.CharField(max_length = 200)
+    concertName = models.CharField(max_length=200)
+    artists = ArrayField(models.CharField(max_length=200), blank = True,size = 80)
+    venue = models.CharField(max_length = 200)
+    venueWebsite = models.CharField(max_length = 200)
+    startingTime = models.CharField(max_length = 200)
+    date = models.CharField(max_length = 200)
+    headliner = models.CharField(max_length = 200,default = 'N/A')
+    imageURL = models.CharField(max_length = 200,default = 'N/A')	
 
-	def __str__(self):
-		return self.concertName
-	def create():
-		clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
-		secret = '492d077d949c4f21a79eedff5d70852d'
-		auth = base64.b64encode(six.text_type(clientId + ':' + secret).encode("ascii"))
-		payload = {"grant_type": "client_credentials"}
-		resp = requests.post("https://accounts.spotify.com/api/token",data=payload,headers={'Authorization': "Basic %s" % auth.decode("ascii")},verify=True)
-		token = resp.json()['access_token']		
+    def __str__(self):
+        return self.concertName
+    def create():
+        #spotify API info to get artist image
+        clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
+        secret = '492d077d949c4f21a79eedff5d70852d'
+        auth = base64.b64encode(six.text_type(clientId + ':' + secret).encode("ascii"))
+        payload = {"grant_type": "client_credentials"}
 
-		key = 'fYlpdrJQZavt4FGw'
-		locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
 
-		location = locationResponse.json()
-		cityID = str(location['resultsPage']['results']['location'][0]['metroArea']['id'])
-		PARAMS = {'min_date': '2020-03-28','max_date': '2020-04-03'}
-		eventsResponseDate = requests.get('https://api.songkick.com/api/3.0/metro_areas/'+ cityID+'/calendar.json?apikey='+key, PARAMS)
+        key = 'fYlpdrJQZavt4FGw'
+        locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
 
-		eventsForWeek = eventsResponseDate.json()
+        location = locationResponse.json()
+        cityID = str(location['resultsPage']['results']['location'][0]['metroArea']['id'])
+        PARAMS = {'min_date': '2020-03-28','max_date': '2020-04-03'}
+        eventsResponseDate = requests.get('https://api.songkick.com/api/3.0/metro_areas/'+ cityID+'/calendar.json?apikey='+key, PARAMS)
 
-		eventsWeek = eventsForWeek['resultsPage']['results']['event']
+        eventsForWeek = eventsResponseDate.json()
 
-		concerts =[]
-		for eachEvent in eventsWeek:
-			concertTitle = eachEvent['displayName']
-			if "(" in concertTitle:
-				index = concertTitle.index('(')
-				concertTitle = concertTitle[:index-1]
-			artist = []
-			performances = eachEvent['performance']
-			for performance in performances:
-				artist.append(performance['displayName'])
-			artistName = artist[0]
-			URL1 = "https://api.spotify.com/v1/search?q=" + artistName.lower().replace(" ", "%20") + "&type=artist"
-			r1 = requests.get(url = URL1, headers={'Authorization': 'Bearer ' + token})
-			data1 = r1.json()['artists']['items'][0]
-			imageLink= data1['images'][0]['url']
-			City = eachEvent['location']['city']
-			Venue = eachEvent['venue']['displayName']
-			VenueWebsite = eachEvent['venue']['uri']
-			if VenueWebsite is None:
-				VenueWebsite = 'N/A'
-			StartingTime = '21:00:00'
-			Date = eachEvent['start']['date']
-			headLiner = artist[0]
-			if "," in headLiner:
-				index = headLiner.index(',')
-				headliner = headliner[:index]
-			
-			specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner, imageURL = imageLink)
-			concerts.append(specificConcert)
-		
+        eventsWeek = eventsForWeek['resultsPage']['results']['event']
 
-		return concerts
+        concerts =[]
+        for eachEvent in eventsWeek:
+            concertTitle = eachEvent['displayName']
+            if "(" in concertTitle:
+                index = concertTitle.index('(')
+                concertTitle = concertTitle[:index-1]
+            artist = []
+            performances = eachEvent['performance']
+            for performance in performances:
+                artist.append(performance['displayName'])
+            artistName = artist[0]
+
+            #spotify request to get token
+            resp = requests.post("https://accounts.spotify.com/api/token",data=payload,headers={'Authorization': "Basic %s" % auth.decode("ascii")},verify=True) 
+            token = resp.json()['access_token']	
+
+            #spotify request to get artist's image
+            URL1 = "https://api.spotify.com/v1/search?q=" + artistName.lower().replace(" ", "%20") + "&type=artist"
+            r1 = requests.get(url = URL1, headers={'Authorization': 'Bearer ' + token})
+            try:
+                data1 = r1.json()['artists']['items'][0]
+            except:
+                data1 = None
+
+            if data1 is not None:
+                imageLink= data1['images'][0]['url']
+
+                City = eachEvent['location']['city']
+                Venue = eachEvent['venue']['displayName']
+                VenueWebsite = eachEvent['venue']['uri']
+                if VenueWebsite is None:
+                    VenueWebsite = 'N/A'
+                StartingTime = '21:00:00'
+                Date = eachEvent['start']['date']
+                headLiner = artist[0]
+                if "," in headLiner:
+                    index = headLiner.index(',')
+                    headliner = headliner[:index]
+
+                specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner, imageURL = imageLink)
+                concerts.append(specificConcert)
+
+
+        return concerts
