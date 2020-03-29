@@ -51,7 +51,7 @@
         <br><br>
         <div class="card border-warning border-size-5 text-body text-center ml-lg-5 mr-lg-5 mb-5">
             <div class="card-body">
-                <h1> {{ venue.name }}</h1>
+                <h1 style="font-weight: bold"> {{ venue.name }}</h1>
                 <img class="w-75"src="{{venue.imageURL}}" style="margin-left: auto; margin-right: auto; display: block; height: 500px">
                 <hr>
                 <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Location and Contact</h4>
@@ -69,13 +69,16 @@
                                 <span> Price ($-$$$$): {{venue.price}}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span> {{venue.phone}}</span>
+                                <span> Phone Number: {{venue.phone}}</span>
                             </li>
                         </ul>
                         <br>
-                        <p>{{venue.rating}}/5.0 Stars with {{venue.reviewCount}} Reviews </p>
+                        <a href="{{venue.yelpURL}}">{{venue.rating}}/5.0 Stars with {{venue.reviewCount}} Reviews </a>
+                        <br>
+                        <br>
                         <!-- TODO: Insert a link to the yelp page here -->
                         <a style="font-size: 1.8em; color: red" href="{{venue.yelpURL}}" target="_blank"><i class="fab fa-yelp"></i></a>
+                       
                     </div>
                 </div> <!-- End of Row -->
                 <hr>
