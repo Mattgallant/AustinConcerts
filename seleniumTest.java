@@ -31,7 +31,7 @@ we.click(); //click the button
 
 WebElement result = wd.findElement(By.find_element_by_tag_name("title"));
 String output = result.getText(); // read the output text
-assertEquals("About", output);
+assertEquals("Austin Data Bass - About", output);
 wd.quit(); // close the browser window
 	}
 
@@ -55,9 +55,9 @@ wd.get("http://www.austindatabass.appspot.com");
 we = wd.findElement(By.linkText("Concerts"));
 we.click(); //click the button
 
-WebElement result = wd.findElement(By.find_element_by_tag_name("h1"));
+WebElement result = wd.findElement(By.find_element_by_tag_name("title"));
 String output = result.getText(); // read the output text
-assertEquals("Concerts", output);	//TODO: should this be upcoming concerts????? 
+assertEquals("Austin Data Bass - Concerts", output);	
 wd.quit(); // close the browser window
 	}
 
@@ -70,7 +70,77 @@ we.click(); //click the button
 
 WebElement result = wd.findElement(By.find_element_by_tag_name("h1"));
 String output = result.getText(); // read the output text
-assertEquals("Venues", output);	//TODO: should this be upcoming concerts????? 
+assertEquals("Venues", output);	
+wd.quit(); // close the browser window
+	}
+
+@Test public void clickOneArtist() {
+System.setProperty("webdriver.gecko.driver","/AustinConcerts/geckodriver");
+WebDriver wd = new FirefoxDriver(); // launch the browser
+wd.get("http://www.austindatabass.appspot.com");
+we = wd.findElement(By.linkText("Artists"));
+we.click(); //click the button
+
+we = wd.findElement(By.linkText("Kesha"));
+we.click(); //click the button
+
+WebElement result = wd.findElement(By.find_element_by_tag_name("title"));
+String output = result.getText(); // read the output text
+assertEquals("Austin Data Bass - Kesha", output);
+wd.quit(); // close the browser window
+	}
+
+@Test public void clickOneVenue() {
+System.setProperty("webdriver.gecko.driver","/AustinConcerts/geckodriver");
+WebDriver wd = new FirefoxDriver(); // launch the browser
+wd.get("http://www.austindatabass.appspot.com");
+we = wd.findElement(By.linkText("Venues"));
+we.click(); //click the button
+
+we = wd.findElement(By.linkText("ACL Live at The Moody Theater"));
+we.click(); //click the button
+
+WebElement result = wd.findElement(By.find_element_by_tag_name("title"));
+String output = result.getText(); // read the output text
+assertEquals("Austin Data Bass - ACL Live at The Moody Theater", output);	
+wd.quit(); // close the browser window
+	}
+
+@Test public void clickOneArtistOnPage2() {
+System.setProperty("webdriver.gecko.driver","/AustinConcerts/geckodriver");
+WebDriver wd = new FirefoxDriver(); // launch the browser
+wd.get("http://www.austindatabass.appspot.com");
+we = wd.findElement(By.linkText("Artists"));
+we.click(); //click the button
+
+we = wd.findElement(By.linkText("next"));
+we.click(); //click the button
+
+we = wd.findElement(By.linkText("Metallica"));
+we.click(); //click the button
+
+WebElement result = wd.findElement(By.find_element_by_tag_name("title"));
+String output = result.getText(); // read the output text
+assertEquals("Austin Data Bass - Metallica", output);
+wd.quit(); // close the browser window
+	}
+
+@Test public void clickOneVenueOnPage2() {
+System.setProperty("webdriver.gecko.driver","/AustinConcerts/geckodriver");
+WebDriver wd = new FirefoxDriver(); // launch the browser
+wd.get("http://www.austindatabass.appspot.com");
+we = wd.findElement(By.linkText("Venues"));
+we.click(); //click the button
+
+we = wd.findElement(By.linkText("next"));
+we.click(); //click the button
+
+we = wd.findElement(By.linkText("Continental Club"));
+we.click(); //click the button
+
+WebElement result = wd.findElement(By.find_element_by_tag_name("title"));
+String output = result.getText(); // read the output text
+assertEquals("Austin Data Bass - Continental Club", output);	
 wd.quit(); // close the browser window
 	}
 
