@@ -5,6 +5,7 @@ import six
 import json
 import wikipedia
 
+from django.contrib.postgres.fields import ArrayField
 maxbio_length = 997
 
 # Create your models here.
@@ -177,3 +178,48 @@ class Venue(models.Model):
 
     
         
+class Concerts(models.Model):
+	city = models.CharField(max_length = 200)
+	concertName = models.CharField(max_length=200)
+	artists = ArrayField(models.CharField(max_length=200), blank = True,size = 80)
+	venue = models.CharField(max_length = 200)
+	venueWebsite = models.CharField(max_length = 200)
+	startingTime = models.CharField(max_length = 200)
+	date = models.CharField(max_length = 200)
+	
+	def __str__(self):
+		return self.concertName
+	def create():
+		
+		key = 'fYlpdrJQZavt4FGw'
+		locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
+
+		location = locationResponse.json()
+		cityID = str(location['resultsPage']['results']['location'][0]['metroArea']['id'])
+		PARAMS = {'min_date': '2020-03-28','max_date': '2020-04-03'}
+		eventsResponseDate = requests.get('https://api.songkick.com/api/3.0/metro_areas/'+ cityID+'/calendar.json?apikey='+key, PARAMS)
+
+		eventsForWeek = eventsResponseDate.json()
+
+		eventsWeek = eventsForWeek['resultsPage']['results']['event']
+
+		concerts =[]
+		for eachEvent in eventsWeek:
+			concertTitle = eachEvent['displayName']
+			artist = []
+			performances = eachEvent['performance']
+			for performance in performances:
+				artist.append(performance['displayName'])
+			City = eachEvent['location']['city']
+			Venue = eachEvent['venue']['displayName']
+			VenueWebsite = eachEvent['venue']['uri']
+			if VenueWebsite is None:
+				VenueWebsite = 'N/A'
+			StartingTime = '21:00:00'
+			Date = eachEvent['start']['date']
+			
+			specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date)
+			concerts.append(specificConcert)
+		
+
+		return concerts
