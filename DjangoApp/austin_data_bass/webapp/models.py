@@ -12,7 +12,7 @@ maxbio_length = 997
 
 
 class Artist(models.Model):
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=100)
     spotifyID = models.CharField(max_length=50)
     spotifyLink = models.CharField(max_length=200)
     imageLink = models.CharField(max_length=200)
@@ -26,13 +26,14 @@ class Artist(models.Model):
     track2popularity = models.CharField(max_length=10)
     track3 = models.CharField(max_length=50) 
     track3popularity = models.CharField(max_length=10)
+    upcomingConcert = models.CharField(max_length=200)
 
     
     def __str__(self):
         #This function just allows the model to be displayed in a more readable fashion
         return(self.name)
 
-    def create(artistName):
+    def create(artistName, concertName):
         #get the token to use the spotify API
         clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
         secret = '492d077d949c4f21a79eedff5d70852d'
@@ -52,7 +53,10 @@ class Artist(models.Model):
 
         r1 = requests.get(url = URL1, headers={'Authorization': 'Bearer ' + token}) 
 
-        data1 = r1.json()['artists']['items'][0]
+        try:
+            data1 = r1.json()['artists']['items'][0]
+        except:
+            return None
 
         artist = {
             'name': data1['name'],
@@ -63,6 +67,7 @@ class Artist(models.Model):
             'genres': data1['genres'],
             'popularity': data1['popularity'],
             'followers': data1['followers']['total'],
+            'upcomingConcert': concertName,
         }
 
         URL2 = "https://api.spotify.com/v1/artists/" + artist['spotifyID'] + "/top-tracks?country=US"
@@ -78,15 +83,18 @@ class Artist(models.Model):
         artist['topTracks'] = topTracks
         
         #now get the artist's wikipedia bio
-        bio = wikipedia.summary(artistName + " musician")
-        bio_array = bio.splitlines()
-        bio_short = bio_array[0][0:maxbio_length] 
+        try:
+            bio = wikipedia.summary(artistName + " musician")
+            bio_array = bio.splitlines()
+            bio_short = bio_array[0][0:maxbio_length] 
 
-        # chop bios that are too long
-        if(len(bio_short) >= maxbio_length):
-            bio_short = bio_short + '...'
-            
-        artist['bio'] = bio_short
+            # chop bios that are too long
+            if(len(bio_short) >= maxbio_length):
+                bio_short = bio_short + '...'
+        except:
+            bio_short = "No Wikipedia info found."
+        finally:
+            artist['bio'] = bio_short
 
         
         return Artist(name = artist['name'],
@@ -102,7 +110,8 @@ class Artist(models.Model):
                      track2 = artist['topTracks'][1]['track'],
                      track2popularity = artist['topTracks'][1]['popularity'],
                      track3 = artist['topTracks'][2]['track'],
-                     track3popularity = artist['topTracks'][2]['popularity'],)
+                     track3popularity = artist['topTracks'][2]['popularity'],
+                     upcomingConcert = artist['upcomingConcert'],)
 
 
 
@@ -143,9 +152,13 @@ class Venue(models.Model):
         r1 = requests.request("GET", url, headers=headers, data = {})
         data1 = json.loads(r1.text)
         priceholder = "$$"
+        phonenumber = "N/A"
 
         if ("price" in data1):
             priceholder = data1["price"]
+
+        if ("display_phone" in data1):
+            phonenumber = data1["display_phone"]
         
 
         venue = {
@@ -153,7 +166,7 @@ class Venue(models.Model):
             "yelpID": data1["id"],
             "imageURL": data1["image_url"],
             "yelpURL": data1["url"],
-            "phone": data1["display_phone"],
+            "phone": phonenumber,
             "reviewCount": data1["review_count"],
             "rating": data1["rating"],
             "location": " ".join(data1["location"]["display_address"]),
@@ -187,11 +200,18 @@ class Concerts(models.Model):
 	startingTime = models.CharField(max_length = 200)
 	date = models.CharField(max_length = 200)
 	headliner = models.CharField(max_length = 200,default = 'N/A')
-	
+	imageURL = models.CharField(max_length = 200,default = 'N/A')	
+
 	def __str__(self):
 		return self.concertName
 	def create():
-		
+		clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
+		secret = '492d077d949c4f21a79eedff5d70852d'
+		auth = base64.b64encode(six.text_type(clientId + ':' + secret).encode("ascii"))
+		payload = {"grant_type": "client_credentials"}
+		resp = requests.post("https://accounts.spotify.com/api/token",data=payload,headers={'Authorization': "Basic %s" % auth.decode("ascii")},verify=True)
+		token = resp.json()['access_token']		
+
 		key = 'fYlpdrJQZavt4FGw'
 		locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
 
@@ -214,6 +234,11 @@ class Concerts(models.Model):
 			performances = eachEvent['performance']
 			for performance in performances:
 				artist.append(performance['displayName'])
+			artistName = artist[0]
+			URL1 = "https://api.spotify.com/v1/search?q=" + artistName.lower().replace(" ", "%20") + "&type=artist"
+			r1 = requests.get(url = URL1, headers={'Authorization': 'Bearer ' + token})
+			data1 = r1.json()['artists']['items'][0]
+			imageLink= data1['images'][0]['url']
 			City = eachEvent['location']['city']
 			Venue = eachEvent['venue']['displayName']
 			VenueWebsite = eachEvent['venue']['uri']
@@ -226,7 +251,7 @@ class Concerts(models.Model):
 				index = headLiner.index(',')
 				headliner = headliner[:index]
 			
-			specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner)
+			specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner, imageURL = imageLink)
 			concerts.append(specificConcert)
 		
 
