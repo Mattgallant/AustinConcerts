@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'austin_data_bass.wsgi.application'
 DATABASES = {
     'default': {
       'ENGINE': 'django.db.backends.postgresql',
-      #'HOST': '/cloudsql/djangopractice-272319:us-central1:djangopractice-dbs',
+      #'HOST': '/cloudsql/austindatabass:us-central1:austindatabass-db',
       'HOST': '34.68.27.7',
       'PORT': '5432', # PostgreSQL port
       'NAME': 'test',
