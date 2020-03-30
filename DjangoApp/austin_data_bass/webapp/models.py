@@ -198,86 +198,86 @@ class Concerts(models.Model):
 
 		def __str__(self):
 				return self.concertName
-            #spotify API info to get artist image
-		def create():
-                    clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
-                    secret = '492d077d949c4f21a79eedff5d70852d'
-                    auth = base64.b64encode(six.text_type(clientId + ':' + secret).encode("ascii"))
-                    payload = {"grant_type": "client_credentials"}
-                    headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'}
-                    key = 'fYlpdrJQZavt4FGw'
-                    cityID = "9179"
-                    PARAMS = {'min_date': '2020-03-30','max_date': '2020-04-05'}
-                    eventsResponseDate = requests.get('https://api.songkick.com/api/3.0/metro_areas/'+ cityID+'/calendar.json?apikey='+key, PARAMS)
-                    eventsForWeek = eventsResponseDate.json()
-                    eventsWeek = eventsForWeek['resultsPage']['results']['event']
-                    concerts =[]
-                    for eachEvent in eventsWeek:
-                        concertTitle = eachEvent['displayName']
-                        if "(" in concertTitle:
-                            index = concertTitle.index('(')
-                            concertTitle = concertTitle[:index-1]
-                        artist = []
-                        performances = eachEvent['performance']
-                        for performance in performances:
-                            artist.append(performance['displayName'])
-                            artistName = artist[0]
+			#spotify API info to get artist image
+		def create(self):
+					clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
+					secret = '492d077d949c4f21a79eedff5d70852d'
+					auth = base64.b64encode(six.text_type(clientId + ':' + secret).encode("ascii"))
+					payload = {"grant_type": "client_credentials"}
+					headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'}
+					key = 'fYlpdrJQZavt4FGw'
+					cityID = "9179"
+					PARAMS = {'min_date': '2020-03-30','max_date': '2020-04-05'}
+					eventsResponseDate = requests.get('https://api.songkick.com/api/3.0/metro_areas/'+ cityID+'/calendar.json?apikey='+key, PARAMS)
+					eventsForWeek = eventsResponseDate.json()
+					eventsWeek = eventsForWeek['resultsPage']['results']['event']
+					concerts =[]
+					for eachEvent in eventsWeek:
+						concertTitle = eachEvent['displayName']
+						if "(" in concertTitle:
+							index = concertTitle.index('(')
+							concertTitle = concertTitle[:index-1]
+						artist = []
+						performances = eachEvent['performance']
+						for performance in performances:
+							artist.append(performance['displayName'])
+							artistName = artist[0]
 
 #spotify request to get token
-                        resp = requests.post("https://accounts.spotify.com/api/token",data=payload,headers={'Authorization': "Basic %s" % auth.decode("ascii")},verify=True) 
-                        token = resp.json()['access_token']				
+						resp = requests.post("https://accounts.spotify.com/api/token",data=payload,headers={'Authorization': "Basic %s" % auth.decode("ascii")},verify=True)
+						token = resp.json()['access_token']
 
 #spotify request to get artist's image
-                        URL1 = "https://api.spotify.com/v1/search?q=" + artistName.lower().replace(" ", "%20") + "&type=artist"
-                        r1 = requests.get(url = URL1, headers={'Authorization': 'Bearer ' + token})
-                        try:
-                            data1 = r1.json()['artists']['items'][0]
-                        except:
-                            data1 = None
-                        if data1 is not None:
-                            imageLink= data1['images'][0]['url']
-                        City = eachEvent['location']['city']
-                        Venue = eachEvent['venue']['displayName']
-                        if '(' in Venue:
-                            index = Venue.index('(')
-                            Venue = Venue[:index-1]
-                        if '-' in Venue:
-                            index = Venue.index('-')
-                            Venue = Venue[:index-1]
-                        if ',' in Venue:
-                            index = Venue.index(',')
-                            Venue = Venue[:index]
-                        if 'Cactus' in Venue:
-                            Venue = 'Cactus Cafe'
-                        if 'Austin City Limits' in Venue:
-                            Venue = 'ACL Live at the Moody Theater'
-                        if 'Threadgill' in Venue:
-                            Venue = Venue[:10]
-                        if 'Stubb' in Venue:
-                            Venue = Venue[:5]
-                        if 'Empire' in Venue:
-                            Venue = 'Empire Control Room'
-                        URL =  'https://api.yelp.com/v3/businesses/search?location=austin&term=' + Venue +'&limit=50'
-                        response = requests.request('GET',URL,headers=headers,data= {})
-                        businesses = response.json()['businesses']
-                        yelpid = 'N/A'
-                        if len(businesses)!=0:
-                            if Venue.lower() in businesses[0]['name'].lower():
-                                yelpid = businesses[0]['id']
-                            elif businesses[0]['name'].lower() in Venue.lower():
-                                yelpid = businesses[0]['id']
-                        VenueWebsite = eachEvent['venue']['uri']
-                        if VenueWebsite is None:
-                            VenueWebsite = 'N/A'
-                        StartingTime = eachEvent['start']['time']
-                        if StartingTime is None:
-                            StartingTime = '21:00:00'
-                        Date = eachEvent['start']['date']
-                        headLiner = artist[0]
-                        if "," in headLiner:
-                            index = headLiner.index(',')
-                            headLiner = headLiner[:index]
-                        specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner, imageURL = imageLink, yelpID = yelpid)
-                        if yelpid !='N/A':
-                            concerts.append(specificConcert)
-                    return concerts
+						URL1 = "https://api.spotify.com/v1/search?q=" + artistName.lower().replace(" ", "%20") + "&type=artist"
+						r1 = requests.get(url = URL1, headers={'Authorization': 'Bearer ' + token})
+						try:
+							data1 = r1.json()['artists']['items'][0]
+						except:
+							data1 = None
+						if data1 is not None:
+							imageLink= data1['images'][0]['url']
+						City = eachEvent['location']['city']
+						Venue = eachEvent['venue']['displayName']
+						if '(' in Venue:
+							index = Venue.index('(')
+							Venue = Venue[:index-1]
+						if '-' in Venue:
+							index = Venue.index('-')
+							Venue = Venue[:index-1]
+						if ',' in Venue:
+							index = Venue.index(',')
+							Venue = Venue[:index]
+						if 'Cactus' in Venue:
+							Venue = 'Cactus Cafe'
+						if 'Austin City Limits' in Venue:
+							Venue = 'ACL Live at the Moody Theater'
+						if 'Threadgill' in Venue:
+							Venue = Venue[:10]
+						if 'Stubb' in Venue:
+							Venue = Venue[:5]
+						if 'Empire' in Venue:
+							Venue = 'Empire Control Room'
+						URL =  'https://api.yelp.com/v3/businesses/search?location=austin&term=' + Venue +'&limit=50'
+						response = requests.request('GET',URL,headers=headers,data= {})
+						businesses = response.json()['businesses']
+						yelpid = 'N/A'
+						if len(businesses)!=0:
+							if Venue.lower() in businesses[0]['name'].lower():
+								yelpid = businesses[0]['id']
+							elif businesses[0]['name'].lower() in Venue.lower():
+								yelpid = businesses[0]['id']
+						VenueWebsite = eachEvent['venue']['uri']
+						if VenueWebsite is None:
+							VenueWebsite = 'N/A'
+						StartingTime = eachEvent['start']['time']
+						if StartingTime is None:
+							StartingTime = '21:00:00'
+						Date = eachEvent['start']['date']
+						headLiner = artist[0]
+						if "," in headLiner:
+							index = headLiner.index(',')
+							headLiner = headLiner[:index]
+						specificConcert = Concerts(city = City,concertName = concertTitle,artists = artist,venue = Venue,venueWebsite = VenueWebsite,startingTime = StartingTime,date = Date, headliner = headLiner, imageURL = imageLink, yelpID = yelpid)
+						if yelpid !='N/A':
+							concerts.append(specificConcert)
+					return concerts
