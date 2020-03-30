@@ -1,0 +1,483 @@
+<!DOCTYPE HTML>
+<script>
+function requestCommitStats(){
+   //Create an XMLHttpRequest object
+    const xhr = new XMLHttpRequest(); 
+
+   //GitHub endpoint
+    const url = `https://api.github.com/repos/mattgallant/AustinConcerts/stats/contributors`;
+    xhr.open('GET', url, true);
+    xhr.onload = function(){
+        //Parse API Data into JSON
+        const data = JSON.parse(this.response);
+        // Log the response
+        console.log(data);
+
+        let commits, zanderCommits, guyCommits, mattCommits, dylanCommits, willCommits, michaelCommits;
+        commits = zanderCommits = guyCommits = mattCommits = dylanCommits = willCommits = michaelCommits = 0;
+        for(let i of data){
+            if(i.author.login == "zandertedjo") {
+                zanderCommits = i.total;
+            }
+            if(i.author.login == "farmerguycf") {
+                guyCommits = i.total;
+            }
+            if(i.author.login == "Mattgallant") {
+                mattCommits = i.total;
+            }
+            if(i.author.login == "dylanwolford") {
+                dylanCommits = i.total;
+            }
+            if(i.author.login == "michaelhilborn") {
+                michaelCommits = i.total;
+            }
+            if(i.author.login == "willworthington") {
+                willCommits = i.total;
+            }
+            commits += i.total;
+        }
+
+        //Set total commits
+        let span = document.getElementById("statCommits");
+        span.innerHTML = commits.toString();
+
+        //Set member commits
+        span = document.getElementById("statGuyCommits");
+        span.innerHTML = guyCommits.toString();
+        span = document.getElementById("statMattCommits");
+        span.innerHTML = mattCommits.toString();
+        span = document.getElementById("statMichaelCommits");
+        span.innerHTML = michaelCommits.toString();
+        span = document.getElementById("statDylanCommits");
+        span.innerHTML = dylanCommits.toString();
+        span = document.getElementById("statZanderCommits");
+        span.innerHTML = zanderCommits.toString();
+        span = document.getElementById("statWillCommits");
+        span.innerHTML = willCommits.toString();
+    }
+    xhr.send();
+}
+
+function requestIssueStats(){
+    //Create an XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+
+    //GitHub endpoint
+    const url = `https://api.github.com/repos/mattgallant/AustinConcerts/issues`;
+    xhr.open('GET', url, true);
+    xhr.onload = function(){
+        //Parse API Data into JSON
+        const data = JSON.parse(this.response);
+        // Log the response
+        console.log(data);
+
+        let issues, zanderIssues, guyIssues, mattIssues, dylanIssues, willIssues, michaelIssues;
+        issues = zanderIssues = guyIssues = mattIssues = dylanIssues = willIssues = michaelIssues = 0;
+        for(let i of data){
+            if(i.user.login == "zandertedjo") {
+                zanderIssues++;
+            }
+            if(i.user.login == "farmerguycf") {
+                guyIssues++;
+            }
+            if(i.user.login == "Mattgallant") {
+                mattIssues++;
+            }
+            if(i.user.login == "dylanwolford") {
+                dylanIssues++;
+            }
+            if(i.user.login == "michaelhilborn") {
+                michaelIssues++;
+            }
+            if(i.user.login == "willworthington") {
+                willIssues++;
+            }
+        }
+
+        //Set total issues
+        let span = document.getElementById("statIssues");
+        span.innerHTML = data[0].number;
+
+        //Set member issues TODO: This number is not actually accurate. Doesn't account for closed issues!
+        span = document.getElementById("statGuyIssues");
+        span.innerHTML = guyIssues.toString();
+        span = document.getElementById("statMattIssues");
+        span.innerHTML = mattIssues.toString();
+        span = document.getElementById("statMichaelIssues");
+        span.innerHTML = michaelIssues.toString();
+        span = document.getElementById("statDylanIssues");
+        span.innerHTML = dylanIssues.toString();
+        span = document.getElementById("statZanderIssues");
+        span.innerHTML = zanderIssues.toString();
+        span = document.getElementById("statWillIssues");
+        span.innerHTML = willIssues.toString();
+    }
+    xhr.send();
+}
+
+function populatePage(){
+    requestCommitStats();
+    requestIssueStats();
+}
+</script>
+
+<html>
+<head>
+    <title>About</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Our stylesheet -->
+    <link rel="stylesheet" href="styles/main.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+</head>
+<body onload="populatePage()">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <a class="navbar-brand" href="index.html">Austin Data Bass</a>
+        <div class="ml-auto">
+            <a class="navbar-brand" href="artists/index.html">Artists</a>
+            <a class="navbar-brand" href="concerts/index.html">Concerts</a>
+            <a class="navbar-brand" href="venues/index.html">Venues</a>
+            <a class="navbar-brand" href="about.html">About</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <h1 class="pt-5 pb-5 text-center font-weight-bold">About Us</h1>
+        <div class="mb-5 text-body text-center ml-lg-5 mr-lg-5">
+            <div class="card border-warning border-size-5">
+                <div class="card-body">
+                    <h3 class="card-title font-weight-bold">Austin Data Bass Team</h3>
+                    <br><br>
+                    <h4 class="card-subtitle text-left pl-2 mb-2 text-muted">Site Description</h4>
+                    <p class="card-text text-left pl-2 pr-2">
+                        Our site serves as a database for all of Austin's upcoming concerts. We aim to make finding upcoming concerts a seamless experience by providing all of the venue, artist and
+                        event details in one easy to use website. We know how hard it can be to find all the information about one concert in one place. Whether you're an avid concert goer, an artist
+                        looking to find a venue or taking your first steps into the world of live music, we have the information you need!
+                    </p>
+                    <hr>
+                    <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Data & Tools</h4>
+                    <div class ="row text-center">
+                        <div class="col-xs-6 col-sm-4 col-md-4">
+                            <i style="color: #e54d26" class="fas fa-code"></i>
+                            <h5> HTML </h5>
+                            <p> Used to create the structure of our webpages. </p>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            <i style="color: #563d7c" class="fas fa-bold"></i>
+                            <h5> Bootstrap</h5>
+                            <p> Used as a CSS framework to speed up styling. </p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-4">
+                            <i style="color: #2163af" class="fab fa-css3"></i>
+                            <h5> CSS</h5>
+                            <p>Used to style our webpages. </p>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 pt-sm-3 pt-md-3">
+                            <i style="color: #FFCA28" class="fab fa-js"></i>
+                            <h5> JavaScript</h5>
+                            <p> Used to import API data and display it.</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 pt-sm-3 pt-md-3">
+                            <i style="color: black" class="fab fa-python"></i>
+                            <h5> Python</h5>
+                            <p> Used as our backend language that handles the database.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class ="row text-center">
+                        <div class="col-sm-6 col-md-6">
+                            <p>We used several different RESTful APIs that provided data for our venues, concerts and artist models.
+                                Using these disparate data sources allowed us to centralize all the information a concert goer needs
+                                to chose the right show! Whether you need Spotify stats on an artist, details about the size and location of
+                                a venue or all the details you need to worry about for the show, Austin Data Bass displays it in an
+                                easy to read format.
+                            </p>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <ul class="list group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-center align-items-center">
+                                    <a href="https://www.yelp.com/fusion">Yelp API</a>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-center align-items-center">
+                                    <a href="https://developer.spotify.com/documentation/web-api/"> Spotify API </a>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-center align-items-center">
+                                    <a href="https://www.songkick.com/developer"> Songkick API </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Stats & GitHub</h4>
+                    <div class ="row text-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Commits
+                                    <span id="statCommits" class="badge badge-warning badge-pill"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Issues
+                                    <span id="statIssues" class="badge badge-warning badge-pill"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Unit Tests
+                                    <span id="statTests" class="badge badge-warning badge-pill">0</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <a style="font-size: 4.5em; color: black" href="https://www.github.com/mattgallant/AustinConcerts" target="_blank"><i class="fab fa-github"></i></a>
+                            <h6> GitHub Repo</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  for each member: name, photo, bio, major/track, primary responsibilities, number of commits, number of issues, number of unit tests
+                        team stats: total number of commits, total number of issues, total number of unit tests -->
+        <!-- Start of member cards-->
+        <div class="container-fluid text-body">
+            <div class="row mr-5 ml-5">
+                <div class="col-12 col-md-6 mb-6 mb-md-0 mb-3">
+                    <div class="card">
+                        <div class="card-header font-weight-bold display text-center">
+                            Guy Farmer
+                        </div>
+                        <img class="card-img" src="./imgs/guy.jpg" alt="Card image">
+                        <br>
+                        <div class ="row text-center">
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <ul class="list group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Commits
+                                        <span id="statGuyCommits" class="badge badge-warning badge-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Issues
+                                        <span id="statGuyIssues" class="badge badge-warning badge-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Unit Tests
+                                        <span id="statGuyTests" class="badge badge-warning badge-pill">0</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6 col-md-6 ">
+                                <p class="card-title">ECE Major</p>
+                                <p class="card-subtitle text-muted" >Software Engineering / AE Track</p>
+                                <hr>
+                                <p> Responsible for Concert Model </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
+                        <p class="card-text"> Junior at the University of Texas. When I'm not behind a computer screen, I like to rock climb, play the saxophone, and go on runs. </p>
+                        <br>
+                    </div> <!-- End of member card -->
+                </div <!-- End of column spacing -->
+                <div class="col-12 col-md-6 mb-6 mb-md-0">
+                    <div class="card">
+                        <div class="card-header font-weight-bold display text-center">
+                            Matt Gallant
+                        </div>
+                        <img class="card-img" src="./imgs/matt.jpg" alt="Card image">
+                        <br>
+                        <div class ="row text-center">
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <ul class="list group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Commits
+                                        <span id="statMattCommits" class="badge badge-warning badge-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Issues
+                                        <span id="statMattIssues" class="badge badge-warning badge-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Unit Tests
+                                        <span id="statMattTests" class="badge badge-warning badge-pill">0</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <p class="card-title">ECE Major</p>
+                                <p class="card-subtitle text-muted" >Software Engineering / AE Track</p>
+                                <hr>
+                                <p> Responsible for About Page and Venue Model </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
+                        <p class="card-text"> Originally from Canada, I moved to Austin when I was 10 years old. I am a senior at UT Austin. When I'm not programming or studying you can find me doing
+                        something outdoors. I love to hike, rock climb, run, learn and read! </p>
+                        <br>
+                    </div> <!-- End of member card -->
+                    </div> <!-- End of column spacing -->
+                </div> <!-- End of ROW -->
+            <div class="row mt-3 mr-5 ml-5"">
+                <div class="col-12 col-md-6 mb-6 mb-md-0">
+                    <div class="card">
+                        <div class="card-header font-weight-bold display text-center">
+                            Michael Hilborn
+                        </div>
+                        <img class="card-img" src="./imgs/michael.jpg" alt="Card image">
+                        <br>
+                        <div class ="row text-center">
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <ul class="list group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Commits
+                                        <span id="statMichaelCommits" class="badge badge-warning badge-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Issues
+                                        <span id="statMichaelIssues" class="badge badge-warning badge-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Unit Tests
+                                        <span id="statMichaelTests" class="badge badge-warning badge-pill">0</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <p class="card-title">ECE Major</p>
+                                <p class="card-subtitle text-muted" >Software Engineering / AE Track</p>
+                                <hr>
+                                <p> Responsible for Concert Model </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
+                        <p class="card-text"> Junior in Software Engineering and Design from Houston Texas. I enjoy exercising, Pina Coladas, and getting caught in the rain.
+  </p>
+                        <br>
+                    </div> <!-- End of member card -->
+                </div> <!-- End of column spacing -->
+                <div class="col-12 col-md-6 mb-6 mb-md-0 mt-3">
+                    <div class="card">
+                        <div class="card-header font-weight-bold display text-center">
+                            Zander Tedjo
+                        </div>
+                        <img class="card-img" src="./imgs/zander.png" alt="Card image">
+                        <br>
+                        <div class ="row text-center">
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <ul class="list group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Commits
+                                        <span id="statZanderCommits" class="badge badge-warning badge-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Issues
+                                        <span id="statZanderIssues" class="badge badge-warning badge-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Unit Tests
+                                        <span id="statZanderTests" class="badge badge-warning badge-pill">0</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <p class="card-title">ECE Major</p>
+                                <p class="card-subtitle text-muted" >Software Engineering / AE Track</p>
+                                <hr>
+                                <p> Responsible for Artist Model </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
+                        <p class="card-text">  Zander is from the Houston area and enjoys outdoor activities.</p>
+                        <br>
+                    </div> <!-- End of member card -->
+                </div> <!-- End of column spacing -->
+            </div> <!-- End of ROW -->
+        <div class="row mt-3 mr-5 ml-5"">
+            <div class="col-12 col-md-6 mb-6 mb-md-0 mt-3">
+                <div class="card">
+                    <div class="card-header font-weight-bold display text-center">
+                        Dylan Wolford
+                    </div>
+                    <img class="card-img" src="./imgs/dylan.jpg" alt="Card image">
+                    <br>
+                    <div class ="row text-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <ul class="list group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Commits
+                                    <span id="statDylanCommits" class="badge badge-warning badge-pill"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Issues
+                                    <span id="statDylanIssues" class="badge badge-warning badge-pill"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Unit Tests
+                                    <span id="statDylanTests" class="badge badge-warning badge-pill">0</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <p class="card-title">ECE Major</p>
+                            <p class="card-subtitle text-muted" >Software Engineering / AE Track</p>
+                            <hr>
+                            <p> Responsible for Venue Model, User Stories </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
+                    <p class="card-text">  I'm a Junior at UT from Dallas, TX. I love sweet treats, bad TV, and warm weather. </p>
+                    <br>
+                </div> <!-- End of member card -->
+            </div> <!-- End of column spacing -->
+            <div class="col-12 col-md-6 mb-6 mb-3 mt-3">
+                <div class="card">
+                    <div class="card-header font-weight-bold display text-center">
+                        Will Worthington
+                    </div>
+                    <img class="card-img" src="./imgs/will.jpg" alt="Card image">
+                    <br>
+                    <div class ="row text-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <ul class="list group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Commits
+                                    <span id="statWillCommits" class="badge badge-warning badge-pill"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Issues
+                                    <span id="statWillIssues" class="badge badge-warning badge-pill"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Unit Tests
+                                    <span id="statWillTests" class="badge badge-warning badge-pill">0</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <p class="card-title">ECE Major</p>
+                            <p class="card-subtitle text-muted" >Software Engineering / AE Track</p>
+                            <hr>
+                            <p> Responsible for Artist Model, Splash Page </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="card-subtitle text-left pl-2 mb-3 text-muted">Bio</h5>
+                    <p class="card-text">  I'm a Junior from Houston, Texas.  I love running and lifting, but nothing compares to my love for pair programming.
+                    </p>
+                    <br>
+                </div> <!-- End of member card -->
+            </div> <!-- End of column spacing -->
+        </div> <!-- End of row -->
+    </div>
+        </div>
+    </div>
+</body>
+</html>

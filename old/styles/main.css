@@ -1,0 +1,172 @@
+body {
+	font-family: Verdana, Helvetica, sans-serif;
+    /*color: #05386b; */
+    color: white;
+
+    background: linear-gradient(to bottom, #000000 80%, #454545 100%);
+    background-attachment: fixed;
+}
+.navbar-custom {
+    background-color: orange;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: black;
+}
+
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-text:hover {
+    color: white;
+}
+
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+.carousel-inner {
+    width: 75%;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;    
+}
+.concert-carousel-img{
+    width: auto;
+    height: 500px;
+}
+
+.carousel-inner img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* For the artist pages */
+.artist-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+/*for the concerts page*/
+/* Style the container w some padding and margin */
+.container{
+    border-radius: 15px;
+    border: 2px solid #ccc;
+    color: #000;
+    background-color: #eee;
+    padding: 16px;
+    margin: 16px 0;
+}
+.container::after{
+    content: "";
+    clear:both;
+    display: table;
+}
+
+.container:hover{
+    cursor: pointer;
+}
+/* Float images inside the container to the left. 
+Add a right margin, and style the image as a circle */
+
+
+
+.container img{
+    float: left;
+    margin-right: 20px;
+    height: 100px;
+    width: 50px;
+    border-radius: 50%;
+    
+}
+/* Add media queries for responsiveness. 
+This will center both the text and the image inside the container */
+@media (max-width: 500px) {
+  .container {
+    text-align: center;
+  }
+
+  .container img {
+    margin: auto;
+    float: none;
+    display: block;
+  }
+}
+
+.concert_div::after{
+	content: "";
+	clear:both;
+	display: table;	
+}
+
+.event_div{
+	float: left;
+	width: 50%;
+}
+
+
+.concert_div{
+    background-color: #fff;
+    color: #000;
+    border-radius: 25px;
+    border: 2px solid #ccc;
+    padding: 50px;
+    margin-left: 20%;
+    margin-right:20%;
+    margin-top: 100px;
+}
+.event_div img{
+    top:50%;
+    float:left;
+    border-radius:50%;
+    height: 80%;
+    width: 80%;
+    vertical-align:center; 
+}
+.artist_name{
+    /*position: relative;*/
+    /*left: 350px;
+    top: 20px;*/
+}
+.artist_bio{
+    /*position: relative;*/
+    /*left: 350px;
+    top: 20px;*/
+}
+
+/*
+.artist-image img {
+    width: auto;
+    height: auto;
+}*/
+
+
+/* For about page */
+.fa-github:hover{
+    color: #d5d5d5;
+}
+.fa-python,
+.fa-js,
+.fa-code,
+.fa-css3,
+.fa-bold{
+font-size:3em;
+}
+
+.fa-github:hover{
+    color: #d5d5d5;
+}/* End about page */
+
+/*For venue instances*/
+.fa-yelp:hover{
+    color: white;
+}

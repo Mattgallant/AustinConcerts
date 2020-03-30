@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Austin Data Bass Main Concert Page</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="../styles/main.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+            <a class="navbar-brand" href="../index.html">Austin Data Bass</a>
+            <div class="ml-auto">
+                <a class="navbar-brand" href="../artists/index.html">Artists</a>
+                <a class="navbar-brand" href="./index.html">Concerts</a>
+                <a class="navbar-brand" href="../venues/index.html">Venues</a>
+                <a class="navbar-brand" href="../about.html">About</a>
+            </div>
+        </nav>
+        
+        <h2 style="margin-left: 3%;">Upcoming Concerts</h2>
+        
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            <div class="carousel-item active" onclick="location.href='./Alan-Ancira-Event.html'">
+              <img class="concert-carousel-img" src="../imgs/AlanAncira.jpg" alt="ACL Music Festival">
+            </div>
+
+            <div class="carousel-item" onclick="location.href='post-malone-event.html'">
+              <img class="concert-carousel-img" src="../imgs/Post-Malone-Show.jpg" alt="Austin">
+            </div>
+
+            <div class="carousel-item" onclick="location.href='./kesha-event.html'">
+              <img class="concert-carousel-img" src="../imgs/Kesha-Concert.jpg" alt="Austin Music Awards">
+            </div>
+          </div>
+
+          <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <h4 style="margin:50px;" >Events the week of 3-2</h4>
+            <div class="container" onclick="location.href='./Alan-Ancira-Event.html'">
+                <img src="../imgs/AlanAncira.jpg" alt = "AlanAncira">
+                 <p><span> Alan Ancira</span> March 6th, 2020</p>
+            <p>St. Edwards University</p>
+        </div>
+       
+
+    <h4 style="margin:50px;" >Events the week of 3-8</h4>
+            <div class="container" onclick="location.href='post-malone-event.html'">
+        <img src = "../imgs/post_malone_concert.jpg" alt="post_malone_concert" style="width: 90px">
+            <p><span> Post Malone</span> March 10th, 2020</p>
+            <p>Frank Erwin Center</p>
+    </div>
+        <h4 style="margin:50px;" >Events next month</h4>
+
+        <div class="container" onclick="location.href='./kesha-event.html'">
+        <img src = "../imgs/kesha_show.jpg" alt="kesha_show" style="width: 90px">
+            <p><span> Kesha</span> April 26th, 2020</p>
+            <p>Austin City Limits Live</p>
+    </div>
+
+
+
+
+    </body>
+</html>
