@@ -122,18 +122,18 @@ class Artist(models.Model):
 
 
 class Venue(models.Model):
-    name = models.CharField(max_length=200)
-    yelpID =  models.CharField(max_length=25)
-    imageURL = models.CharField(max_length=300)
-    yelpURL = models.CharField(max_length=300)
-    phone = models.CharField(max_length=15) 
-    reviewCount = models.IntegerField()
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
-    location = models.CharField(max_length=150)
-    latitude = models.DecimalField(max_digits=15, decimal_places=13) 
-    longitude = models.DecimalField(max_digits=15, decimal_places=13) 
-    price = models.CharField(max_length=4)
-    upcomingConcert = models.CharField(max_length=205)
+    name = models.CharField(max_length=200, blank = True)
+    yelpID =  models.CharField(max_length=25, blank = True)
+    imageURL = models.CharField(max_length=300, blank = True)
+    yelpURL = models.CharField(max_length=300, blank = True)
+    phone = models.CharField(max_length=15, blank = True) 
+    reviewCount = models.IntegerField(blank = True)
+    rating = models.DecimalField(max_digits=2, decimal_places=1, blank = True)
+    location = models.CharField(max_length=150, blank = True)
+    latitude = models.DecimalField(max_digits=15, decimal_places=13, blank = True) 
+    longitude = models.DecimalField(max_digits=15, decimal_places=13, blank = True) 
+    price = models.CharField(max_length=4, blank = True)
+    upcomingConcerts = ArrayField(models.CharField(max_length=215), blank = True,size = 80)
 
     def __str__(self):
         #This function just allows the model to be displayed in a more readable fashion
@@ -160,17 +160,14 @@ class Venue(models.Model):
         priceholder = "$$"
         phonenumber = "N/A"
         
-        if(concertName is None):
-            concertName = "No Upcoming Concert"
+        #if(concertName is None):
+         #   concertName = ["No Upcoming Concert"]
 
-        if(concertName == ""):
-            concertName = "There Are No Upcoming Concerts"
+        #if ("price" in data1):
+         #   priceholder = data1["price"]
 
-        if ("price" in data1):
-            priceholder = data1["price"]
-
-        if ("display_phone" in data1):
-            phonenumber = data1["display_phone"]
+        #if ("display_phone" in data1):
+         #   phonenumber = data1["display_phone"]
         
 
         venue = {
@@ -184,8 +181,8 @@ class Venue(models.Model):
             "location": " ".join(data1["location"]["display_address"]),
             "latitude": data1["coordinates"]["latitude"],
             "longitude": data1["coordinates"]["longitude"],
-            "price": priceholder,
-            "upcomingConcert": concertName
+            "price": "$$",
+            "upcomingConcerts": concertName
             
         }
 
@@ -200,8 +197,9 @@ class Venue(models.Model):
                     location = venue['location'], 
                     latitude = venue['latitude'],
                     longitude = venue['longitude'],
-                    price = venue['price'],
-                    upcomingConcert = venue['upcomingConcert'])
+                    price = "$$",
+                    upcomingConcerts = venue['upcomingConcerts']
+                    )
 
     
         
