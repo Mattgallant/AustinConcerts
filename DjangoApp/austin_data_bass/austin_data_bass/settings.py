@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v!_^w+2fms1a+qp^&!ood@uxzo%p_d8*tobr&029-^q!v7*qz_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False #set to false when deploying
+DEBUG = True #set to false when deploying
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'austindatabass.appspot.com',]
 
