@@ -85,8 +85,6 @@
                     <ul type="1" class="list group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <!-- RN this may not be handling multiple concerts at same venue.... need to come back and use a forloop with queryset -->
-                                <p>{{venue.upcomingConcerts}}</p>
-
                                 {% if upcoming != "" %}
                                 <a href="../../concerts/{{upcoming}}"> 
                                     {{upcoming}} </a>

@@ -41,9 +41,18 @@ def concerts(request):
 
 #Concert instance pages
 def concert_name(request, concert_name):
+	concert = Concerts.objects.filter(concertName__iexact = concert_name).first()
+	print(concert.yelpID)
+	venue = Venue.objects.filter(yelpID__iexact = concert.yelpID).first()
+	if venue is None:
+		venue_name = ""
+	else:
+		venue_name = venue.name #This is used to link to the venue page
+
 	context = {
+		'venue_name': venue_name,
 		'title': concert_name,
-		'concert': Concerts.objects.filter(concertName__iexact = concert_name).first(),
+		'concert': concert,
 	}
 	return render(request, 'webapp/concerts/concert-template.html', context) 
 
@@ -116,8 +125,11 @@ def venues(request):
 #Venue instance template handler
 def venue_name(request, venue_name):
 	venue = Venue.objects.filter(name__iexact = venue_name).first()
+	if venue is None: #If that specific venue wasn't found, just display grid page
+		return venues(request)
+	#Venue name found, continue on	
 	venueName = venue.name
-	concert = Concerts.objects.filter(concertName__iexact = venueName).first()
+	concert = Concerts.objects.filter(yelpID = venue.yelpID).first()
 	if concert is not None:
 		upcoming = concert.concertName
 	else: 
