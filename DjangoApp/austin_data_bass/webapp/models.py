@@ -67,7 +67,7 @@ class Artist(models.Model):
             'genres': data1['genres'],
             'popularity': data1['popularity'],
             'followers': data1['followers']['total'],
-            'upcomingConcert': concertName,
+            'upcomingConcert': concertName
         }
 
         URL2 = "https://api.spotify.com/v1/artists/" + artist['spotifyID'] + "/top-tracks?country=US"
@@ -133,7 +133,7 @@ class Venue(models.Model):
     latitude = models.DecimalField(max_digits=15, decimal_places=13) 
     longitude = models.DecimalField(max_digits=15, decimal_places=13) 
     price = models.CharField(max_length=4)
-    upcomingConcert = models.CharField(max_length=200)
+    upcomingConcert = models.CharField(max_length=205)
 
     def __str__(self):
         #This function just allows the model to be displayed in a more readable fashion
@@ -159,6 +159,12 @@ class Venue(models.Model):
         data1 = json.loads(r1.text)
         priceholder = "$$"
         phonenumber = "N/A"
+        
+        if(concertName is None):
+            concertName = "No Upcoming Concert"
+
+        if(concertName == ""):
+            concertName = "There Are No Upcoming Concerts"
 
         if ("price" in data1):
             priceholder = data1["price"]
@@ -169,7 +175,7 @@ class Venue(models.Model):
 
         venue = {
             "name": data1["name"],
-            "yelpID": data1["id"],
+            "yelpID": venueID,
             "imageURL": data1["image_url"],
             "yelpURL": data1["url"],
             "phone": phonenumber,
@@ -179,7 +185,7 @@ class Venue(models.Model):
             "latitude": data1["coordinates"]["latitude"],
             "longitude": data1["coordinates"]["longitude"],
             "price": priceholder,
-            'upcomingConcert': concertName
+            "upcomingConcert": concertName
             
         }
 
