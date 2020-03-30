@@ -129,9 +129,9 @@ def venue_name(request, venue_name):
 		return venues(request)
 	#Venue name found, continue on	
 	venueName = venue.name
-	concert = Concerts.objects.filter(yelpID = venue.yelpID).first()
-	if concert is not None:
-		upcoming = concert.concertName
+	concerts = Concerts.objects.filter(yelpID = venue.yelpID)
+	if concerts is not None:
+		upcoming = concerts
 	else: 
 		upcoming = ""
 

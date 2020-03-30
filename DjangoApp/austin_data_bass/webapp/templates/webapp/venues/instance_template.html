@@ -83,15 +83,19 @@
                 <h4 class="card-subtitle text-left pl-2 mb-3 text-muted">Upcoming Concerts</h4>
                 <div class="w-m-75 w-l-50 w-xs-75">
                     <ul type="1" class="list group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <!-- RN this may not be handling multiple concerts at same venue.... need to come back and use a forloop with queryset -->
                                 {% if upcoming != "" %}
-                                <a href="../../concerts/{{upcoming}}"> 
-                                    {{upcoming}} </a>
+                                    {% for concert in upcoming %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <a href="../../concerts/{{concert.concertName}}"> 
+                                        {{concert.concertName}} </a>
+                                    </li>
+                                    {% endfor %}
                                 {% else %}
-                                    No Upcoming Concerts!
-                                {% endif %}</a></span>
-                        </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        No Upcoming Concerts!
+                                    </li>
+                                {% endif %}
                     </ul>
                 </div> <!-- End Calendar -->
                 <hr>
