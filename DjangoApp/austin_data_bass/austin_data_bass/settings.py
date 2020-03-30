@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v!_^w+2fms1a+qp^&!ood@uxzo%p_d8*tobr&029-^q!v7*qz_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False #set to false when deploying
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'austindatabass.appspot.com',]
 
@@ -77,8 +77,8 @@ WSGI_APPLICATION = 'austin_data_bass.wsgi.application'
 DATABASES = {
     'default': {
       'ENGINE': 'django.db.backends.postgresql',
-      #'HOST': '/cloudsql/austindatabass:us-central1:austindatabass-db',
-      'HOST': '34.68.27.7',
+      #'HOST': '/cloudsql/austindatabass:us-central1:austindatabass-db', #use when deploying
+      'HOST': '34.68.27.7', #use when running local
       'PORT': '5432', # PostgreSQL port
       'NAME': 'test',
       'USER': 'dbuser', # either 'postgres' (default) or one you created on the PostgreSQL instance page
