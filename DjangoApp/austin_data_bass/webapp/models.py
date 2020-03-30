@@ -122,19 +122,21 @@ class Artist(models.Model):
 
 
 class Venue(models.Model):
-    name = models.CharField(max_length=200, blank = True)
-    yelpID =  models.CharField(max_length=25, blank = True)
-    imageURL = models.CharField(max_length=300, blank = True)
-    yelpURL = models.CharField(max_length=300, blank = True)
-    phone = models.CharField(max_length=15, blank = True) 
-    reviewCount = models.IntegerField(blank = True)
-    rating = models.DecimalField(max_digits=2, decimal_places=1, blank = True)
-    location = models.CharField(max_length=150, blank = True)
-    latitude = models.DecimalField(max_digits=15, decimal_places=13, blank = True) 
-    longitude = models.DecimalField(max_digits=15, decimal_places=13, blank = True) 
-    price = models.CharField(max_length=4, blank = True)
-    upcomingConcerts = ArrayField(models.CharField(max_length=215), blank = True,size = 80)
-
+    name = models.CharField(max_length=200, default="Insert Name")
+    yelpID =  models.CharField(max_length=25, default="Insert yelpID")
+    imageURL = models.CharField(max_length=300, default="Insert Image")
+    yelpURL = models.CharField(max_length=300, default="Insert Yelp URL")
+    phone = models.CharField(max_length=15, default="N/A") 
+    reviewCount = models.IntegerField(default=0)
+    rating = models.DecimalField(max_digits=2, decimal_places=1, default=2.5)
+    location = models.CharField(max_length=150, default="Insert Location")
+    latitude = models.DecimalField(max_digits=17, decimal_places=14, default=30.2885) 
+    longitude = models.DecimalField(max_digits=17, decimal_places=14, default=97.7355) 
+    price = models.CharField(max_length=4, default="$$")
+    upcomingConcerts = ArrayField(models.CharField(max_length=200), blank = True, size = 80)
+    """ 
+    upcomingConcert = models.CharField(max_length=205)
+    """
     def __str__(self):
         #This function just allows the model to be displayed in a more readable fashion
         return(self.name)
@@ -157,19 +159,19 @@ class Venue(models.Model):
         url = "https://api.yelp.com/v3/businesses/" + venueID
         r1 = requests.request("GET", url, headers=headers, data = {})
         data1 = json.loads(r1.text)
+        
+        
         priceholder = "$$"
         phonenumber = "N/A"
         
-        #if(concertName is None):
-         #   concertName = ["No Upcoming Concert"]
 
-        #if ("price" in data1):
-         #   priceholder = data1["price"]
+        if ("price" in data1):
+            priceholder = data1["price"]
 
-        #if ("display_phone" in data1):
-         #   phonenumber = data1["display_phone"]
+        if ("display_phone" in data1):
+            phonenumber = data1["display_phone"]
         
-
+        
         venue = {
             "name": data1["name"],
             "yelpID": venueID,
@@ -181,8 +183,10 @@ class Venue(models.Model):
             "location": " ".join(data1["location"]["display_address"]),
             "latitude": data1["coordinates"]["latitude"],
             "longitude": data1["coordinates"]["longitude"],
-            "price": "$$",
+            "price": priceholder,
             "upcomingConcerts": concertName
+           
+            
             
         }
 
@@ -197,11 +201,13 @@ class Venue(models.Model):
                     location = venue['location'], 
                     latitude = venue['latitude'],
                     longitude = venue['longitude'],
-                    price = "$$",
+                    price = venue['price'],
                     upcomingConcerts = venue['upcomingConcerts']
+                    #
+                    #upcomingConcert = venue['upcomingConcert']
                     )
 
-    
+
         
 class Concerts(models.Model):
     city = models.CharField(max_length = 200)
