@@ -116,7 +116,7 @@ class Artist(models.Model):
                      track2popularity = artist['topTracks'][1]['popularity'],
                      track3 = artist['topTracks'][2]['track'],
                      track3popularity = artist['topTracks'][2]['popularity'],
-                     upcomingConcert = artist['upcomingConcert'],)
+                     upcomingConcert = artist['upcomingConcert'])
 
 
 
@@ -133,13 +133,14 @@ class Venue(models.Model):
     latitude = models.DecimalField(max_digits=15, decimal_places=13) 
     longitude = models.DecimalField(max_digits=15, decimal_places=13) 
     price = models.CharField(max_length=4)
+    upcomingConcert = models.CharField(max_length=200)
 
     def __str__(self):
         #This function just allows the model to be displayed in a more readable fashion
         return(self.name)
 
 
-    def create(venueID):
+    def create(venueID, concertName):
         api_key='a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
         headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'}
         
@@ -177,7 +178,8 @@ class Venue(models.Model):
             "location": " ".join(data1["location"]["display_address"]),
             "latitude": data1["coordinates"]["latitude"],
             "longitude": data1["coordinates"]["longitude"],
-            "price": priceholder
+            "price": priceholder,
+            'upcomingConcert': concertName
             
         }
 
@@ -192,7 +194,8 @@ class Venue(models.Model):
                     location = venue['location'], 
                     latitude = venue['latitude'],
                     longitude = venue['longitude'],
-                    price = venue['price'])
+                    price = venue['price'],
+                    upcomingConcert = venue['upcomingConcert'])
 
     
         
