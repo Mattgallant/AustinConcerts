@@ -40,17 +40,47 @@ from django.db import models
 from webapp.models import Artist, Venue, Concerts
 
 class ArtistTest(TestCase):
-	def test_name(self):
+	def test_artist_name(self):
 		artist = Artist.create("kesha", "ACL")
 		result = artist.name
 		self.assertEqual(result, "Kesha")
-	def test_bio(self):
+	def test_artist_bio(self):
 		artist = Artist.create("kesha", "ACL")
 		result = artist.bio
 		self.assertTrue(isinstance(result, str))
-	def test_genres(self):
+	def test_artist_genres(self):
 		artist = Artist.create("kesha", "ACL")
 		result = artist.genres
 		self.assertTrue(result) #check not empty
 
+class VenueTest(TestCase):
+	def test_venue_name(self):
+		venue = Venue.create("xaTGgwLwFGopzr1VlpBuBw", "ACL")
+		result = venue.name
+		self.assertEqual(result, "Mohawk")
+	def test_venue_location(self):
+		venue = Venue.create("xaTGgwLwFGopzr1VlpBuBw", "ACL")
+		result = venue.location
+		self.assertEqual(result, "912 Red River St Austin, TX 78701")
+	def test_venue_reviewCount(self):
+		venue = Venue.create("xaTGgwLwFGopzr1VlpBuBw", "ACL")
+		result = venue.reviewCount
+		self.assertEqual(result, 243)
 
+class ConcertTest(TestCase):
+	def test_concert_concertName(self):
+		concert_list = Concerts.create()
+		concert = concert_list[0]
+		result = concert.concertName
+		self.assertEqual(result, "Tattoo @ Diablo Rojo - Guadalupe 2020")
+	def test_concert_city(self):
+		concert_list = Concerts.create()
+		concert = concert_list[0]
+		result = concert.city
+		self.assertEqual(result, "Austin, TX, US")
+	def test_concert_date(self):
+		concert_list = Concerts.create()
+		concert = concert_list[0]
+		result = concert.date
+		self.assertEqual(result, "2020-03-28")
+	
