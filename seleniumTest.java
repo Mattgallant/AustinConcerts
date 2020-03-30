@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
+//import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -59,7 +59,7 @@ public class seleniumTest {
 
 	WebElement result = wd.findElement(By.tagName("h1"));
 	String output = result.getText(); // read the output text
-	assertEquals("Dale Watson", output);
+	assertEquals("Circle Pit", output);
 	wd.quit(); // close the browser window
 	}
 
@@ -81,11 +81,10 @@ public class seleniumTest {
 
 	WebElement result = wd.findElement(By.tagName("h1"));
 	String output = result.getText(); // read the output text
-	assertEquals("Ted Hajna", output);
+	assertEquals("Nap Eyes", output);
 	wd.quit(); // close the browser window
 	}
 
-*/
 
 @Test public void clickVenues() {
 
@@ -117,7 +116,7 @@ public class seleniumTest {
 
 	WebElement result = wd.findElement(By.tagName("h1"));
 	String output = result.getText(); // read the output text
-	assertEquals("ACL Live at The Moody Theater", output);	
+	assertEquals("MedtoMarket", output);	
 	wd.quit(); // close the browser window
 	}
 
@@ -140,10 +139,10 @@ public class seleniumTest {
 
 	WebElement result = wd.findElement(By.tagName("h1"));
 	String output = result.getText(); // read the output text
-	assertEquals("Spider House", output);	
+	assertEquals("Santa Catarina Restaurant", output);	
 	wd.quit(); // close the browser window
 	}
-/*
+
 
 @Test public void clickConcerts() {
 
@@ -173,12 +172,12 @@ public class seleniumTest {
 	WebElement we = wd.findElement(By.linkText("Concerts"));
 	we.click(); //click the button
 
-	we = wd.findElement(By.tagName("img"));
+	we = wd.findElement(By.tagName("li"));
 	we.click(); //click the button
 
-	WebElement result = wd.findElement(By.tagName("h1"));
+	WebElement result = wd.findElement(By.tagName("h3"));
 	String output = result.getText(); // read the output text
-	assertEquals("Elle Limebear at H-E-B Center at Cedar Park", output);	
+	assertEquals("Tattoo @ Diablo Rojo - Guadalupe 2020", output);	
 	wd.quit(); // close the browser window
 	}
 
@@ -198,9 +197,9 @@ public class seleniumTest {
 	we = wd.findElement(By.tagName("img"));
 	we.click(); //click the button
 
-	WebElement result = wd.findElement(By.tagName("h1"));
+	WebElement result = wd.findElement(By.tagName("h3"));
 	String output = result.getText(); // read the output text
-	assertEquals("Math Judson at Sahara Lounge", output);	
+	assertEquals("PEARS with Noogy at Mohawk", output);	
 	wd.quit(); // close the browser window
 	}
 
@@ -217,14 +216,14 @@ public class seleniumTest {
 	we = wd.findElement(By.linkText("last »"));
 	we.click(); //click the button
 
-	we = wd.findElement(By.tagName("img"));
+	we = wd.findElement(By.tagName("li"));
 	we.click(); //click the button
 
-	WebElement result = wd.findElement(By.tagName("h1"));
+	WebElement result = wd.findElement(By.tagName("h3"));
 	String output = result.getText(); // read the output text
-	assertEquals("Josh Kelley with Harper Grae at Mohawk", output);	
+	assertEquals("giulia millanta at The Rustic Tap", output);	
 	wd.quit(); // close the browser window
 	}
-	*/
+
 }
 
