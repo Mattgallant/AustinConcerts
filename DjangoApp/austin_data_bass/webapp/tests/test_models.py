@@ -1,14 +1,14 @@
 from django.test import TestCase
 import sys
 import json
-import unittest
+#import unittest
 
-sys.path.append("../..")
-from app.main import *
+#sys.path.append("../..")
+#from app.main import *
 
 # Create your tests here.
 
-class TestFunctions(unittest.TestCase):
+'''class TestFunctions(unittest.TestCase):
 	"""test case for cient methods"""
 	def setup(self):
 		app.app.config['TESTING'] = True
@@ -34,4 +34,23 @@ class TestFunctions(unittest.TestCase):
 
 if __name__ == '__main__':
 	unittest.main()
-	
+	'''
+
+from django.db import models
+from webapp.models import Artist, Venue, Concerts
+
+class ArtistTest(TestCase):
+	def test_name(self):
+		artist = Artist.create("kesha", "ACL")
+		result = artist.name
+		self.assertEqual(result, "Kesha")
+	def test_bio(self):
+		artist = Artist.create("kesha", "ACL")
+		result = artist.bio
+		self.assertTrue(isinstance(result, str))
+	def test_genres(self):
+		artist = Artist.create("kesha", "ACL")
+		result = artist.genres
+		self.assertTrue(result) #check not empty
+
+
