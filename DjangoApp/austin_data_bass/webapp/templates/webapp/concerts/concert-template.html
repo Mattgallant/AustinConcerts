@@ -32,7 +32,11 @@
                     <p><b>Event time:</b><br> {{concert.startingTime}}</p> 
                 </li>
                 <li class="list-group-item d-flex align-items-start">
-                    <p><b>Venue:</b><br><a href="../../venues/{{concert.venue}}"> {{concert.venue}}</a></p>
+                    {% if venue_name != "" %} <!-- Venue link found, bring to instance page -->
+                        <p><b>Venue:</b><br><a href="../../venues/{{venue_name}}"> {{concert.venue}}</a></p>
+                    {% else %} <!-- Couldn't find venue link, just bring to grid page -->
+                        <p><b>Venue:</b><br><a href="../../venues"> {{concert.venue}}</a></p>
+                    {% endif %}</a></span>
                 </li>
                 <li class="list-group-item d-flex align-items-start">
                     <p><b>Ticket price range:</b><br> Unknown</p>
