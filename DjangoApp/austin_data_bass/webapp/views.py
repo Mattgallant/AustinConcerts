@@ -85,11 +85,15 @@ def artist_name(request, artist_name):
 		genre_list.append(genre)
 	genre_list = ", ".join(genre_list)
 
+	artist = Artist.objects.filter(name__iexact = artist_name).first()
+	date = Concerts.objects.filter(concertName__iexact = artist.upcomingConcert).first().date
+	print(date)
 	context = {
+		'date' : date,
 		'genre' : genre_list,
 		'title': artist_name, 
 		'artist_name': artist_name,
-		'artist': Artist.objects.filter(name__iexact = artist_name).first(), #The __iexact makes querey ignore caps..!
+		'artist': artist, #The __iexact makes querey ignore caps..!
 	}
 	return render(request, 'webapp/artists/artist-template.html', context)
 
@@ -111,9 +115,18 @@ def venues(request):
 
 #Venue instance template handler
 def venue_name(request, venue_name):
+	venue = Venue.objects.filter(name__iexact = venue_name).first()
+	venueName = venue.name
+	concert = Concerts.objects.filter(concertName__iexact = venueName).first()
+	if concert is not None:
+		upcoming = concert.concertName
+	else: 
+		upcoming = ""
+
 	context = {
+		'upcoming': upcoming,
 		'title': venue_name,
-		'venue': Venue.objects.filter(name__iexact = venue_name).first(),
+		'venue': venue
 	}
 	return render(request, 'webapp/venues/instance_template.html', context) 
 

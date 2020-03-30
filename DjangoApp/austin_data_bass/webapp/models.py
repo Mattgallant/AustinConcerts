@@ -12,19 +12,19 @@ maxbio_length = 997
 
 
 class Artist(models.Model):
-    name = models.CharField(max_length=100)
-    spotifyID = models.CharField(max_length=50)
+    name = models.CharField(max_length=105)
+    spotifyID = models.CharField(max_length=100)
     spotifyLink = models.CharField(max_length=200)
     imageLink = models.CharField(max_length=200)
     bio = models.CharField(max_length=1000)
-    genres = models.CharField(max_length=150) #will be a json list of genres
+    genres = models.CharField(max_length=200) #will be a json list of genres
     popularity = models.IntegerField()
     followers = models.IntegerField()
-    track1 = models.CharField(max_length=50)
+    track1 = models.CharField(max_length=105)
     track1popularity = models.CharField(max_length=10)
-    track2 = models.CharField(max_length=50) 
+    track2 = models.CharField(max_length=105) 
     track2popularity = models.CharField(max_length=10)
-    track3 = models.CharField(max_length=50) 
+    track3 = models.CharField(max_length=105) 
     track3popularity = models.CharField(max_length=10)
     upcomingConcert = models.CharField(max_length=200)
 
@@ -67,7 +67,7 @@ class Artist(models.Model):
             'genres': data1['genres'],
             'popularity': data1['popularity'],
             'followers': data1['followers']['total'],
-            'upcomingConcert': concertName,
+            'upcomingConcert': concertName
         }
 
         URL2 = "https://api.spotify.com/v1/artists/" + artist['spotifyID'] + "/top-tracks?country=US"
@@ -76,9 +76,14 @@ class Artist(models.Model):
         data2 = r2.json()['tracks'][0:3]
 
         topTracks = []
-
+        
+        count = 0
         for track in data2:
             topTracks.append({'track':track['name'], 'popularity':track['popularity']})
+            count = ++count
+            
+        for i in range(count, 3):
+            topTracks.append({'track':'', 'popularity':''})
 
         artist['topTracks'] = topTracks
         
@@ -111,7 +116,7 @@ class Artist(models.Model):
                      track2popularity = artist['topTracks'][1]['popularity'],
                      track3 = artist['topTracks'][2]['track'],
                      track3popularity = artist['topTracks'][2]['popularity'],
-                     upcomingConcert = artist['upcomingConcert'],)
+                     upcomingConcert = artist['upcomingConcert'])
 
 
 
@@ -128,13 +133,14 @@ class Venue(models.Model):
     latitude = models.DecimalField(max_digits=15, decimal_places=13) 
     longitude = models.DecimalField(max_digits=15, decimal_places=13) 
     price = models.CharField(max_length=4)
+    upcomingConcert = models.CharField(max_length=205)
 
     def __str__(self):
         #This function just allows the model to be displayed in a more readable fashion
         return(self.name)
 
 
-    def create(venueID):
+    def create(venueID, concertName):
         api_key='a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
         headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'}
         
@@ -153,6 +159,12 @@ class Venue(models.Model):
         data1 = json.loads(r1.text)
         priceholder = "$$"
         phonenumber = "N/A"
+        
+        if(concertName is None):
+            concertName = "No Upcoming Concert"
+
+        if(concertName == ""):
+            concertName = "There Are No Upcoming Concerts"
 
         if ("price" in data1):
             priceholder = data1["price"]
@@ -163,7 +175,7 @@ class Venue(models.Model):
 
         venue = {
             "name": data1["name"],
-            "yelpID": data1["id"],
+            "yelpID": venueID,
             "imageURL": data1["image_url"],
             "yelpURL": data1["url"],
             "phone": phonenumber,
@@ -172,7 +184,8 @@ class Venue(models.Model):
             "location": " ".join(data1["location"]["display_address"]),
             "latitude": data1["coordinates"]["latitude"],
             "longitude": data1["coordinates"]["longitude"],
-            "price": priceholder
+            "price": priceholder,
+            "upcomingConcert": concertName
             
         }
 
@@ -187,7 +200,8 @@ class Venue(models.Model):
                     location = venue['location'], 
                     latitude = venue['latitude'],
                     longitude = venue['longitude'],
-                    price = venue['price'])
+                    price = venue['price'],
+                    upcomingConcert = venue['upcomingConcert'])
 
     
         
@@ -213,10 +227,11 @@ class Concerts(models.Model):
 
 
         key = 'fYlpdrJQZavt4FGw'
-        locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
+        #locationResponse = requests.get('https://api.songkick.com/api/3.0/search/locations.json?query=Austin&apikey=' +key)
 
-        location = locationResponse.json()
-        cityID = str(location['resultsPage']['results']['location'][0]['metroArea']['id'])
+        #locationlist = locationResponse.json()['resultsPage'][]
+        #cityID = str(location['resultsPage']['results']['location'][0]['metroArea']['id'])
+        cityID = "9179"
         PARAMS = {'min_date': '2020-03-28','max_date': '2020-04-03'}
         eventsResponseDate = requests.get('https://api.songkick.com/api/3.0/metro_areas/'+ cityID+'/calendar.json?apikey='+key, PARAMS)
 
@@ -256,7 +271,9 @@ class Concerts(models.Model):
                 VenueWebsite = eachEvent['venue']['uri']
                 if VenueWebsite is None:
                     VenueWebsite = 'N/A'
-                StartingTime = '21:00:00'
+                StartingTime = eachEvent['start']['time']
+                if StartingTime is None:
+                    StartingTime = '21:00:00'
                 Date = eachEvent['start']['date']
                 headLiner = artist[0]
                 if "," in headLiner:
