@@ -23,7 +23,7 @@
         <div class = "event_div">
             <ul type="1" class="list group list-group-flush">
                 <li class="list-group-item d-flex align-items-left">
-                    <p><b>Event headliner:</b><br>  {{concert.headliner}}</p>
+                    <p><b>Event headliner:</b><br>  <a href="../../artists/{{concert.headliner}}">{{concert.headliner}}</a></p>
                 </li>
                 <li class="list-group-item d-flex align-items-left">
                     <p><b>Event date:</b><br>  {{concert.date}}</p>
@@ -32,7 +32,7 @@
                     <p><b>Event time:</b><br> {{concert.startingTime}}</p> 
                 </li>
                 <li class="list-group-item d-flex align-items-start">
-                    <p><b>Venue:</b><br>  {{concert.venue}}</p>
+                    <p><b>Venue:</b><br><a href="../../venues/{{concert.venue}}"> {{concert.venue}}</a></p>
                 </li>
                 <li class="list-group-item d-flex align-items-start">
                     <p><b>Ticket price range:</b><br> Unknown</p>
