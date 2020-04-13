@@ -16,7 +16,7 @@ urlpatterns = [
     path('artists/', views.artists, name='webapp-artists'),
     path('artists/<str:artist_name>/', views.artist_name, name='webapp-artists-instance'),
     
-    path('search/<str:key_words>', views.search, 'webapp-search'),
+    path('search/', views.search, name='webapp-search'),
 
     #Development url... just for messing around
     path('dev/', views.dev, name='webapp-dev'),

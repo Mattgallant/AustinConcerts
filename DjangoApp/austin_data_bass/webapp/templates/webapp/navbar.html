@@ -24,20 +24,45 @@
 
     <!--<link rel="stylesheet" href="{% static 'webapp/styles/main.css' %}"> --> <!-- SERVES AS DEFAULT CSS -->
     <link rel="stylesheet" href="https://storage.googleapis.com/austindatabass-bucket/static/webapp/styles/main.css"> <!-- SERVES AS DEFAULT CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/webapp/styles/searchbar.css">
 
     {% block head %}{% endblock %} <!-- This is for any custom CSS or any other head tag items -->
 </head>
 
 <body>
+   <!--Scripts to run upon loading page-->
+    <script>
+        window.onload = function(){
+            document.searchForm.action = getSearchUrl();
+        }
+        function getSearchUrl(){
+            //return window.location.host + "/search/"
+            return "/search/"
+        }
+    </script>
+
     <!-- NAVBAR -->
     <header class="site-header">
         <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
             <a class="navbar-brand" href="{% url 'webapp-home' %}">Austin Data Bass</a>
+            
             <div class="ml-auto">
                 <a class="navbar-brand" href="{% url 'webapp-artists' %}">Artists</a>
                 <a class="navbar-brand" href="{% url 'webapp-concerts' %}">Concerts</a>
                 <a class="navbar-brand" href="{% url 'webapp-venues' %}">Venues</a>
                 <a class="navbar-brand" href="{% url 'webapp-about' %}">About</a>
+            </div>
+            <div class="nav-item ">
+                <form class="form-inline searchbar-group p-0" name="searchForm" action="" method="get">
+                    <select class="form-control searchbar-elem p-1" name="type">
+                       <option>All</option>
+                       <option>Artists</option>
+                       <option>Concerts</option>
+                       <option>Venues</option>
+                    </select>
+                    <input class="form-control searchbar-elem p-1" id="search-txt" type="text" name="q" required>
+                    <input class="form-control searchbar-elem p-1" id="search-btn" type="submit" value="Search">
+                </form>
             </div>
         </nav>
     </header>

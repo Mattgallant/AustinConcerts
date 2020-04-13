@@ -146,11 +146,12 @@ def venue_name(request, venue_name):
 
 
 #The querying search results
-def search(request, key_words):
+def search(request):
     #check type (all, artists, concerts, venues)
     #search the types specified (case switch)
-    return render(request, 'webapp/search_grid_template.html', context)
-
+    
+    #return render(request, 'webapp/search_grid_template.html', context)
+    return render(request, 'webapp/index.html')
 
 #Development view... just for messing around
 def dev(request): #Model Grid Page
