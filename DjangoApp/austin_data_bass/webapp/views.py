@@ -148,10 +148,62 @@ def venue_name(request, venue_name):
 #The querying search results
 def search(request):
     #check type (all, artists, concerts, venues)
-    #search the types specified (case switch)
+    model_type = request.GET['type']
+    keywords = request.GET['q']
     
-    #return render(request, 'webapp/search_grid_template.html', context)
-    return render(request, 'webapp/index.html')
+    domain = request.META['HTTP_HOST']
+    
+    #set default values of context
+    context = {
+        'artist_model': False,
+        'concert_model': False,
+        'venue_model': False,
+        'title': 'Search',
+        'domain': domain,
+    }
+    
+    if model_type == "All":
+        artists = Artist.objects.annotate(search = SearchVector('name', 'bio', 'track1', 'track2', 'track3', 'upcomingConcert')).filter(search = keywords)
+        
+        concerts = Concerts.objects.annotate(search = SearchVector('city', 'concertName', 'headliner', 'venue')).filter(search = keywords)
+        
+        venues = Venue.objects.annotate(search = SearchVector('name', 'location', 'upcomingConcerts')).filter(search = keywords)
+        
+        #add/update relevant data in context
+        context['artist_model'] = True
+        context['artists'] = artists
+        context['concert_model'] = True
+        context['concerts'] = concerts
+        context['venue_model'] = True
+        context['venues'] = venues
+        
+        
+    elif model_type == "Artists":
+        artists = Artist.objects.annotate(search = SearchVector('name', 'bio', 'track1', 'track2', 'track3')).filter(search = keywords)
+        
+        #add/update relevant data in context
+        context['artist_model'] = True
+        context['artists'] = artists
+        
+    elif model_type == "Concerts":
+        concerts = Concerts.objects.annotate(search = SearchVector('city', 'concertName', 'headliner', 'venue')).filter(search = keywords)
+        
+        #add/update relevant data in context
+        context['concert_model'] = True
+        context['concerts'] = concerts
+        
+    elif model_type == "Venues":
+        venues = Venue.objects.annotate(search = SearchVector('name', 'location', 'upcomingConcerts')).filter(search = keywords)
+        
+        #add/update relevant data in context
+        context['venue_model'] = True
+        context['venues'] = venues
+        
+        
+    #print(keyword_list)
+    #search the types specified (case switch)
+
+    return render(request, 'webapp/search_results/grid.html', context)
 
 #Development view... just for messing around
 def dev(request): #Model Grid Page
