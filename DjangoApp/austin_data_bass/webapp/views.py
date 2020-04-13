@@ -7,6 +7,8 @@ import re
 from .models import Venue
 from .models import Concerts
 
+from django.contrib.postgres.search import SearchQuery, SearchVector
+
 # Create your views here. These are called from urls.py.
 # A URL will essentially request a certain "view". Process
 # and display that view here. 
@@ -142,6 +144,12 @@ def venue_name(request, venue_name):
 	}
 	return render(request, 'webapp/venues/instance_template.html', context) 
 
+
+#The querying search results
+def search(request, key_words):
+    #check type (all, artists, concerts, venues)
+    #search the types specified (case switch)
+    return render(request, 'webapp/search_grid_template.html', context)
 
 
 #Development view... just for messing around
