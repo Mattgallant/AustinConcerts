@@ -2,148 +2,208 @@
 {% load static %}
 <!-- This page now imports the navbar from the template... -->
 {% block head %}
+<style>
+    a.active {
+        background-color: black !important;
+        border-bottom-color: black !important;
+        color: white !important;
+    }
+    #searchResultCard {
+        background-color: rgba(0,0,0,0);
+        border: none;
+    }
+    #searchResultCardHeader {
+        background-color: white;
+        border-radius: 0px;
+        
+    }
+</style>
 {% endblock head %}
 
 
 {% block body %}
+
     <div class="container-fluid">
-       {% if artist_model == True %}
-        <h3 class="pt-2 pb-2 text-left font-weight-bold">Artists</h3> <!-- Pass in model_name during context and it will display! -->
-
-        <!-- Start of instance cards -->
-        <div class="row mr-2 ml-2">
-            {% for instance in artists %}
-                <div class="col-sm-12 col-lg-4 col-md-4 col-4  mb-4">
-                    <a href="http://{{ domain }}/artists/{{instance.name}}">
-                    <div class="card text-body" href="#">
-                        <div class="card-header font-weight-bold display text-center">
-                            <!-- Insert the link to the instance here? -->
-                            {{ instance.name }}
+       <div class="row">
+              <div class="card" id="searchResultCard" >
+                 <div class="card-header" id="searchResultCardHeader">
+                     <h4 style="color: black">Showing Search Results for: "{{ keywords }}" in {{ type }}</h4>
+                     <ul class="nav nav-tabs card-header-tabs" id="search-list" role="tablist">
+                         {% if artist_model == True %}
+                         <li class="nav-item">
+                             <a class="nav-link font-weight-bold active" href="#artists" role="tab" aria-controls="artists" aria-selected="true">Artists</a>
+                         </li>
+                         {% endif %}
+                         {% if concert_model == True %}
+                         <li class="nav-item">
+                            {% if artist_model == True %}
+                             <a class="nav-link font-weight-bold" href="#concerts" role="tab" aria-controls="concerts" aria-selected="false">Concerts</a>
+                             {% else %}
+                             <a class="nav-link font-weight-bold active" href="#concerts" role="tab" aria-controls="concerts" aria-selected="true">Concerts</a>
+                             {% endif%}
+                         </li>
+                         {% endif %}
+                         {% if venue_model == True %}
+                         <li class="nav-item">
+                            {% if artist_model == True or concert_model == True %}
+                             <a class="nav-link font-weight-bold" href="#venues" role="tab" aria-controls="venues" aria-selected="false">Venues</a>
+                             {% else %}
+                             <a class="nav-link font-weight-bold active" href="#venues" role="tab" aria-controls="venues" aria-selected="true">Venues</a>
+                             {% endif %}
+                         </li>
+                         {% endif %}
+                     </ul>
+                 </div>
+                 <div class="card-body" style="background-color: rgba(0, 0, 0, 0)">
+                   <div class="tab-content">
+                        {% if artist_model == True %}
+                        <div class="tab-pane active" id="artists" role="tabpanel">
+                            <!-- Start of artist instance cards -->
+                            <div class="row mr-2 ml-2">
+                            {% for instance in artists %}
+                                <div class="col-sm-12 col-lg-4 col-md-4 col-4  mb-4">
+                                    <a href="http://{{ domain }}/artists/{{instance.name}}">
+                                    <div class="card text-body" href="#">
+                                        <div class="card-header font-weight-bold display text-center">
+                                            <!-- Insert the link to the instance here? -->
+                                            {{ instance.name }}
+                                        </div>
+                                        <!-- Instance Image, still need to figure out how to handle this... -->
+                                        <img class="card-img" style="height: 400px;" src="{{ instance.imageLink }}" alt= {{ instance.imageLink }}>
+                                        <!-- At least 3 attributes -->
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex align-items-start">
+                                                <span><b>Popularity:  </b> {{ instance.popularity }}%</span>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <span><b>Top Track:  </b> 
+                                                        {{ instance.track1 }}
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <span><b>Followers:</b> {{ instance.followers }}</span>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- End of card -->
+                                </a>
+                                </div> <!-- End of Col Div -->
+                            {% endfor %}
+                            </div> <!-- End of Row Div -->
                         </div>
-                        <!-- Instance Image, still need to figure out how to handle this... -->
-                        <img class="card-img" style="height: 400px;" src="{{ instance.imageLink }}" alt= {{ instance.imageLink }}>
-                        <!-- At least 3 attributes -->
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex align-items-start">
-                                <span><b>Popularity:  </b> {{ instance.popularity }}%</span>
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span><b>Top Track:  </b> 
-                                        {{ instance.track1 }}
-                                </span>
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span><b>Followers:</b> {{ instance.followers }}</span>
-                            </li>
-                        </ul>
-                    </div> <!-- End of card -->
-                </a>
-                </div> <!-- End of Col Div -->
-            {% endfor %}
-            </div> <!-- End of Row Div -->
-            {% endif %}
-            
-            {% if concert_model == True %}
-            <h3 class="pt-2 pb-2 text-left font-weight-bold">Concerts</h3> <!-- Pass in model_name during context and it will display! -->
-
-            <!-- Start of instance cards -->
-            <div class="row mr-2 ml-2">
-                {% for instance in concerts %}
-                    <div class="col-4  mb-4">
-                        <a href="http://{{ domain }}/concerts/{{ instance.concertName }}">
-                        <div class="card text-body">
-                            <div class="card-header font-weight-bold display text-center">
-                                <!-- Insert the link to the instance here? -->
-                                {{ instance.concertName }}
+                        {% endif %}
+                        {% if concert_model == True %}
+                            {% if artist_model == True %}
+                            <div class="tab-pane" id="concerts" role="tabpanel">
+                            {% else %}
+                            <div class="tab-pane active" id="concerts" role="tabpanel">
+                            {% endif %}
+                                <!-- Start of concert instance cards -->
+                                <div class="row mr-2 ml-2">
+                                    {% for instance in concerts %}
+                                        <div class="col-4  mb-4">
+                                            <a href="http://{{ domain }}/concerts/{{ instance.concertName }}">
+                                            <div class="card text-body">
+                                                <div class="card-header font-weight-bold display text-center">
+                                                    <!-- Insert the link to the instance here? -->
+                                                    {{ instance.concertName }}
+                                                </div>
+                                                <!-- Instance Image, still need to figure out how to handle this... -->
+                                                <img class="card-img" style="height: 400px;" src="{{ instance.imageURL}}" alt= {{ instance.imageLink }}>
+                                                <!-- At least 3 attributes -->
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item d-flex align-items-start">
+                                                        <span><b>Date:  </b> {{ instance.date }}</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex align-items-center">
+                                                        <span><b>Headliner:  </b> 
+                                                                {{ instance.headliner }}
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex align-items-center">
+                                                        <span><b>City:</b> {{ instance.city }}</span>
+                                                    </li>
+                                                </ul>
+                                            </div> <!-- End of card -->
+                                            </a>
+                                        </div> <!-- End of Col Div -->
+                                {% endfor %}
+                                </div> <!-- End of Row Div --> 
                             </div>
-                            <!-- Instance Image, still need to figure out how to handle this... -->
-                            <img class="card-img" style="height: 400px;" src="{{ instance.imageURL}}" alt= {{ instance.imageLink }}>
-                            <!-- At least 3 attributes -->
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex align-items-start">
-                                    <span><b>Date:  </b> {{ instance.date }}</span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <span><b>Headliner:  </b> 
-                                            {{ instance.headliner }}
-                                    </span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <span><b>City:</b> {{ instance.city }}</span>
-                                </li>
-                            </ul>
-                        </div> <!-- End of card -->
-                        </a>
-                    </div> <!-- End of Col Div -->
-            {% endfor %}
-            </div> <!-- End of Row Div -->
-            {% endif %}
-            
-            {% if venue_model == True %}
-            <h3 class="pt-2 pb-2 text-left font-weight-bold">Venues</h3> <!-- Pass in model_name during context and it will display! -->
-
-            <!-- Start of instance cards -->
-            <div class="row mr-2 ml-2">
-                {% for instance in venues %}
-                    <div class="col-sm-12 col-lg-4 col-md-4 col-4  mb-4">
-                        <a href="http://{{ domain }}/venues/{{ instance.name }}">
-                        <div class="card text-body">
-                            <div class="card-header font-weight-bold display text-center">
-                                <!-- Insert the link to the instance here? -->
-                                {{ instance.name }}
+                        {% endif %}
+                        {% if venue_model == True %}
+                            {% if artist_model == True or concert_model == True %}
+                            <div class="tab-pane" id="venues" role="tabpanel">
+                            {% else %}
+                            <div class="tab-pane active" id="venues" role="tabpanel">
+                            {% endif %}
+                                <!-- Start of venue instance cards -->
+                                <div class="row mr-2 ml-2">
+                                    {% for instance in venues %}
+                                        <div class="col-sm-12 col-lg-4 col-md-4 col-4  mb-4">
+                                            <a href="http://{{ domain }}/venues/{{ instance.name }}">
+                                            <div class="card text-body">
+                                                <div class="card-header font-weight-bold display text-center">
+                                                    <!-- Insert the link to the instance here? -->
+                                                    {{ instance.name }}
+                                                </div>
+                                                <!-- Instance Image, still need to figure out how to handle this... -->
+                                                <img class="card-img" src="{{ instance.imageURL }}" style="height: 400px;" alt= {{ instance.imageLink }}>
+                                                <!-- At least 3 attributes -->
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item d-flex align-items-start">
+                                                        <span><b>Rating:  </b> {{ instance.rating }}</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex align-items-center">
+                                                        <span><b>Location:  </b> 
+                                                                {{ instance.location }}
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex align-items-center">
+                                                        <span><b>Phone:</b> {{ instance.phone }}</span>
+                                                    </li>
+                                                </ul>
+                                            </div> <!-- End of card -->
+                                            </a>
+                                        </div> <!-- End of Col Div -->
+                                    {% endfor %}
+                                </div> <!-- End of Row Div -->
                             </div>
-                            <!-- Instance Image, still need to figure out how to handle this... -->
-                            <img class="card-img" src="{{ instance.imageURL }}" style="height: 400px;" alt= {{ instance.imageLink }}>
-                            <!-- At least 3 attributes -->
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex align-items-start">
-                                    <span><b>Rating:  </b> {{ instance.rating }}</span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <span><b>Location:  </b> 
-                                            {{ instance.location }}
-                                    </span>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <span><b>Phone:</b> {{ instance.phone }}</span>
-                                </li>
-                            </ul>
-                        </div> <!-- End of card -->
-                        </a>
-                    </div> <!-- End of Col Div -->
-                {% endfor %}
-            </div> <!-- End of Row Div -->
-            {% endif %}
-            
-        
+                    {% endif %}
+                   </div>
+                 </div>
+              </div>
+          </div>
+        </div>  
+        <!-- Script to manage nav-tab -->
+        <script>
+            $('#search-list a').on('click', function (e) {
+              e.preventDefault()
+              $(this).tab('show')
+            })
+        </script>      
         <!-- END OF THE GRID -->
+        
+        
 
         <!-- Search, filter and pagination features go here -->
-        <div class="card-footer text-muted mx-5">
-            <!--<input class="form-control mb-3"  type="text" id="searchBar" onkeyup="search()" placeholder="Search for Instance">-->
-           <!-- <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul> -->
-            <div class="pagination justify-content-center">
-                    {% if artists.has_previous %}
-                        <a class="page-link" href="?page=1">&laquo; first</a>
-                        <a class="page-link" href="?page={{ artists.previous_page_number }}">previous</a>
-                    {% endif %}
+            <div class="card-footer text-muted mx-5">
+                <div class="pagination justify-content-center">
+                        {% if artists.has_previous %}
+                            <a class="page-link" href="?page=1">&laquo; first</a>
+                            <a class="page-link" href="?page={{ artists.previous_page_number }}">previous</a>
+                        {% endif %}
 
 
-                    {% if artists.has_next %}
-                        <a class="page-link" href="?page={{ artists.next_page_number }}">next</a>
-                        <a class="page-link" href="?page={{ artists.paginator.num_pages }}">last &raquo;</a>
-                    {% endif %}
-                    <br>
-                    <p class="current ml-5">
-                           Page {{ artists.number }} of {{ artists.paginator.num_pages }}.
-                    </p>
-            </div>
-        </div> <!-- End of card footer -->
+                        {% if artists.has_next %}
+                            <a class="page-link" href="?page={{ artists.next_page_number }}">next</a>
+                            <a class="page-link" href="?page={{ artists.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                        <br>
+                        <p class="current ml-5">
+                               Page {{ artists.number }} of {{ artists.paginator.num_pages }}.
+                        </p>
+                </div>
+            </div> <!-- End of card footer -->
+        </div>
     </div> <!--End of fluid container -->
 {% endblock body %}

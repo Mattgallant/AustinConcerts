@@ -168,6 +168,7 @@ def search(request):
         'title': 'Search',
         'domain': domain,
         'keywords': keywords,
+        'type': model_type,
     }
     
     if model_type == "All":
