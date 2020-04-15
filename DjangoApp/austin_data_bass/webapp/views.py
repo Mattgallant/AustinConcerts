@@ -7,7 +7,7 @@ import re
 from .models import Venue
 from .models import Concerts
 
-from django.contrib.postgres.search import SearchQuery, SearchVector
+from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
 # Create your views here. These are called from urls.py.
 # A URL will essentially request a certain "view". Process
@@ -153,6 +153,13 @@ def search(request):
     
     domain = request.META['HTTP_HOST']
     
+    artist_vector = SearchVector('name', weight='A' ) + SearchVector('track1', 'track2', 'track3', weight='B') + SearchVector('bio', 'upcomingConcert' , weight='C')    
+    concert_vector = SearchVector('concertName', weight='A') + SearchVector('headliner', 'venue', weight='B') + SearchVector('city', weight='C')
+    venue_vector = SearchVector('name', weight='A') + SearchVector('location', 'upcomingConcerts', weight='B')
+    
+    query = SearchQuery(keywords)
+
+    
     #set default values of context
     context = {
         'artist_model': False,
@@ -160,14 +167,15 @@ def search(request):
         'venue_model': False,
         'title': 'Search',
         'domain': domain,
+        'keywords': keywords,
     }
     
     if model_type == "All":
-        artists = Artist.objects.annotate(search = SearchVector('name', 'bio', 'track1', 'track2', 'track3', 'upcomingConcert')).filter(search = keywords)
+        artists = Artist.objects.annotate(rank = SearchRank(artist_vector, query)).filter(rank__gte=0.1).order_by('-rank')
         
-        concerts = Concerts.objects.annotate(search = SearchVector('city', 'concertName', 'headliner', 'venue')).filter(search = keywords)
+        concerts = Concerts.objects.annotate(rank = SearchRank(concert_vector, query)).filter(rank__gte=0.1).order_by('-rank')
         
-        venues = Venue.objects.annotate(search = SearchVector('name', 'location', 'upcomingConcerts')).filter(search = keywords)
+        venues = Venue.objects.annotate(rank = SearchRank(venue_vector, query)).filter(rank__gte=0.1).order_by('-rank')
         
         #add/update relevant data in context
         context['artist_model'] = True
@@ -179,21 +187,21 @@ def search(request):
         
         
     elif model_type == "Artists":
-        artists = Artist.objects.annotate(search = SearchVector('name', 'bio', 'track1', 'track2', 'track3')).filter(search = keywords)
+        artists = Artist.objects.annotate(rank = SearchRank(artist_vector, query)).filter(rank__gte=0.1).order_by('-rank')
         
         #add/update relevant data in context
         context['artist_model'] = True
         context['artists'] = artists
         
     elif model_type == "Concerts":
-        concerts = Concerts.objects.annotate(search = SearchVector('city', 'concertName', 'headliner', 'venue')).filter(search = keywords)
+        concerts = Concerts.objects.annotate(rank = SearchRank(concert_vector, query)).filter(rank__gte=0.1).order_by('-rank')
         
         #add/update relevant data in context
         context['concert_model'] = True
         context['concerts'] = concerts
         
     elif model_type == "Venues":
-        venues = Venue.objects.annotate(search = SearchVector('name', 'location', 'upcomingConcerts')).filter(search = keywords)
+        venues = Venue.objects.annotate(rank = SearchRank(venue_vector, query)).filter(rank__gte=0.1).order_by('-rank')
         
         #add/update relevant data in context
         context['venue_model'] = True
