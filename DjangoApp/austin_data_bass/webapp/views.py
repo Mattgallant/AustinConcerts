@@ -181,10 +181,13 @@ def search(request):
         #add/update relevant data in context
         context['artist_model'] = True
         context['artists'] = artists
+        context['artist_count'] = len(artists)
         context['concert_model'] = True
         context['concerts'] = concerts
+        context['concert_count'] = len(concerts)
         context['venue_model'] = True
         context['venues'] = venues
+        context['venue_count'] = len(venues)
         
         
     elif model_type == "Artists":
@@ -193,6 +196,8 @@ def search(request):
         #add/update relevant data in context
         context['artist_model'] = True
         context['artists'] = artists
+        context['artist_count'] = len(artists)
+
         
     elif model_type == "Concerts":
         concerts = Concerts.objects.annotate(rank = SearchRank(concert_vector, query)).filter(rank__gte=0.1).order_by('-rank')
@@ -200,14 +205,16 @@ def search(request):
         #add/update relevant data in context
         context['concert_model'] = True
         context['concerts'] = concerts
-        
+        context['concert_count'] = len(concerts)
+
     elif model_type == "Venues":
         venues = Venue.objects.annotate(rank = SearchRank(venue_vector, query)).filter(rank__gte=0.1).order_by('-rank')
         
         #add/update relevant data in context
         context['venue_model'] = True
         context['venues'] = venues
-        
+        context['venue_count'] = len(venues)
+
         
     #print(keyword_list)
     #search the types specified (case switch)
