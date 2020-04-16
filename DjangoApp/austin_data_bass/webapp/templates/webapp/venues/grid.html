@@ -37,8 +37,50 @@
     price = models.CharField(max_length=4) -->
 
 {% block body %}
+    <div class="container-fluid text-body text-center px-0 ">
+        <div class="card p-2" id="searchResultCard" >
+            <div class="row">
+                <div class="col-6 mr-2"> <!-- Filtering Side of the Card -->
+                    <div class="row">
+                        <div class="col-5"> <!-- Popularity -->
+                            <form class="form-inline" name="filterFormGenre" action="" method="get">
+                                <p class="text-center"> Venue Rating Minimum </p>
+                                <select class="form-control btn-warning p-1" name="rating"> 
+                                   <option>0</option>
+                                   <option>1.0</option>
+                                   <option>2.0</option>
+                                   <option>3.0</option>
+                                   <option>4.0</option>
+                                   <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                                </select>
+                            </form>  
+                        </div> <!-- End popularity -->
+                        <div class="col-5"> <!-- Genre -->
+                            <form class="form-inline" name="filterFormGenre" action="" method="get">
+                                <p class="text-center"> Cost </p>
+                                <select class="form-control btn-warning p-1" name="cost"> 
+                                    <option>$</option>
+                                    <option>$$</option>
+                                    <option>$$$</option>
+                                    <option>$$$$</option>
+                                    <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                                </select>
+                            </form>
+                        </div> <!-- End Genre -->
+                        <div class="col-2">
+                            <p style="color: white"> t </p>
+                            <button class="btn-warning form-control" onclick="window.location.href ={% url 'webapp-venues' %}">Clear</button>
+                        </div>
+                    </div> <!-- End filtering row -->
+                </div> <!-- End Filtering Side of card -->
+                <div class ="col-6">
+                    <!-- Sorting Options go here!!!!-->
+                </div>
+             </div>
+         </div>
+    </div>
     <div class="container-fluid">
-        <h1 class="pt-5 pb-5 text-center font-weight-bold">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
+        <h1 class="pt-5 pb-5 text-center font-weight-bold display-3">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
 
         <!-- Start of instance cards -->
         <div class="row mr-2 ml-2">

@@ -119,7 +119,18 @@ def artist_name(request, artist_name):
 
 #Venues grid page
 def venues(request):
-	venue_list = Venue.objects.all()
+	rating_filter = request.GET.get('rating', 0)
+	cost_filter = request.GET.get('cost', '$')
+
+	print(rating_filter)
+	print(cost_filter)
+
+	if rating_filter == 0 and cost_filter == '$':
+		venue_list = Venue.objects.all()
+	elif rating_filter != 0:
+		venue_list = Venue.objects.filter(rating__gte= rating_filter)
+	elif cost_filter != '$':
+		venue_list = Venue.objects.filter(price=cost_filter)
 
 	#Pagination
 	paginator = Paginator(venue_list, 9) #9 Artists per page
