@@ -29,7 +29,18 @@ def about(request):
 
 #Concert grid page
 def concerts(request):
-	concert_list = Concerts.objects.all()
+	time_filter = request.GET.get('time', '18:00:00')
+	date_filter = request.GET.get('date', '01')
+
+	date_filter = "2020-" + date_filter
+
+	if time_filter == '18:00:00' and date_filter == '2020-01':
+		concert_list = Concerts.objects.all()
+	elif time_filter != '18:00:00':
+		concert_list = Concerts.objects.filter(startingTime= time_filter)
+	elif date_filter !=  '01':
+		concert_list = Concerts.objects.filter(date__contains=date_filter)
+
 	#Pagination
 	paginator = Paginator(concert_list, 9) #9 Concerts per page
 	page_number = request.GET.get('page')
@@ -41,6 +52,7 @@ def concerts(request):
 		'title': 'Concerts',
 	}
 	return render(request, 'webapp/concerts/grid.html', context)
+
 
 #Concert instance pages
 def concert_name(request, concert_name):

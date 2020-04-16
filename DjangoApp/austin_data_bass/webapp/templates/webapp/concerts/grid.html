@@ -37,6 +37,57 @@
     headliner = models.CharField(max_length = 200,default = 'N/A') -->
 
 {% block body %}
+    <div class="container-fluid text-body text-center px-0 ">
+        <div class="card p-2" id="searchResultCard" >
+            <div class="row">
+                <div class="col-6 mr-2"> <!-- Filtering Side of the Card -->
+                    <div class="row">
+                        <div class="col-5"> <!-- Popularity -->
+                            <form class="form-inline" name="filterFormGenre" action="" method="get">
+                                <p class="text-center"> Month </p>
+                                <select class="form-control btn-warning p-1" name="date"> 
+                                   <option>01</option>
+                                   <option>02</option>
+                                   <option>03</option>
+                                   <option>04</option>
+                                   <option>05</option>
+                                   <option>06</option>
+                                   <option>07</option>
+                                   <option>08</option>
+                                   <option>09</option>
+                                   <option>10</option>
+                                   <option>11</option>
+                                   <option>12</option>
+                                   <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                                </select>
+                            </form>  
+                        </div> <!-- End popularity -->
+                        <div class="col-5"> <!-- Genre -->
+                            <form class="form-inline" name="filterFormGenre" action="" method="get">
+                                <p class="text-center"> Starting Time </p>
+                                <select class="form-control btn-warning p-1" name="time"> 
+                                    <option>18:00:00</option>
+                                    <option>19:00:00</option>
+                                    <option>20:00:00</option>
+                                    <option>21:00:00</option>
+                                    <option>22:00:00</option>
+                                    <option>23:00:00</option>
+                                    <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                                </select>
+                            </form>
+                        </div> <!-- End Genre -->
+                        <div class="col-2">
+                            <p style="color: white"> t </p>
+                            <button class="btn-warning form-control" onclick="window.location.href ={% url 'webapp-venues' %}">Clear</button>
+                        </div>
+                    </div> <!-- End filtering row -->
+                </div> <!-- End Filtering Side of card -->
+                <div class ="col-6">
+                    <!-- Sorting Options go here!!!!-->
+                </div>
+             </div>
+         </div>
+    </div>
     <div class="container-fluid">
         <h1 class="pt-5 pb-5 text-center font-weight-bold">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
 
