@@ -6,6 +6,7 @@ import json
 import re
 from .models import Venue
 from .models import Concerts
+#from .filters import ArtistFilter
 
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
@@ -60,7 +61,15 @@ def concert_name(request, concert_name):
 
 #Artist grid page
 def artists(request):
-	artist_list = Artist.objects.all()
+	genre_filter = request.GET.get('genre', 'All')
+	popularity_filter = request.GET.get('popularity', 0)
+
+	if genre_filter == 'All' and popularity_filter == 0:
+		artist_list = Artist.objects.all()
+	elif genre_filter != 'All':
+		artist_list = Artist.objects.filter(genres__icontains=genre_filter)
+	elif popularity_filter != 0:
+		artist_list = Artist.objects.filter(popularity__gte=popularity_filter)
 
 	#Pagination
 	paginator = Paginator(artist_list, 9) #9 Artists per page
@@ -145,6 +154,8 @@ def venue_name(request, venue_name):
 	return render(request, 'webapp/venues/instance_template.html', context) 
 
 
+#END MODEL PAGES
+
 #The querying search results
 def search(request):
     #check type (all, artists, concerts, venues)
@@ -220,6 +231,9 @@ def search(request):
     #search the types specified (case switch)
 
     return render(request, 'webapp/search_results/grid.html', context)
+
+
+
 
 #Development view... just for messing around
 def dev(request): #Model Grid Page

@@ -4,31 +4,52 @@
 {% block head %}
 {% endblock head %}
 
-<script> 
-    //THIS SCRIPT CURRENTLY DOES NOTHING!
-    function search() {
-        // var input, filter, div, element, a, i, txtValue;
-        // input = document.getElementById('searchBar');
-        // filter = input.value.toUpperCase();
-        // div = document.getElementById("list-tab");
-        // element = div.getElementsByTagName('a');
-
-        // // Loop through all list items, and hide those who don't match the search query
-        // for (i = 0; i < element.length; i++) {
-        //     txtValue = element[i].innerHTML; //Get text of the element
-        //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        //         element[i].style.display = ""; //Show
-        //     } else {
-        //         element[i].style.display = "none"; //Hide
-        //     }
-        // }
-        
-    }
-</script>
 
 {% block body %}
     <div class="container-fluid">
-        <h1 class="pt-5 pb-5 text-center font-weight-bold">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
+        <h1 class="pt-5 pb-5 text-center font-weight-bold display-2">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
+        <div class="row mr-3 ml-3 mb-5">
+            <div class="col-6">
+                <div class="card text-body"> <!-- Filtering Card -->
+                    <h3 class="text-center"> Filtering </h3>
+                    <div class="row mt-2">
+                        <div class="col-2">
+                             <form class="form-inline" name="filterFormGenre" action="" method="get">
+                                <p class="text-center"> Popularity Threshold </p>
+                                <select class="form-control btn-warning p-1" name="popularity"> 
+                                   <option>0</option>
+                                   <option>20</option>
+                                   <option>40</option>
+                                   <option>60</option>
+                                   <option>80</option>
+                                   <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                                </select>
+                            </form>  
+                        </div>
+                        <div class="col-2">
+                            <form class="form-inline" name="filterFormGenre" action="" method="get">
+                                <p class="text-center"> Genre </p>
+                                <select class="form-control btn-warning p-1" name="genre"> 
+                                   <option>All</option>
+                                   <option>Rock</option>
+                                   <option>Rap</option>
+                                   <option>Pop</option>
+                                   <option>Country</option>
+                                   <option>Electronic</option>
+                                   <option>Jazz</option>
+                                   <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!--End filtering card-->
+            </div>
+            <div class="col-6">
+                <div class="card text-body"> <!--Sorting Card-->
+                    <h3 class ="text-center"> Sorting </h3>
+                </div> <!-- End Sorting Card -->
+            </div> <!-- End Column -->
+        </div> <!-- End of Sorting/Filtering Row -->
 
         <!-- Start of instance cards -->
         <div class="row mr-2 ml-2">
@@ -63,16 +84,8 @@
         </div> <!-- End of the row div -->
         <!-- END OF THE GRID -->
 
-        <!-- Search, filter and pagination features go here -->
+        <!-- Pagination -->
         <div class="card-footer text-muted mx-5">
-            <!--<input class="form-control mb-3"  type="text" id="searchBar" onkeyup="search()" placeholder="Search for Instance">-->
-           <!-- <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul> -->
             <div class="pagination justify-content-center">
                     {% if artists.has_previous %}
                         <a class="page-link" href="?page=1">&laquo; first</a>
