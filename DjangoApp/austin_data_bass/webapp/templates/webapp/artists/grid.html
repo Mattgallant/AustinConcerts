@@ -7,47 +7,38 @@
 
 
 {% block body %}
-    <div class="container-fluid text-body text-center px-0 ">
-        <div class="card p-2" id="searchResultCard" >
+    <div class="container-fluid text-body px-0 ">
+        <div class="card p-2" >
             <div class="row">
-                <div class="col-6 mr-2"> <!-- Filtering Side of the Card -->
-                    <div class="row">
-                        <div class="col-5"> <!-- Popularity -->
-                            <form class="form-inline" name="filterFormGenre" action="" method="get">
-                                <p class="text-center"> Popularity Minimum </p>
-                                <select class="form-control btn-warning p-1" name="popularity"> 
-                                   <option>0</option>
-                                   <option>20</option>
-                                   <option>40</option>
-                                   <option>60</option>
-                                   <option>80</option>
-                                   <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
-                                </select>
-                            </form>  
-                        </div> <!-- End popularity -->
-                        <div class="col-5"> <!-- Genre -->
-                            <form class="form-inline" name="filterFormGenre" action="" method="get">
-                                <p class="text-center"> Genre </p>
-                                <select class="form-control btn-warning p-1" name="genre"> 
-                                    <option>All</option>
-                                    <option>Rock</option>
-                                    <option>Rap</option>
-                                    <option>Pop</option>
-                                    <option>Country</option>
-                                    <option>Electronic</option>
-                                    <option>Jazz</option>
-                                    <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
-                                </select>
-                            </form>
-                        </div> <!-- End Genre -->
-                        <div class="col-2">
-                            <p style="color: white"> t </p>
-                            <button class="btn-warning form-control" onclick="window.location.href ={% url 'webapp-artists' %}">Clear</button>
-                        </div>
-                    </div> <!-- End filtering row -->
+                <div class="col-5 text-left"> <!-- Filtering Side of the Card -->
+                    <form class="form-inline " name="filterFormGenre" action="" method="get"> <!-- Drop Downs -->
+                        <select class="form-control btn-warning p-1" name="popularity">  
+                           <option selected disabled>Popularity (Minimum)</option>
+                           <option>0</option>
+                           <option>20</option>
+                           <option>40</option>
+                           <option>60</option>
+                           <option>80</option>
+                        </select>
+                        <select class="form-control btn-warning p-1" name="genre"> 
+                            <option selected disabled>Genre</option>
+                            <option>All</option>
+                            <option>Rock</option>
+                            <option>Rap</option>
+                            <option>Pop</option>
+                            <option>Country</option>
+                            <option>Electronic</option>
+                            <option>Jazz</option>
+                        </select>
+                        <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                    </form>  
                 </div> <!-- End Filtering Side of card -->
-                <div class ="col-6">
+                <div class="col-2">
+                    <button class="btn-warning form-control" onclick="window.location.href ={% url 'webapp-artists' %}">Reset</button>
+                </div>
+                <div class ="col-5 text-right">
                     <!-- Sorting Options go here!!!!-->
+                    <span> Sorting Options! WIP... </span>
                 </div>
              </div>
          </div>
