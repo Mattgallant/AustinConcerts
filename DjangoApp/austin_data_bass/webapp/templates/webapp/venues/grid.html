@@ -5,38 +5,6 @@
 {% block head %}
 {% endblock head %}
 
-<script> 
-    //THIS SCRIPT CURRENTLY DOES NOTHING!
-    function search() {
-        // var input, filter, div, element, a, i, txtValue;
-        // input = document.getElementById('searchBar');
-        // filter = input.value.toUpperCase();
-        // div = document.getElementById("list-tab");
-        // element = div.getElementsByTagName('a');
-
-        // // Loop through all list items, and hide those who don't match the search query
-        // for (i = 0; i < element.length; i++) {
-        //     txtValue = element[i].innerHTML; //Get text of the element
-        //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        //         element[i].style.display = ""; //Show
-        //     } else {
-        //         element[i].style.display = "none"; //Hide
-        //     }
-        // }
-        
-    }
-</script>
-
-<!--    name = models.CharField(max_length=200)
-    yelpID =  models.CharField(max_length=25)
-    imageURL = models.CharField(max_length=300)
-    yelpURL = models.CharField(max_length=300)
-    phone = models.CharField(max_length=15) 
-    reviewCount = models.IntegerField()
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
-    location = models.CharField(max_length=150) 
-    price = models.CharField(max_length=4) -->
-
 {% block body %}
     <div class="container-fluid text-body text-center px-0 ">
         <div class="card p-2" id="searchResultCard" >
@@ -88,7 +56,7 @@
             {% for instance in venues %}
                 <div class="col-sm-12 col-lg-4 col-md-4 col-4  mb-4">
                     <a href="{{instance.name}}">
-                    <div class="card text-body">
+                    <div class="card text-body h-100">
                         <div class="card-header font-weight-bold display text-center">
                             <!-- Insert the link to the instance here? -->
                             {{ instance.name }}

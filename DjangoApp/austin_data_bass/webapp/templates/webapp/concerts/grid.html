@@ -58,14 +58,14 @@
          </div>
     </div>
     <div class="container-fluid">
-        <h1 class="pt-5 pb-5 text-center font-weight-bold">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
+        <h1 class="pt-5 pb-5 text-center font-weight-bold display-3">{{model_name}}</h1> <!-- Pass in model_name during context and it will display! -->
 
         <!-- Start of instance cards -->
         <div class="row mr-2 ml-2">
             {% for instance in concerts %}
-                <div class="col-4  mb-4">
+                <div class="col-4 mb-4">
                     <a href="{{instance.concertName}}">
-                    <div class="card text-body">
+                    <div class="card text-body h-100">
                         <div class="card-header font-weight-bold display text-center">
                             <!-- Insert the link to the instance here? -->
                             {{ instance.concertName }}

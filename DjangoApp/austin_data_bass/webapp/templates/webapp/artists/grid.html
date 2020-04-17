@@ -3,14 +3,6 @@
 {% load tags %}
 <!-- This page now imports the navbar from the template... -->
 {% block head %}
-<style>
-    #searchResultCard {
-        background-color: rgba(0,0,0,0);
-        border: none;
-        width: 100%;
-        background-color: white;
-    }
-</style>
 {% endblock head %}
 
 
@@ -67,7 +59,7 @@
             {% for instance in artists %}
                 <div class="col-sm-12 col-lg-4 col-md-4 col-4  mb-4">
                     <a href="{{instance.name}}">
-                    <div class="card text-body" href="#">
+                    <div class="card text-body h-100" href="#">
                         <div class="card-header font-weight-bold display text-center">
                             <!-- Insert the link to the instance here? -->
                             {{ instance.name }}
