@@ -32,14 +32,24 @@
                             <option>Jazz</option>
                         </select>
                         <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
-                    </form>  
+                    </form>
                 </div> <!-- End Filtering Side of card -->
                 <div class="col-2">
                     <button class="btn-warning form-control" onclick="window.location.href ={% url 'webapp-artists' %}">Reset</button>
                 </div>
                 <div class ="col-5 text-right">
-                    <!-- Sorting Options go here!!!!-->
-                    <span> Sorting Options! WIP... </span>
+                    <form class="form-inline" name="artist-sort" action="" method="get">
+                        <select class="form-control btn-warning p-1" name="sort-select-artists">
+                            <option selected disabled>Sort Page By</option>
+                            <option>Popularity (Decending)</option>
+                            <option>Popularity (Acending)</option>
+                            <option>Name (A-Z)</option>
+                            <option>Name (Z-A)</option>
+                            <option>Followers (Decending)</option>
+                            <option>Followers (Acending)</option>
+                        </select>
+                        <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                    </form>
                 </div>
              </div>
          </div>
