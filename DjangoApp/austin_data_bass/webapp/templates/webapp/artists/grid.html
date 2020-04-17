@@ -13,8 +13,8 @@
     <div class="container-fluid text-body px-0">
         <div class="card p-2 " style="border-radius: 0px;" >
             <div class="row">
-                <div class="col-5 text-left"> <!-- Filtering Side of the Card -->
-                    <form class="form-inline " name="filterFormGenre" action="" method="get"> <!-- Drop Downs -->
+                <div class="col-5 text-left form-inline"> <!-- Filtering Side of the Card -->
+                    <form name="filterFormGenre" action="" method="get"> <!-- Drop Downs -->
                         <select class="form-control form-dropdown btn-warning p-1" name="popularity">  
                            <option selected disabled>Popularity (Minimum)</option>
                            <option>0</option>
@@ -34,8 +34,8 @@
                             <option>Electronic</option>
                             <option>Jazz</option>
                         </select>
+                        <input class="form-control btn-warning p-1" type="submit" value="Apply">
                     </form>
-                        <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
                 </div> <!-- End Filtering Side of card -->
                 <div class="col-2">
                     <button class="btn-warning form-reset form-control" onclick="window.location.href ={% url 'webapp-artists' %}">Reset</button>
