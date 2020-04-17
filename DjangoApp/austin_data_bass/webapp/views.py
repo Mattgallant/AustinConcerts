@@ -134,9 +134,6 @@ def venues(request):
 	rating_filter = request.GET.get('rating', 0)
 	cost_filter = request.GET.get('cost', '$')
 
-	print(rating_filter)
-	print(cost_filter)
-
 	if rating_filter == 0 and cost_filter == '$':
 		venue_list = Venue.objects.all()
 	elif rating_filter != 0:
