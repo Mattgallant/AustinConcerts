@@ -52,3 +52,25 @@ Zander Tedjo | 20
 Will Worthington | 22
 Michael Hilborn | 14
 Guy Farmer | -
+
+***
+
+**Phase III: Estimated Completion Time**
+| Name | Estimated Time (Hours)
+------| ------|
+Matt Gallant | 12
+Dylan Wolford | -
+Zander Tedjo | -
+Will Worthington | -
+Michael Hilborn | -
+Guy Farmer | -
+
+**Phase III: Actual Completion Time**
+| Name | Actual Time (Hours)
+------| ------|
+Matt Gallant | -
+Dylan Wolford | -
+Zander Tedjo | -
+Will Worthington | -
+Michael Hilborn | -
+Guy Farmer | -
