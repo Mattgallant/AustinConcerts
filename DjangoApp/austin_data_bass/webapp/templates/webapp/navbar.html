@@ -21,10 +21,45 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <!-- End Bootstrap Imports -->
+    
 
     <!--<link rel="stylesheet" href="{% static 'webapp/styles/main.css' %}"> --> <!-- SERVES AS DEFAULT CSS -->
     <link rel="stylesheet" href="https://storage.googleapis.com/austindatabass-bucket/static/webapp/styles/main.css"> <!-- SERVES AS DEFAULT CSS -->
     <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/austindatabass-bucket/static/webapp/styles/searchbar.css">
+    
+    <!-- Custom Styles -->
+    <style>
+        .form-dropdown{
+            background-color: #CCC;
+            border-color: #CCC;
+        }
+        .form-dropdown:hover{
+            background-color: #CCC;
+            border-color: #CCC;
+            cursor: pointer;
+        }
+        
+        .form-apply{
+            background-color: #fac166;
+        }
+        .form-apply:hover{
+            background-color: orange;
+            border-color: orange;
+        }
+        
+        .form-reset{
+            background-color: #fa9d5f;
+            border-color: #fa9d5f;
+        }
+        .form-reset:hover{
+            background-color: #f27b2c;
+            border-color: #f27b2c;
+        }
+        #search-btn{
+            background-color: #CCC;
+        }
+        
+    </style>
 
     {% block head %}{% endblock %} <!-- This is for any custom CSS or any other head tag items -->
 </head>
@@ -61,7 +96,7 @@
                        <option>Venues</option>
                     </select>
                     <input class="form-control searchbar-elem p-1" id="search-txt" type="text" name="q" required>
-                    <input class="form-control searchbar-elem p-1" id="search-btn" type="submit" value="Search">
+                    <input style="color: black;" class="form-control searchbar-elem  p-2 fas fa-search" id="search-btn" type="submit" value="Search">
                 </form>
             </div>
         </nav>
