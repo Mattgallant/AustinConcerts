@@ -29,17 +29,19 @@ def about(request):
 
 #Concert grid page
 def concerts(request):
-	time_filter = request.GET.get('time', '18:00:00')
+	time_filter = request.GET.get('time', '17:00:00')
 	date_filter = request.GET.get('date', '01')
 
 	date_filter = "2020-" + date_filter
 
-	if time_filter == '18:00:00' and date_filter == '2020-01':
+	if time_filter == '17:00:00' and date_filter == '2020-01':
 		concert_list = Concerts.objects.all()
-	elif time_filter != '18:00:00':
+	elif time_filter != '17:00:00' and date_filter == '2020-01':
 		concert_list = Concerts.objects.filter(startingTime= time_filter)
-	elif date_filter !=  '01':
+	elif date_filter !=  '01' and time_filter == '17:00:00':
 		concert_list = Concerts.objects.filter(date__contains=date_filter)
+	else:
+		concert_list = Concerts.objects.filter(date__contains=date_filter, startingTime = time_filter)
 
 	#Pagination
 	paginator = Paginator(concert_list, 9) #9 Concerts per page
@@ -78,10 +80,12 @@ def artists(request):
 
 	if genre_filter == 'All' and popularity_filter == 0:
 		artist_list = Artist.objects.all()
-	elif genre_filter != 'All':
+	elif genre_filter != 'All' and popularity_filter == 0:
 		artist_list = Artist.objects.filter(genres__icontains=genre_filter)
-	elif popularity_filter != 0:
+	elif popularity_filter != 0 and genre_filter == 'All':
 		artist_list = Artist.objects.filter(popularity__gte=popularity_filter)
+	else:
+		artist_list = Artist.objects.filter(genres__icontains=genre_filter, popularity__gte=popularity_filter)
 
 	#Pagination
 	paginator = Paginator(artist_list, 9) #9 Artists per page
@@ -136,10 +140,12 @@ def venues(request):
 
 	if rating_filter == 0 and cost_filter == '$':
 		venue_list = Venue.objects.all()
-	elif rating_filter != 0:
+	elif rating_filter != 0 and cost_filter == '$':
 		venue_list = Venue.objects.filter(rating__gte= rating_filter)
-	elif cost_filter != '$':
+	elif cost_filter != '$' and rating_filter == 0:
 		venue_list = Venue.objects.filter(price=cost_filter)
+	else:
+		venue_list = Venue.objects.filter(price=cost_filter, rating__gte = rating_filter)
 
 	#Pagination
 	paginator = Paginator(venue_list, 9) #9 Artists per page
