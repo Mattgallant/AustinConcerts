@@ -92,10 +92,10 @@ class Artist(models.Model):
 
 				return Artist(name = artist['name'],
 							  spotifyID = artist['spotifyID'],
-							  imageLink = artist['imageLink'],
-							  spotifyLink = artist['spotifyLink'],
+							  imageLink = artist['imageLink'][0:200],
+							  spotifyLink = artist['spotifyLink'][0:199],
 							  bio = artist['bio'],
-							  genres = artist['genres'],
+							  genres = artist['genres'][0:199],
 							  popularity = artist['popularity'],
 							  followers = artist['followers'],
 							  track1 = artist['topTracks'][0]['track'],
@@ -104,7 +104,7 @@ class Artist(models.Model):
 							  track2popularity = artist['topTracks'][1]['popularity'],
 							  track3 = artist['topTracks'][2]['track'],
 							  track3popularity = artist['topTracks'][2]['popularity'],
-							  upcomingConcert = artist['upcomingConcert'])
+							  upcomingConcert = artist['upcomingConcert'][0:199])
 
 
 class Venue(models.Model):

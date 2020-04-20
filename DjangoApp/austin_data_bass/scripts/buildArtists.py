@@ -8,5 +8,8 @@ concertlist = Concerts.objects.all()
 for c in concertlist:
     artist = Artist.create(c.artists[0], c.concertName)
     if artist is not None:
-        artist.save()
+        try:
+            artist.save()
+        except:
+            continue
         
