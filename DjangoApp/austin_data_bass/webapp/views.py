@@ -4,6 +4,8 @@ from .gitstats import getGitStats
 from .models import Artist
 import json
 import re
+import datetime
+from datetime import time, date, datetime, timedelta
 from .models import Venue
 from .models import Concerts
 #from .filters import ArtistFilter
@@ -32,18 +34,47 @@ def concerts(request):
 	concert_sort = request.GET.get('sort-select-concert')
 
 	time_filter = request.GET.get('time', '17:00:00')
-	date_filter = request.GET.get('date', '01')
+	date_filter = request.GET.get('date', '00')
+	todaySource = datetime.today()
 
-	date_filter = "2020-" + date_filter
-
-	if time_filter == '17:00:00' and date_filter == '2020-01':
-		concert_list = Concerts.objects.all()
-	elif time_filter != '17:00:00' and date_filter == '2020-01':
-		concert_list = Concerts.objects.filter(startingTime= time_filter)
-	elif date_filter !=  '01' and time_filter == '17:00:00':
-		concert_list = Concerts.objects.filter(date__contains=date_filter)
+	if time_filter == '17:00:00' and date_filter == '00':
+		concert_list = Concerts.objects.all().order_by('date')
+	elif time_filter != '17:00:00' and date_filter == '00':
+		concert_list = Concerts.objects.filter(startingTime= time_filter).order_by('date')
+	elif date_filter !=  '00' and time_filter == '17:00:00':
+		if date_filter == '01':
+			currentSource = todaySource
+		if date_filter == '02':
+			currentSource = todaySource + timedelta(days = 7)
+		if date_filter == '03':
+			currentSource = todaySource + timedelta(days = 14)
+		if date_filter == '04':
+			currentSource = todaySource + timedelta(days = 21)
+		if date_filter == '05':
+			currentSource = todaySource + timedelta(days = 28)
+		startDate = currentSource.strftime('%Y-%m-%d')
+		concert_list = Concerts.objects.filter(date= startDate).order_by('date')
+		for x in range(8):
+			nextDaySource = currentSource + timedelta(days = x)
+			nextDay = nextDaySource.strftime('%Y-%m-%d')
+			concert_list = concert_list|Concerts.objects.filter(date = nextDay).order_by('date') 
 	else:
-		concert_list = Concerts.objects.filter(date__contains=date_filter, startingTime = time_filter)
+		if date_filter == '01':
+			currentSource = todaySource
+		if date_filter == '02':
+			currentSource = todaySource + timedelta(days = 7)
+		if date_filter == '03':
+			currentSource = todaySource + timedelta(days = 14)
+		if date_filter == '04':
+			currentSource = todaySource + timedelta(days = 21)
+		if date_filter == '05':
+			currentSource = todaySource + timedelta(days = 28)
+		startDate = currentSource.strftime('%Y-%m-%d')
+		concert_list = Concerts.objects.filter(date= startDate,startingTime = time_filter).order_by('date')
+		for x in range(8):
+			nextDaySource = currentSource + timedelta(days = x)
+			nextDay = nextDaySource.strftime('%Y-%m-%d')
+			concert_list = concert_list|Concerts.objects.filter(date = nextDay,startingTime = time_filter).order_by('date') 
 
 	if concert_sort == 'Concert Name (A-Z)':
 		concert_list = Concerts.objects.all().order_by('concertName')

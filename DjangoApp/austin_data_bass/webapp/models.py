@@ -199,7 +199,7 @@ class Concerts(models.Model):
 		def __str__(self):
 				return self.concertName
 			#spotify API info to get artist image
-		def create(self):
+		def create(self, startDate,endDate):
                     clientId = '7fed28ee3a0d4a89838c1edd4a891b63'
                     secret = '492d077d949c4f21a79eedff5d70852d'
                     auth = base64.b64encode(six.text_type(clientId + ':' + secret).encode("ascii"))
@@ -207,7 +207,7 @@ class Concerts(models.Model):
                     headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'}
                     key = 'fYlpdrJQZavt4FGw'
                     cityID = "9179"
-                    PARAMS = {'min_date': '2020-03-30','max_date': '2020-04-05'}
+                    PARAMS = {'min_date': startDate,'max_date': endDate}
                     eventsResponseDate = requests.get('https://api.songkick.com/api/3.0/metro_areas/'+ cityID+'/calendar.json?apikey='+key, PARAMS)
                     eventsForWeek = eventsResponseDate.json()
                     eventsWeek = eventsForWeek['resultsPage']['results']['event']
@@ -232,6 +232,7 @@ class Concerts(models.Model):
                         r1 = requests.get(url = URL1, headers={'Authorization': 'Bearer ' + token})
                         try:
                             data1 = r1.json()['artists']['items'][0]
+                            data1['images'][0]
                         except:
                             data1 = None
                         if data1 is None:
@@ -277,7 +278,10 @@ class Concerts(models.Model):
                         if StartingTime is None:
                             StartingTime = '21:00:00'
                         Date = eachEvent['start']['date']
-                        headLiner = artist[0]
+                        try:
+                            headLiner = artist[0]
+                        except:
+                            continue
                         if "," in headLiner:
                             index = headLiner.index(',')
                             headLiner = headLiner[:index]
