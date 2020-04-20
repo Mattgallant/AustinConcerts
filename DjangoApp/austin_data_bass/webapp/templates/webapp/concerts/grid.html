@@ -12,28 +12,19 @@
                 <div class="col-5 text-left"> <!-- Filtering -->
                     <form class="form-inline" name="filterFormGenre" action="" method="get">
                         <select class="form-control btn-warning p-1" name="date"> 
-                            <option selected disabled>Month</option>
-                           <option>01</option>
-                           <option>02</option>
-                           <option>03</option>
-                           <option>04</option>
-                           <option>05</option>
-                           <option>06</option>
-                           <option>07</option>
-                           <option>08</option>
-                           <option>09</option>
-                           <option>10</option>
-                           <option>11</option>
-                           <option>12</option>
+                            <option selected disabled>Filter by week</option>
+                           <option value = "01">This week</option>
+                           <option value = "02">Next week</option>
+                           <option value = "03">In two weeks</option>
+                           <option value = "04">In three weeks</option>
+                           <option value = "05">In four weeks</option>
                         </select>
                         <select class="form-control btn-warning p-1" name="time">
                             <option selected disabled>Starting Time</option> 
-                            <option>18:00:00</option>
-                            <option>19:00:00</option>
-                            <option>20:00:00</option>
-                            <option>21:00:00</option>
-                            <option>22:00:00</option>
-                            <option>23:00:00</option>
+                            <option value = "18:00:00">6:00</option>
+                            <option value = "19:00:00">7:00</option>
+                            <option value = "20:00:00">8:00</option>
+                            <option value = "21:00:00">9:00</option>
                         </select>
                         <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
                     </form>  
@@ -42,8 +33,16 @@
                     <button class="btn-warning form-control" onclick="window.location.href ={% url 'webapp-concerts' %}">Clear</button>
                 </div>
                 <div class ="col-5 text-right">
-                    <!-- Sorting Options go here!!!!-->
-                    <span> Sorting Options! WIP... </span>
+                    <form class="form-inline" name="artist-sort" action="" method="get">
+                        <select class="form-control btn-warning p-1" name="sort-select-concert">
+                            <option selected disabled>Sort Page By</option>
+                            <option>Concert Name (A-Z)</option>
+                            <option>Concert Name (Z-A)</option>
+                            <option>Venue Name (A-Z)</option>
+                            <option>Venue Name (Z-A)</option>
+                        </select>
+                        <input class="form-control btn-warning p-1 ml-1" type="submit" value="Apply">
+                    </form>
                 </div>
              </div>
          </div>
