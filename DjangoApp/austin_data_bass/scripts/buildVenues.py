@@ -22,7 +22,10 @@ for c in concertlist:
 
         response = requests.request("GET", url, headers=headers, data = {})
         parsed = json.loads(response.text)
-        businesses = parsed["businesses"]
+        try:
+            businesses = parsed["businesses"]
+        except:
+            continue
         if len(businesses) != 0:
             business = businesses[0]
             id = business["id"]
