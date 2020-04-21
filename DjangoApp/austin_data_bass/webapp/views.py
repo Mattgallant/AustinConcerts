@@ -38,9 +38,13 @@ def concerts(request):
 	todaySource = datetime.today()
 
 	if time_filter == '17:00:00' and date_filter == '00':
-		concert_list = Concerts.objects.all().order_by('date')
+		concert_list = Concerts.objects.filter(date__gte=todaySource.strftime('%Y-%m-%d')).order_by('date')
+		for concert in concert_list:
+			concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
 	elif time_filter != '17:00:00' and date_filter == '00':
-		concert_list = Concerts.objects.filter(startingTime= time_filter).order_by('date')
+		concert_list = Concerts.objects.filter(startingTime= time_filter, date__gte=todaySource.strftime('%Y-%m-%d')).order_by('date')
+		for concert in concert_list:
+			concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
 	elif date_filter !=  '00' and time_filter == '17:00:00':
 		if date_filter == '01':
 			currentSource = todaySource
@@ -58,6 +62,8 @@ def concerts(request):
 			nextDaySource = currentSource + timedelta(days = x)
 			nextDay = nextDaySource.strftime('%Y-%m-%d')
 			concert_list = concert_list|Concerts.objects.filter(date = nextDay).order_by('date') 
+		for concert in concert_list:
+			concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
 	else:
 		if date_filter == '01':
 			currentSource = todaySource
@@ -75,6 +81,8 @@ def concerts(request):
 			nextDaySource = currentSource + timedelta(days = x)
 			nextDay = nextDaySource.strftime('%Y-%m-%d')
 			concert_list = concert_list|Concerts.objects.filter(date = nextDay,startingTime = time_filter).order_by('date') 
+		for concert in concert_list:
+			concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
 
 	if concert_sort == 'Concert Name (A-Z)':
 		concert_list = Concerts.objects.all().order_by('concertName')
@@ -101,6 +109,9 @@ def concerts(request):
 #Concert instance pages
 def concert_name(request, concert_name):
 	concert = Concerts.objects.filter(concertName__iexact = concert_name).first()
+	concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
+	remainder = ':00 pm'
+	concert.startingTime = str( int(concert.startingTime[0:2])-12)+remainder
 	print(concert.yelpID)
 	venue = Venue.objects.filter(yelpID__iexact = concert.yelpID).first()
 	if venue is None:
