@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-5 text-left"> <!-- Popularity -->
                     <form class="form-inline" name="filterFormGenre" action="" method="get">
-                        <select class="form-control btn-warning p-1" name="rating">
+                        <select class="form-control form-dropdown btn-warning p-1" name="rating">
                            <option selected disabled>Venue Rating (Minimum)</option> 
                            <option>0</option>
                            <option>1.0</option>
@@ -19,7 +19,7 @@
                            <option>3.0</option>
                            <option>4.0</option>
                         </select>
-                        <select class="form-control btn-warning p-1" name="cost"> 
+                        <select class="form-control form-dropdown btn-warning p-1" name="cost"> 
                             <option selected disabled>Cost</option> 
                             <option>$</option>
                             <option>$$</option>
@@ -30,11 +30,11 @@
                     </form>  
                 </div> <!-- End popularity -->
                 <div class="col-2 text-center">
-                    <button class="btn-warning form-control" onclick="window.location.href ={% url 'webapp-venues' %}">Reset</button>
+                    <button class="btn-warning form-reset form-control" onclick="window.location.href ={% url 'webapp-venues' %}">Reset</button>
                 </div>
                 <div class="col-5 text-right">
                     <form class="form-inline" name="artist-sort" action="" method="get">
-                        <select class="form-control btn-warning p-1" name="sort-select-venues">
+                        <select class="form-control form-dropdown btn-warning p-1" name="sort-select-venues">
                             <option selected disabled>Sort Page By</option>
                             <option>Venue Name (A-Z)</option>
                             <option>Venue Name (Z-A)</option>

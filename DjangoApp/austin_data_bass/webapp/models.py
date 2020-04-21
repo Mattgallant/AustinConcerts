@@ -92,10 +92,10 @@ class Artist(models.Model):
 
 				return Artist(name = artist['name'],
 							  spotifyID = artist['spotifyID'],
-							  imageLink = artist['imageLink'],
-							  spotifyLink = artist['spotifyLink'],
+							  imageLink = artist['imageLink'][0:200],
+							  spotifyLink = artist['spotifyLink'][0:199],
 							  bio = artist['bio'],
-							  genres = artist['genres'],
+							  genres = artist['genres'][0:199],
 							  popularity = artist['popularity'],
 							  followers = artist['followers'],
 							  track1 = artist['topTracks'][0]['track'],
@@ -104,31 +104,31 @@ class Artist(models.Model):
 							  track2popularity = artist['topTracks'][1]['popularity'],
 							  track3 = artist['topTracks'][2]['track'],
 							  track3popularity = artist['topTracks'][2]['popularity'],
-							  upcomingConcert = artist['upcomingConcert'])
+							  upcomingConcert = artist['upcomingConcert'][0:199])
 
 
 class Venue(models.Model):
-		name = models.CharField(max_length=200, default="Insert Name")
-		yelpID =  models.CharField(max_length=25, default="Insert yelpID")
-		imageURL = models.CharField(max_length=300, default="Insert Image")
-		yelpURL = models.CharField(max_length=300, default="Insert Yelp URL")
-		phone = models.CharField(max_length=15, default="N/A") 
-		reviewCount = models.IntegerField(default=0)
-		rating = models.DecimalField(max_digits=2, decimal_places=1, default=2.5)
-		location = models.CharField(max_length=150, default="Insert Location")
-		latitude = models.DecimalField(max_digits=17, decimal_places=14, default=30.2885) 
-		longitude = models.DecimalField(max_digits=17, decimal_places=14, default=97.7355) 
-		price = models.CharField(max_length=4, default="$$")
-		upcomingConcerts = ArrayField(models.CharField(max_length=200), blank = True, size = 80)
+        name = models.CharField(max_length=200, default="Insert Name")
+        yelpID =  models.CharField(max_length=25, default="Insert yelpID")
+        imageURL = models.CharField(max_length=300, default="Insert Image")
+        yelpURL = models.CharField(max_length=300, default="Insert Yelp URL")
+        phone = models.CharField(max_length=15, default="N/A") 
+        reviewCount = models.IntegerField(default=0)
+        rating = models.DecimalField(max_digits=2, decimal_places=1, default=2.5)
+        location = models.CharField(max_length=150, default="Insert Location")
+        latitude = models.DecimalField(max_digits=17, decimal_places=14, default=30.2885) 
+        longitude = models.DecimalField(max_digits=17, decimal_places=14, default=97.7355) 
+        price = models.CharField(max_length=4, default="$$")
+        upcomingConcerts = ArrayField(models.CharField(max_length=200), blank = True, size = 80)
 
-		def __str__(self):
-		#This function just allows the model to be displayed in a more readable fashion
-				return(self.name)
+        def __str__(self):
+        #This function just allows the model to be displayed in a more readable fashion
+                return(self.name)
 
 
-		def create(venueID, concertName):
-				api_key='a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
-				headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'}
+        def create(venueID, concertName):
+                api_key='a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'
+                headers = {'Authorization': 'Bearer a2R0zfYLU_ef2pXcyBp36PgiTP5gYuCUimOnsTOjj9chMB5MpZCYzfE4zULFYknJa9edApMste6zAGjxnLhvrP2Q3EDLvQn7_DDI8qqfb0rTxo3Y3a9J4qIQf19dXnYx'}
 
 #url = "https://api.yelp.com/v3/businesses/search?location=austin&term=concert venues&limit=50"
 #response = requests.request("GET", url, headers=headers, data = payload)
@@ -140,45 +140,48 @@ class Venue(models.Model):
 #id_alias_dict[business["id"]] = business["name"]
 
 
-				url = "https://api.yelp.com/v3/businesses/" + venueID
-				r1 = requests.request("GET", url, headers=headers, data = {})
-				data1 = json.loads(r1.text)
-				priceholder = "$$"
-				phonenumber = "N/A"
+                url = "https://api.yelp.com/v3/businesses/" + venueID
+                r1 = requests.request("GET", url, headers=headers, data = {})
+                data1 = json.loads(r1.text)
+                priceholder = "$$"
+                phonenumber = "N/A"
 
-				if ("price" in data1):
-						priceholder = data1["price"]
+                if ("price" in data1):
+                        priceholder = data1["price"]
 
-				if ("display_phone" in data1):
-						phonenumber = data1["display_phone"]
+                if ("display_phone" in data1):
+                        phonenumber = data1["display_phone"]
+                
+                try:
+                    venue = {"name": data1["name"],
+                        "yelpID": data1["id"],
+                        "imageURL": data1["image_url"],
+                        "yelpURL": data1["url"],
+                        "phone": phonenumber,
+                        "reviewCount": data1["review_count"],
+                        "rating": data1["rating"],
+                        "location": " ".join(data1["location"]["display_address"]),
+                        "latitude": data1["coordinates"]["latitude"],
+                        "longitude": data1["coordinates"]["longitude"],
+                        "price": priceholder,
+                        "upcomingConcerts": concertName
+                        }
+                except:
+                    return None
 
-				venue = {"name": data1["name"],
-						"yelpID": data1["id"],
-						"imageURL": data1["image_url"],
-						"yelpURL": data1["url"],
-						"phone": phonenumber,
-						"reviewCount": data1["review_count"],
-						"rating": data1["rating"],
-						"location": " ".join(data1["location"]["display_address"]),
-						"latitude": data1["coordinates"]["latitude"],
-						"longitude": data1["coordinates"]["longitude"],
-						"price": priceholder,
-						"upcomingConcerts": concertName
-						}
 
-
-				return Venue(name = venue['name'],
-						yelpID =  venue['yelpID'],
-						imageURL = venue['imageURL'],
-						yelpURL = venue['yelpURL'],
-						phone = venue['phone'],
-						reviewCount = venue['reviewCount'],
-						rating = venue['rating'],
-						location = venue['location'], 
-						latitude = venue['latitude'],
-						longitude = venue['longitude'],
-						price = venue['price'],
-						upcomingConcerts = venue['upcomingConcerts'])
+                return Venue(name = venue['name'],
+                        yelpID =  venue['yelpID'],
+                        imageURL = venue['imageURL'],
+                        yelpURL = venue['yelpURL'],
+                        phone = venue['phone'],
+                        reviewCount = venue['reviewCount'],
+                        rating = venue['rating'],
+                        location = venue['location'], 
+                        latitude = venue['latitude'],
+                        longitude = venue['longitude'],
+                        price = venue['price'],
+                        upcomingConcerts = venue['upcomingConcerts'])
 
 
 

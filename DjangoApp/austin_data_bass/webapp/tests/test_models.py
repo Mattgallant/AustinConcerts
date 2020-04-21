@@ -125,34 +125,34 @@ class VenueTest(TestCase):
 class ConcertTest(TestCase):
 
 	def test_concert_concertName(self):
-		concert_list = Concerts.create()
+		concert_list = Concerts.create(Concerts, "2020-04-25", "2020-05-25")
 		concert = concert_list[1]
 		result = concert.concertName
 		#self.assertEqual(result, "Tattoo @ Diablo Rojo - Guadalupe 2020")
-		self.assertEqual(result, "Phangs with Saint Loretto at Stubb's BBQ - Indoors")
+		self.assertEqual(result, "3LAU at Vulcan Gas Company")
 	
 	def test_concert_city(self):
-		concert_list = Concerts.create()
+		concert_list = Concerts.create(Concerts, "2020-04-25", "2020-05-25")
 		concert = concert_list[1]
 		result = concert.city
 		self.assertEqual(result, "Austin, TX, US")
 	
 	def test_concert_date(self):
-		concert_list = Concerts.create()
+		concert_list = Concerts.create(Concerts, "2020-04-25", "2020-05-25")
 		concert = concert_list[1]
 		result = concert.date
-		self.assertEqual(result, "2020-04-16")
+		self.assertEqual(result, "2020-04-25")
 	
 	def test_concert_headliner(self):
-		concert_list = Concerts.create()
+		concert_list = Concerts.create(Concerts, "2020-04-25", "2020-05-25")
 		concert = concert_list[1]
 		result = concert.headliner
-		self.assertEqual(result, "Phangs")
+		self.assertEqual(result, "3LAU")
 	
 	def test_concert_venue(self):
-		concert_list = Concerts.create()
+		concert_list = Concerts.create(Concerts, "2020-04-25", "2020-05-25")
 		concert = concert_list[1]
 		result = concert.venue
-		self.assertEqual(result, "Stubb")
+		self.assertEqual(result, "Vulcan Gas Company")
 
 	
