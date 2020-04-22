@@ -60,7 +60,7 @@ Guy Farmer | -
 ------| ------|
 Matt Gallant | 12
 Dylan Wolford | 10
-Zander Tedjo | -
+Zander Tedjo | 10
 Will Worthington | -
 Michael Hilborn | 10
 Guy Farmer | -
@@ -70,7 +70,7 @@ Guy Farmer | -
 ------| ------|
 Matt Gallant | 10
 Dylan Wolford | 10
-Zander Tedjo | -
+Zander Tedjo | 10
 Will Worthington | -
 Michael Hilborn | 12
 Guy Farmer | -
