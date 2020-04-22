@@ -111,7 +111,10 @@ def concert_name(request, concert_name):
 	concert = Concerts.objects.filter(concertName__iexact = concert_name).first()
 	concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
 	remainder = ':00 pm'
-	concert.startingTime = str( int(concert.startingTime[0:2])-12)+remainder
+	if concert.startingTime[0:2]>='12':
+		concert.startingTime = str( int(concert.startingTime[0:2])-12)+remainder
+	else :
+		concert.startingTime = str( int(concert.startingTime[0:2]))+remainder
 	print(concert.yelpID)
 	venue = Venue.objects.filter(yelpID__iexact = concert.yelpID).first()
 	if venue is None:
