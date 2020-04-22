@@ -68,8 +68,8 @@ Guy Farmer | -
 **Phase III: Actual Completion Time**
 | Name | Actual Time (Hours)
 ------| ------|
-Matt Gallant | 10
-Dylan Wolford | -
+Matt Gallant | -
+Dylan Wolford | 10
 Zander Tedjo | -
 Will Worthington | -
 Michael Hilborn | -
