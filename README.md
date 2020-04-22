@@ -60,17 +60,17 @@ Guy Farmer | -
 ------| ------|
 Matt Gallant | 12
 Dylan Wolford | 10
-Zander Tedjo | -
+Zander Tedjo | 10
 Will Worthington | -
-Michael Hilborn | -
+Michael Hilborn | 10
 Guy Farmer | -
 
 **Phase III: Actual Completion Time**
 | Name | Actual Time (Hours)
 ------| ------|
-Matt Gallant | -
-Dylan Wolford | -
-Zander Tedjo | -
+Matt Gallant | 10
+Dylan Wolford | 10
+Zander Tedjo | 10
 Will Worthington | -
-Michael Hilborn | -
+Michael Hilborn | 12
 Guy Farmer | -
