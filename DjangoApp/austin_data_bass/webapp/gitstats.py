@@ -22,7 +22,6 @@ def getGitStats():
 			willCommits = i.get("total")
 		commits += i.get("total")
 
-
 	#Getting issues stats
 	response = requests.get("https://api.github.com/repos/mattgallant/AustinConcerts/issues")
 	data = response.json()

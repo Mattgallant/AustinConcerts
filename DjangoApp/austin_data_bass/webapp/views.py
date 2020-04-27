@@ -26,14 +26,36 @@ def about(request):
 	return render(request, 'webapp/about.html', context)
 
 
+# Helper Functions ----------------------------------------
 
-# Helper Functions
+# Split modelList query into pages based on concertsPerPage
 def paginate(request, modelList):
 	concertsPerPage = 9
 	paginator = Paginator(modelList, concertsPerPage)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
 	return page_obj
+
+# Parse genreString into a list of genres in a readable format
+def parseGenres(genreString):
+	# Get rid of extreneous symbols
+	genreString = genreString.replace("[", "")
+	genreString = genreString.replace("]", "")
+	genreString = genreString.split(",")
+
+	# Parse into a list
+	genre_list = []
+	skip = True
+	for genre in genreString:
+		genre = genre.replace("'", "")
+		genre = genre.title()
+		if skip:
+			skip = False
+			continue
+		genre = genre[1:]
+		genre_list.append(genre)
+	genre_list = ", ".join(genre_list)
+	return genre_list
 
 
 # MODEL PAGES ------------------------------------------------
@@ -134,7 +156,6 @@ def concert_name(request, concert_name):
 
 #Artist grid page
 def artists(request):
-
 	artists_sort = request.GET.get('sort-select-artists')
 
 	genre_filter = request.GET.get('genre', 'All')
@@ -171,29 +192,12 @@ def artists(request):
 
 #Artist instance template
 def artist_name(request, artist_name):
-	#Query the database, filter by artist_name
-	#Get relevant instance info, pass to template
-	#Handle genre string
-	genrestring = (Artist.objects.filter(name__iexact = artist_name).first()).genres
-	genrestring = genrestring.replace("[", "")
-	genrestring = genrestring.replace("]", "")
-	genrestring = genrestring.split(",")
-	genre_list = []
-	skip = True
-	#Parse the genre list into a more readable format
-	for genre in genrestring:
-		genre = genre.replace("'", "")
-		genre = genre.title()
-		if skip:
-			skip = False
-			continue
-		genre = genre[1:]
-		genre_list.append(genre)
-	genre_list = ", ".join(genre_list)
+	genreString = (Artist.objects.filter(name__iexact = artist_name).first()).genres
+	genre_list = parseGenres(genreString)
 
 	artist = Artist.objects.filter(name__iexact = artist_name).first()
 	date = Concerts.objects.filter(concertName__iexact = artist.upcomingConcert).first().date
-	print(date)
+
 	context = {
 		'date' : date,
 		'genre' : genre_list,
@@ -258,8 +262,6 @@ def venue_name(request, venue_name):
 		'venue': venue
 	}
 	return render(request, 'webapp/venues/instance_template.html', context) 
-
-
 #END MODEL PAGES
 
 #The querying search results
