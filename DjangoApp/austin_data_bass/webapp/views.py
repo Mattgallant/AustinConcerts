@@ -8,7 +8,6 @@ import datetime
 from datetime import time, date, datetime, timedelta
 from .models import Venue
 from .models import Concerts
-#from .filters import ArtistFilter
 
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
@@ -27,7 +26,17 @@ def about(request):
 	return render(request, 'webapp/about.html', context)
 
 
-#MODEL PAGES ------------------------------------------------
+
+# Helper Functions
+def paginate(request, modelList):
+	concertsPerPage = 9
+	paginator = Paginator(modelList, concertsPerPage)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+	return page_obj
+
+
+# MODEL PAGES ------------------------------------------------
 
 #Concert grid page
 def concerts(request):
@@ -93,18 +102,12 @@ def concerts(request):
 	elif concert_sort == 'Venue Name (Z-A)':
 		concert_list = Concerts.objects.all().order_by('-venue')
 
-	#Pagination
-	paginator = Paginator(concert_list, 9) #9 Concerts per page
-	page_number = request.GET.get('page')
-	page_obj = paginator.get_page(page_number)
-
 	context = {
-		'concerts': page_obj, #Passing in the concerts on seperate pages
+		'concerts': paginate(request, concert_list), #Passing in the concerts on seperate pages
 		'model_name' : 'Concerts',
 		'title': 'Concerts',
 	}
 	return render(request, 'webapp/concerts/grid.html', context)
-
 
 #Concert instance pages
 def concert_name(request, concert_name):
@@ -159,13 +162,8 @@ def artists(request):
 	elif artists_sort == 'Followers (Acending)':
 		artist_list = Artist.objects.all().order_by('followers')
 
-	#Pagination
-	paginator = Paginator(artist_list, 9) #9 Artists per page
-	page_number = request.GET.get('page')
-	page_obj = paginator.get_page(page_number)
-
 	context = {
-		'artists': page_obj, #Passing in the artists on seperate pages
+		'artists': paginate(request, artist_list), 
 		'model_name' : 'Artists',
 		'title': 'Artists',
 	}
@@ -173,8 +171,8 @@ def artists(request):
 
 #Artist instance template
 def artist_name(request, artist_name):
-#Query the database, filter by artist_name
-#Get relevant instance info, pass to template
+	#Query the database, filter by artist_name
+	#Get relevant instance info, pass to template
 	#Handle genre string
 	genrestring = (Artist.objects.filter(name__iexact = artist_name).first()).genres
 	genrestring = genrestring.replace("[", "")
@@ -234,13 +232,8 @@ def venues(request):
 	elif venue_sort == 'Price (High to Low)':
 		venue_list = Venue.objects.all().order_by('-price')
 
-	#Pagination
-	paginator = Paginator(venue_list, 9) #9 Artists per page
-	page_number = request.GET.get('page')
-	page_obj = paginator.get_page(page_number)
-
 	context ={
-		'venues': page_obj,
+		'venues': paginate(request, venue_list),
 		'model_name': 'Venues',
 		'title': 'Venues',
 	}
@@ -344,15 +337,5 @@ def search(request):
     #search the types specified (case switch)
 
     return render(request, 'webapp/search_results/grid.html', context)
-
-
-
-
-#Development view... just for messing around
-def dev(request): #Model Grid Page
-	context = {
-		'artists': Artist.objects.all(), #Is this a list?????
-		'model_name' : 'Artists'
-	}
-	return render(request, 'webapp/artists/artist-template.html', context)      
+  
 
