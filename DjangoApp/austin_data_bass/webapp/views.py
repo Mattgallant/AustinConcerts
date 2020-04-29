@@ -4,10 +4,10 @@ from .gitstats import getGitStats
 from .models import Artist
 import json
 import re
-import datetime
-from datetime import time, date, datetime, timedelta
 from .models import Venue
 from .models import Concerts
+from webapp.Filter import Filter
+from webapp.Sort import Sort
 
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
@@ -62,67 +62,11 @@ def parseGenres(genreString):
 
 #Concert grid page
 def concerts(request):
-	concert_sort = request.GET.get('sort-select-concert')
+	filter = Filter()
+	sort = Sort()
 
-	time_filter = request.GET.get('time', '17:00:00')
-	date_filter = request.GET.get('date', '00')
-	todaySource = datetime.today()
-
-	if time_filter == '17:00:00' and date_filter == '00':
-		concert_list = Concerts.objects.filter(date__gte=todaySource.strftime('%Y-%m-%d')).order_by('date')
-		for concert in concert_list:
-			concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
-	elif time_filter != '17:00:00' and date_filter == '00':
-		concert_list = Concerts.objects.filter(startingTime= time_filter, date__gte=todaySource.strftime('%Y-%m-%d')).order_by('date')
-		for concert in concert_list:
-			concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
-	elif date_filter !=  '00' and time_filter == '17:00:00':
-		if date_filter == '01':
-			currentSource = todaySource
-		if date_filter == '02':
-			currentSource = todaySource + timedelta(days = 7)
-		if date_filter == '03':
-			currentSource = todaySource + timedelta(days = 14)
-		if date_filter == '04':
-			currentSource = todaySource + timedelta(days = 21)
-		if date_filter == '05':
-			currentSource = todaySource + timedelta(days = 28)
-		startDate = currentSource.strftime('%Y-%m-%d')
-		concert_list = Concerts.objects.filter(date= startDate).order_by('date')
-		for x in range(8):
-			nextDaySource = currentSource + timedelta(days = x)
-			nextDay = nextDaySource.strftime('%Y-%m-%d')
-			concert_list = concert_list|Concerts.objects.filter(date = nextDay).order_by('date') 
-		for concert in concert_list:
-			concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
-	else:
-		if date_filter == '01':
-			currentSource = todaySource
-		if date_filter == '02':
-			currentSource = todaySource + timedelta(days = 7)
-		if date_filter == '03':
-			currentSource = todaySource + timedelta(days = 14)
-		if date_filter == '04':
-			currentSource = todaySource + timedelta(days = 21)
-		if date_filter == '05':
-			currentSource = todaySource + timedelta(days = 28)
-		startDate = currentSource.strftime('%Y-%m-%d')
-		concert_list = Concerts.objects.filter(date= startDate,startingTime = time_filter).order_by('date')
-		for x in range(8):
-			nextDaySource = currentSource + timedelta(days = x)
-			nextDay = nextDaySource.strftime('%Y-%m-%d')
-			concert_list = concert_list|Concerts.objects.filter(date = nextDay,startingTime = time_filter).order_by('date') 
-		for concert in concert_list:
-			concert.date = concert.date[5:8]+concert.date[8:]+concert.date[4]+concert.date[0:4]
-
-	if concert_sort == 'Concert Name (A-Z)':
-		concert_list = Concerts.objects.all().order_by('concertName')
-	elif concert_sort == 'Concert Name (Z-A)':
-		concert_list = Concerts.objects.all().order_by('-concertName')
-	elif concert_sort == 'Venue Name (A-Z)':
-		concert_list = Concerts.objects.all().order_by('venue')
-	elif concert_sort == 'Venue Name (Z-A)':
-		concert_list = Concerts.objects.all().order_by('-venue')
+	concert_list = filter.filterConcert(request)
+	concert_list = sort.sortConcert(concert_list, request)
 
 	context = {
 		'concerts': paginate(request, concert_list), #Passing in the concerts on seperate pages
@@ -156,32 +100,11 @@ def concert_name(request, concert_name):
 
 #Artist grid page
 def artists(request):
-	artists_sort = request.GET.get('sort-select-artists')
+	filter = Filter()
+	sort = Sort()
 
-	genre_filter = request.GET.get('genre', 'All')
-	popularity_filter = request.GET.get('popularity', 0)
-
-	if genre_filter == 'All' and popularity_filter == 0:
-		artist_list = Artist.objects.all()
-	elif genre_filter != 'All' and popularity_filter == 0:
-		artist_list = Artist.objects.filter(genres__icontains=genre_filter)
-	elif popularity_filter != 0 and genre_filter == 'All':
-		artist_list = Artist.objects.filter(popularity__gte=popularity_filter)
-	else:
-		artist_list = Artist.objects.filter(genres__icontains=genre_filter, popularity__gte=popularity_filter)
-
-	if artists_sort == 'Popularity (Decending)':
-		artist_list = Artist.objects.all().order_by('-popularity')
-	elif artists_sort == 'Popularity (Acending)':
-		artist_list = Artist.objects.all().order_by('popularity')
-	elif artists_sort == 'Name (A-Z)':
-		artist_list = Artist.objects.all().order_by('name')
-	elif artists_sort == 'Name (Z-A)':
-		artist_list = Artist.objects.all().order_by('-name')
-	elif artists_sort == 'Followers (Decending)':
-		artist_list = Artist.objects.all().order_by('-followers')
-	elif artists_sort == 'Followers (Acending)':
-		artist_list = Artist.objects.all().order_by('followers')
+	artist_list = filter.filterArtist(request)
+	artist_list = sort.sortArtist(artist_list, request)
 
 	context = {
 		'artists': paginate(request, artist_list), 
@@ -209,32 +132,11 @@ def artist_name(request, artist_name):
 
 #Venues grid page
 def venues(request):
-	venue_sort = request.GET.get('sort-select-venues')
+	filter = Filter()
+	sort = Sort()
 
-	rating_filter = request.GET.get('rating', 0)
-	cost_filter = request.GET.get('cost', '$')
-
-	if rating_filter == 0 and cost_filter == '$':
-		venue_list = Venue.objects.all()
-	elif rating_filter != 0 and cost_filter == '$':
-		venue_list = Venue.objects.filter(rating__gte= rating_filter)
-	elif cost_filter != '$' and rating_filter == 0:
-		venue_list = Venue.objects.filter(price=cost_filter)
-	else:
-		venue_list = Venue.objects.filter(price=cost_filter, rating__gte = rating_filter)
-
-	if venue_sort == 'Venue Name (A-Z)':
-		venue_list = Venue.objects.all().order_by('name')
-	elif venue_sort == 'Venue Name (Z-A)':
-		venue_list = Venue.objects.all().order_by('-name')
-	elif venue_sort == 'Yelp Rating (High to Low)':
-		venue_list = Venue.objects.all().order_by('rating')
-	elif venue_sort == 'Yelp Rating (Low to High)':
-		venue_list = Venue.objects.all().order_by('-rating')
-	elif venue_sort == 'Price (Low to High)':
-		venue_list = Venue.objects.all().order_by('price')
-	elif venue_sort == 'Price (High to Low)':
-		venue_list = Venue.objects.all().order_by('-price')
+	venue_list = filter.filterVenue(request)
+	venue_list = sort.sortVenue(venue_list, request)
 
 	context ={
 		'venues': paginate(request, venue_list),
