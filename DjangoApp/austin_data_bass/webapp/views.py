@@ -8,8 +8,8 @@ from .models import Venue
 from .models import Concerts
 from webapp.Filter import Filter
 from webapp.Sort import Sort
+from webapp.Search import Search
 
-from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
 # Create your views here. These are called from urls.py.
 # A URL will essentially request a certain "view". Process
@@ -167,79 +167,15 @@ def venue_name(request, venue_name):
 #END MODEL PAGES
 
 #The querying search results
-def search(request):
-    #check type (all, artists, concerts, venues)
-    model_type = request.GET['type']
-    keywords = request.GET['q']
+def search(request):    
+    context = Search.get_search_results(request)
     
-    domain = request.META['HTTP_HOST']
-    
-    artist_vector = SearchVector('name', weight='A' ) + SearchVector('track1', 'track2', 'track3', weight='B') + SearchVector('bio', 'upcomingConcert' , weight='C')    
-    concert_vector = SearchVector('concertName', weight='A') + SearchVector('headliner', 'venue', weight='B') + SearchVector('city', weight='C')
-    venue_vector = SearchVector('name', weight='A') + SearchVector('location', 'upcomingConcerts', weight='B')
-    
-    query = SearchQuery(keywords)
-
-    
-    #set default values of context
-    context = {
-        'artist_model': False,
-        'concert_model': False,
-        'venue_model': False,
-        'title': 'Search',
-        'domain': domain,
-        'keywords': keywords,
-        'type': model_type,
-    }
-    
-    if model_type == "All":
-        artists = Artist.objects.annotate(rank = SearchRank(artist_vector, query)).filter(rank__gte=0.1).order_by('-rank')
-        
-        concerts = Concerts.objects.annotate(rank = SearchRank(concert_vector, query)).filter(rank__gte=0.1).order_by('-rank')
-        
-        venues = Venue.objects.annotate(rank = SearchRank(venue_vector, query)).filter(rank__gte=0.1).order_by('-rank')
-        
-        #add/update relevant data in context
-        context['artist_model'] = True
-        context['artists'] = artists
-        context['artist_count'] = len(artists)
-        context['concert_model'] = True
-        context['concerts'] = concerts
-        context['concert_count'] = len(concerts)
-        context['venue_model'] = True
-        context['venues'] = venues
-        context['venue_count'] = len(venues)
-        
-        
-    elif model_type == "Artists":
-        artists = Artist.objects.annotate(rank = SearchRank(artist_vector, query)).filter(rank__gte=0.1).order_by('-rank')
-        
-        #add/update relevant data in context
-        context['artist_model'] = True
-        context['artists'] = artists
-        context['artist_count'] = len(artists)
-
-        
-    elif model_type == "Concerts":
-        concerts = Concerts.objects.annotate(rank = SearchRank(concert_vector, query)).filter(rank__gte=0.1).order_by('-rank')
-        
-        #add/update relevant data in context
-        context['concert_model'] = True
-        context['concerts'] = concerts
-        context['concert_count'] = len(concerts)
-
-    elif model_type == "Venues":
-        venues = Venue.objects.annotate(rank = SearchRank(venue_vector, query)).filter(rank__gte=0.1).order_by('-rank')
-        
-        #add/update relevant data in context
-        context['venue_model'] = True
-        context['venues'] = venues
-        context['venue_count'] = len(venues)
-
-        
+    print(context)
+      
     #print(keyword_list)
     #search the types specified (case switch)
-
     return render(request, 'webapp/search_results/grid.html', context)
+
+
   
 
