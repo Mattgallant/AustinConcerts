@@ -8,7 +8,7 @@ from .models import Venue
 from .models import Concerts
 from webapp.Filter import Filter
 from webapp.Sort import Sort
-from webapp.Search import Search
+from webapp.Search import SearchFactory
 
 
 # Create your views here. These are called from urls.py.
@@ -168,8 +168,14 @@ def venue_name(request, venue_name):
 
 #The querying search results
 def search(request):    
-    context = Search.get_search_results(request)
-          
+    #context = Search.get_search_results(request)
+    print("test")
+    websearch = SearchFactory.get_search_results(request)
+    context = websearch.context
+    
+    print(context)
+    
+    
     #print(keyword_list)
     #search the types specified (case switch)
     return render(request, 'webapp/search_results/grid.html', context)
