@@ -169,9 +169,7 @@ def venue_name(request, venue_name):
 #The querying search results
 def search(request):    
     context = Search.get_search_results(request)
-    
-    print(context)
-      
+          
     #print(keyword_list)
     #search the types specified (case switch)
     return render(request, 'webapp/search_results/grid.html', context)
