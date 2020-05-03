@@ -29,9 +29,9 @@ class Sort:
 		elif venue_sort == 'Venue Name (Z-A)':
 			venue_list = Venue.objects.all().order_by('-name')
 		elif venue_sort == 'Yelp Rating (High to Low)':
-			venue_list = Venue.objects.all().order_by('rating')
-		elif venue_sort == 'Yelp Rating (Low to High)':
 			venue_list = Venue.objects.all().order_by('-rating')
+		elif venue_sort == 'Yelp Rating (Low to High)':
+			venue_list = Venue.objects.all().order_by('rating')
 		elif venue_sort == 'Price (Low to High)':
 			venue_list = Venue.objects.all().order_by('price')
 		elif venue_sort == 'Price (High to Low)':
