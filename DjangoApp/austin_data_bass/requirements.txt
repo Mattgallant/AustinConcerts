@@ -13,5 +13,5 @@ six==1.14.0
 soupsieve==2.0
 sqlparse==0.3.1
 urllib3==1.25.8
-wheel==0.34.2
+wheel==0.38.1
 wikipedia==1.4.0
